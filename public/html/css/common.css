@@ -1,0 +1,269 @@
+﻿@charset "utf-8";
+
+/* 管理画面用 */
+.colortable-bordered td,
+.colortable-bordered th{
+	border:1px solid #ddd!important
+}
+
+table.colortable-bordered.dataTable {
+	border-collapse: separate !important;
+}
+table.colortable-bordered thead th,
+table.colortable-bordered thead td {
+	border-left-width: 0;
+	border-top-width: 0;
+}
+table.colortable-bordered tbody th,
+table.colortable-bordered tbody td {
+	border-left-width: 0;
+	border-bottom-width: 0;
+}
+
+table.colortable-bordered th:last-child,
+table.colortable-bordered td:last-child {
+	border-right-width: 0;
+}
+
+div.dataTables_scrollHead table.colortable-bordered {
+	border-bottom-width: 0;
+}
+
+table.colortable-bordered tbody th {
+	font-weight: normal !important;
+}
+/* 赤系統 */
+tr.bgbase-red th,
+th.bgbase-red{
+	background-color: #ffe4e1;
+}
+tr.bgbase-red td,
+td.bgbase-red{
+	background-color: #fff9fa;
+}
+td.sbgbase-red{
+	background-color: #ffe4e1;
+}
+
+/* 青系統 */
+tr.bgbase-blue th,
+th.bgbase-blue{
+	background-color: #e5f3ff;
+}
+tr.bgbase-blue td,
+td.bgbase-blue{
+	background-color: #f4fbff;
+}
+td.sbgbase-blue{
+	background-color: #bdffff;
+}
+
+/* 黄系統 */
+tr.bgbase-yellow th,
+th.bgbase-yellow{
+	background-color: #fffacd;
+}
+tr.bgbase-yellow td,
+td.bgbase-yellow{
+	background-color: #ffffe0;
+}
+td.sbgbase-yellow{
+	background-color: #fffacd;
+}
+
+/* 緑系統 */
+td.sbgbase-green{
+	background-color: #a6fc94;
+}
+
+/* 灰系統 */
+td.sbgbase-gray{
+	background-color: #e6e6e6;
+}
+
+/* ボタン群 */
+table.buttonarea,
+table.buttonarea tr *
+{
+	text-align:center;
+	border-style:hidden !important;
+	width:auto;
+}
+
+label{
+	margin-bottom: 0px !important;
+}
+.real_title {
+	float:left;
+	padding-right:0px;
+	width:78%;
+}
+
+#updReasonTitle {
+	border:1px solid #4F81DB;
+	height:150px;
+	background-color:#f4fbff;
+	position:relative;
+	padding-left: 0px;
+}
+
+#updReasonTitle>:first-child {
+	margin-bottom:10px;
+}
+#updReasonRadio {
+	position:absolute;
+	left:160px;
+	top:0px;
+	width: 40%;	
+}
+
+#updReasonRadio>select {
+	width:70%;
+	height:30px;
+	margin-left:0;
+	margin-bottom:20px;
+	margin-top:10px;
+}
+
+#updReasonError {
+	position:absolute;
+	left:50%;
+	top:0;
+	margin-left: 20px;
+	width:48%;
+}
+
+#updReasonErrorText{
+	position:absolute;
+	left:288px;
+	top:80px;
+	width:50%;
+}
+
+.errorText{
+	width: 100%;
+	height: 60px;
+}
+
+.errorStyle {
+	margin-left:2%;
+	width: 70%;
+}
+
+#updReasonError>button {
+	margin-left:20px;
+	/*background-color:#709FD7;
+	color:#FFF;*/
+	height:26px;
+	padding:3px 12px;
+}
+#kadenContactRecord {
+	border:1px solid #4F81DB;
+	height:60px;
+	background-color:#e5f3ff;
+	position:relative;
+	margin-left: 84.6%;
+    width: 15%;
+	top:-150.5px;
+}
+
+.grayColor {
+	background-color:#EBE4EB;
+}
+.changePage{
+	float:right;
+	color:black;
+	background-color: white;
+	border:none;
+	display: block;
+	border-radius: 10px;
+	padding:4px 8px;
+	min-width:50px;
+	vertical-align:top;
+}
+.changePageUp{
+	margin-right: 5px;
+}
+.changePageEnd{
+	float:right;
+	color:black;
+	background-color: lightgray;
+	border:none;
+	display: block;
+	border-radius: 10px;
+	padding:4px 8px;
+	min-width:50px;
+	vertical-align:top;
+}
+.real_examine {
+	float:right;
+	height:109px;
+	padding:0px;
+	width:15%;
+}
+.real_examine_son {
+	height:60px;
+	margin-top:49px;
+	background-color:#ffe4e1;
+}
+.real_examine_title {
+	float:left;
+	margin:20px 6px;
+}
+.real_examine_value {
+	float:right;
+	padding:8px 9px;
+	margin: 11px 20px;
+}
+.kdupload_btn{
+	margin:0 auto;
+	position:absolute;
+	top:20px;
+	left:40%;
+	padding:6px 12px;
+	width:68px;
+}
+
+
+#email_paypay{
+	border:1px solid #4F81DB;
+	height:73px;
+	background-color:#e5f3ff;
+	position:relative;
+	margin-left: 84.6%;
+    width: 15%;
+	top:-133.5px;
+}
+
+
+.email_btn{
+	margin:0 auto;
+	position:absolute;
+	top:35px;
+	left:40%;
+}
+
+.title_str{
+	background:#e5f3ff;
+	height:148px;
+	display:inline-block;
+	padding-left:15px;
+	padding-right:15px;
+	border-right: 1px solid #ddd;
+}
+
+.image_btn{
+	position:absolute;
+	top:110px;
+	left:85%;
+}
+.reupload_btn{
+	position:absolute;
+	top:70px;
+	left:85%;
+}
+.examination_fail_clear_btn{
+	position:absolute;
+	top:110px;
+	left:85%;
+}
