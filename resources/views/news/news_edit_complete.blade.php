@@ -26,7 +26,7 @@
                             </div>
                             <div class="card-body">
                                 <p class="card-text">
-                                    <font size="3" color="#008080">新着情報が変更されました。</font>
+                                    <font size="3" color="#008080">新着情報が更新されました。</font>
                                 </p>
                                 <a href="javascript:" onclick="self.location=document.referrer;" class="btn btn-primary">戻る</a>
                             </div>

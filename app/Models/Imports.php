@@ -60,7 +60,7 @@ class Imports extends Model
                 $m_goods = $m_goods->where('guild_name', 'like', '%'.$params['guild_name'].'%');
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('CREATED_DT', 'DESC')
+                ->orderBy('id')
                 ->get()->toArray();
             return $result;
         } catch (\Exception $e) {
@@ -156,7 +156,7 @@ class Imports extends Model
                 $m_goods = $m_goods->whereIn('open_flg', $params['open_flg']);
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('CREATED_DT', 'DESC')
+                ->orderBy('id')
                 ->get()->toArray();
 
 
@@ -224,9 +224,8 @@ class Imports extends Model
                 $m_goods = $m_goods->whereIn('p_type', $params['p_type_arr']);
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('CREATED_DT', 'DESC')
+                ->orderBy('id')
                 ->get()->toArray();
-
 
             return $result;
         } catch (\Exception $e) {

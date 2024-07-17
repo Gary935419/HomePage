@@ -75,7 +75,7 @@ class Goods extends Model
                 $m_goods = $m_goods->whereIn('p_open_flg', $params['p_open_flg']);
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('CREATED_DT', 'DESC')
+                ->orderBy('id')
                 ->get()->toArray();
             return $result;
         } catch (\Exception $e) {
@@ -168,7 +168,7 @@ class Goods extends Model
                 $m_goods = $m_goods->where('pr_name', 'like', '%'.$params['pr_name'].'%');
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('CREATED_DT', 'DESC')
+                ->orderBy('id')
                 ->get()->toArray();
             return $result;
         } catch (\Exception $e) {
@@ -223,7 +223,7 @@ class Goods extends Model
                 $m_goods = $m_goods->where('b_name', 'like', '%'.$params['b_name'].'%');
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('CREATED_DT', 'DESC')
+                ->orderBy('id')
                 ->get()->toArray();
             return $result;
         } catch (\Exception $e) {

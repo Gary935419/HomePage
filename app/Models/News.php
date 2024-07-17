@@ -49,7 +49,7 @@ class News extends Model
                 $m_goods = $m_goods->where('n_open_date', '<=', $params['D_TO']);
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('CREATED_DT', 'DESC')
+                ->orderBy('id')
                 ->get()->toArray();
 
 

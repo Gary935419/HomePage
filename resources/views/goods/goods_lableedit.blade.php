@@ -11,7 +11,24 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
+        @if(isset($MSG_CODE) && $MSG_CODE == 201)
+            <div class="card-body">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5><i class="icon fas fa-ban"></i>おしらせ!</h5>
+                    {{$MSG}}
+                </div>
+            </div>
+        @endif
+        @if(isset($MSG_CODE) && $MSG_CODE == 200)
+            <div class="card-body">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5><i class="icon fas fa-check"></i>おしらせ!</h5>
+                    {{$MSG}}
+                </div>
+            </div>
+        @endif
         <section class="content">
             <div class="container-fluid">
                 <div class="col-md-12">
@@ -35,7 +52,7 @@
                                 <input type="hidden" value="{{ $info['id'] }}" name="id" id="id">
                                 <a href="/goods/goods_lablelists" class="btn btn-secondary">戻る</a>
                                 <button type="button" id="submit_btn" class="btn btn-success float-right">
-                                    変更
+                                    更新
                                 </button>
                             </div>
                         </form>
@@ -69,7 +86,7 @@
                     return false;
                 }
 
-                var confirm_text = '変更してよろしいですか？';
+                var confirm_text = '更新してよろしいですか？';
 
                 $.confirm({
                     title: false,

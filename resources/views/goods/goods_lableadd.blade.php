@@ -12,7 +12,24 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
+        @if(isset($MSG_CODE) && $MSG_CODE == 201)
+            <div class="card-body">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5><i class="icon fas fa-ban"></i>おしらせ!</h5>
+                    {{$MSG}}
+                </div>
+            </div>
+        @endif
+        @if(isset($MSG_CODE) && $MSG_CODE == 200)
+            <div class="card-body">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5><i class="icon fas fa-check"></i>おしらせ!</h5>
+                    {{$MSG}}
+                </div>
+            </div>
+        @endif
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">

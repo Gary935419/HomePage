@@ -83,7 +83,7 @@
     <script>
         $(function () {
             $("#table_show").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false,"searching":false,
+                "responsive": true, "lengthChange": false, "autoWidth": false,"searching":false,"ordering":false
                 // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#table_show_wrapper .col-md-6:eq(0)');
         });

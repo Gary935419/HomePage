@@ -28,6 +28,7 @@ return [
                     'add_user',
                     'remove_user',
                     'user_rights_download',
+                    'edit_user',
                 ),
                 'force_password_change',
             ),

@@ -51,7 +51,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="#" class="brand-link">
-            <img src="{{ asset('adminlte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <img src="{{ asset('adminlte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image elevation-3" style="opacity: .8;float: left;margin-left: 2rem;margin-right: 1rem;width: auto;">
             <span class="brand-text font-weight-light">東海電子</span>
         </a>
 
@@ -268,7 +268,7 @@
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             </form>
             <a href="/userinfo/password_change">
-                <button type="button" class="btn btn-block btn-primary">パスワードを変更</button>
+                <button type="button" class="btn btn-block btn-primary">パスワードを更新</button>
             </a>
             <button type="button" style="margin-top: 5%" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="btn btn-block btn-danger">ログアウト</button>
         </div>

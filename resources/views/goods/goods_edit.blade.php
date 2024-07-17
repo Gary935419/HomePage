@@ -46,7 +46,24 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
+        @if(isset($MSG_CODE) && $MSG_CODE == 201)
+            <div class="card-body">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5><i class="icon fas fa-ban"></i>おしらせ!</h5>
+                    {{$MSG}}
+                </div>
+            </div>
+        @endif
+        @if(isset($MSG_CODE) && $MSG_CODE == 200)
+            <div class="card-body">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5><i class="icon fas fa-check"></i>おしらせ!</h5>
+                    {{$MSG}}
+                </div>
+            </div>
+        @endif
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -87,6 +104,9 @@
 
                                 <div class="form-group">
                                     <label for="exampleInputFile">製品カタログ（PDF）</label>
+                                    <button type="button" onclick="return clear_p_pdf_url()" class="btn btn-warning" style="padding: 0.1rem 0.5rem;">
+                                        クリア
+                                    </button>
                                     <div class="custom-file">
                                         <input type="hidden" value="{{ $info['p_pdf_url'] }}" name="p_pdf_url" id="p_pdf_url" class="custom-file-input">
                                         <label class="custom-file-label" for="customFile" id="upload_p_pdf_url">{{ $info['p_pdf_url'] }}</label>
@@ -94,11 +114,19 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>確認フラグ</label>
-                                    <select class="form-control select2" name="p_flg" id="p_flg" style="width: 100%;">
-                                        <option @if ($info['p_flg']==0) selected @endif value="0">未確認</option>
-                                        <option @if ($info['p_flg']==1) selected @endif value="1">確認完了</option>
-                                    </select>
+                                    <label for="inputName">確認フラグ</label><span style="color: red">「PDFをダウンロードする際に確認を行う」</span><br>
+                                    <div class="icheck-primary d-inline">
+                                        <input type="radio" id="radioPrimary1" name="p_flg" @if ($info['p_flg']==0) checked @endif value="0">
+                                        <label for="radioPrimary1">
+                                            未確認
+                                        </label>
+                                    </div>
+                                    <div class="icheck-primary d-inline" style="margin-left: 2%">
+                                        <input type="radio" id="radioPrimary2" name="p_flg" @if ($info['p_flg']==1) checked @endif value="1">
+                                        <label for="radioPrimary2">
+                                            確認完了
+                                        </label>
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
@@ -138,7 +166,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">製品説明</label>
                                     <div class="editor-container" style="width: 100%">
-                                        <textarea class="form-control" id="p_contents" name="p_contents" placeholder="製品説明">{{$info['p_contents']}}</textarea>
+                                        <textarea class="form-control" rows="6" id="p_contents" name="p_contents" placeholder="製品説明">{{$info['p_contents']}}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -148,7 +176,7 @@
                                 <input type="hidden" value="{{ $info['id'] }}" name="id" id="id">
                                 <a href="/goods/goods_lists" class="btn btn-secondary">戻る</a>
                                 <button type="button" id="submit_btn" class="btn btn-success float-right">
-                                    変更
+                                    更新
                                 </button>
                             </div>
                         </form>
@@ -233,6 +261,10 @@
                 }
             });
         });
+        function clear_p_pdf_url() {
+            $("#p_pdf_url").val("");
+            $("#upload_p_pdf_url").html("");
+        }
     </script>
 
     <script>
@@ -274,20 +306,23 @@
                 if ($('#p_main_img').val() == "") {
                     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "メインイメージを入力してください。";
                 }
-                if ($('#p_pdf_url').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "製品カタログ（PDF）を選択してください。";
+                // if ($('#p_pdf_url').val() == "") {
+                //     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "製品カタログ（PDF）を選択してください。";
+                // }
+                // if ($('#p_video_url').val() == "") {
+                //     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "製品動画URLを入力してください。";
+                // }
+                if ($('#p_video_url').val() != "" && !isValidHttpUrl($('#p_video_url').val())) {
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "製品動画URLは無効です。";
                 }
-                if ($('#p_video_url').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "製品動画URLを入力してください。";
+                // if ($('#p_special_weburl').val() == "") {
+                //     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "特設サイトURLを入力してください。";
+                // }
+                if ($('#p_special_weburl').val() != "" && !isValidHttpUrl($('#p_special_weburl').val())) {
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "特設サイトURLは無効です。";
                 }
-                if ($('#p_special_weburl').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "特設サイトURLを入力してください。";
-                }
-                if ($('#p_lables').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "タグを入力してください。";
-                }
-                // if ($('#b_sort').val() == "") {
-                //     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "順番Numberを入力してください。";
+                // if ($('#p_lables').val() == "") {
+                //     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "タグを入力してください。";
                 // }
                 if ($('#p_contents').val() == "") {
                     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "説明を入力してください。";
@@ -304,7 +339,7 @@
                     return false;
                 }
 
-                var confirm_text = '変更してよろしいですか？';
+                var confirm_text = '更新してよろしいですか？';
 
                 $.confirm({
                     title: false,
@@ -321,5 +356,13 @@
                 });
             });
         });
+        function isValidHttpUrl(string) {
+            try {
+                const newUrl = new URL(string);
+                return newUrl.protocol === 'http:' || newUrl.protocol === 'https:';
+            } catch (err) {
+                return false;
+            }
+        }
     </script>
 @endsection

@@ -36,34 +36,34 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">アカウント追加</h3>
+                            <h3 class="card-title">アカウント更新</h3>
                         </div>
-                        <form class="form-horizontal" action='/userinfo/admin_add_user' method='post'>
+                        <form class="form-horizontal" action='/userinfo/admin_edit_user' method='post'>
                             <div class="card-body">
 {{--                                @if(isset($add_user_result))--}}
 {{--                                    <font size="2" color="#ff0000">{{$add_user_result}}</font> <br> <br>--}}
 {{--                                @endif--}}
 {{--                                @if(isset($created_user_id))--}}
-{{--                                    <font size="2" color="#28a745">アカウント　{{$created_user_id}}　追加された。</font> <br> <br>--}}
+{{--                                    <font size="2" color="#28a745">アカウント　{{$created_user_id}}　更新された。</font> <br> <br>--}}
 {{--                                @endif--}}
                                 <div class="form-group">
                                     <label for="inputName">ログインID</label>
-                                    <input type="text" id="user_id" size="16" name="USER_ID" autocomplete="off" class="form-control">
+                                    <input type="text" id="user_id" size="16" value="{{ $info['USER_ID'] }}" name="USER_ID" autocomplete="off" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="inputName">アカウント名</label>
-                                    <input type="text" id="user_name" size="16" name="USER_NAME" autocomplete="off" class="form-control">
+                                    <input type="text" id="user_name" size="16" value="{{ $info['USER_NAME'] }}" name="USER_NAME" autocomplete="off" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="inputName">管理権限</label><br>
                                     <div class="icheck-primary d-inline">
-                                        <input type="radio" id="radioPrimary1" name="USER_IDENTITY" value="0" checked>
+                                        <input type="radio" id="radioPrimary1" name="USER_IDENTITY" @if ($info['USER_IDENTITY']==0) checked @endif value="0" >
                                         <label for="radioPrimary1">
                                             一般
                                         </label>
                                     </div>
                                     <div class="icheck-primary d-inline" style="margin-left: 2%">
-                                        <input type="radio" id="radioPrimary2" name="USER_IDENTITY" value="1">
+                                        <input type="radio" id="radioPrimary2" name="USER_IDENTITY" @if ($info['USER_IDENTITY']==1) checked @endif value="1">
                                         <label for="radioPrimary2">
                                             管理者
                                         </label>
@@ -83,9 +83,10 @@
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
+                                <input type="hidden" value="{{ $info['SEQ_NO'] }}" name="SEQ_NO" id="SEQ_NO">
                                 <a href="/userinfo/admin_user_info" class="btn btn-secondary">戻る</a>
                                 <button type="submit" id="btn_change_password" class="btn btn-success float-right">
-                                    登録
+                                    更新
                                 </button>
                             </div>
                             <!-- /.card-footer -->

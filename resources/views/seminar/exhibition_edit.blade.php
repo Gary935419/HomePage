@@ -164,7 +164,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">説明</label>
                                     <div class="editor-container" style="width: 100%">
-                                        <textarea class="form-control" id="p_contents" name="p_contents" placeholder="説明">{{$info['p_contents']}}</textarea>
+                                        <textarea class="form-control" rows="6" id="p_contents" name="p_contents" placeholder="説明">{{$info['p_contents']}}</textarea>
                                     </div>
                                 </div>
 
@@ -175,7 +175,7 @@
                                 <input type="hidden" value="{{ $info['id'] }}" name="id" id="id">
                                 <a href="/seminar/exhibition_lists" class="btn btn-secondary">戻る</a>
                                 <button type="button" id="submit_btn" class="btn btn-success float-right">
-                                    変更
+                                    更新
                                 </button>
                             </div>
                         </form>
@@ -222,30 +222,37 @@
             var S_SEMINARS_EXHIBITIONS_LABLES_ARR = @json($S_SEMINARS_EXHIBITIONS_LABLES_ARR);
             $('#c_lables').val(S_SEMINARS_EXHIBITIONS_LABLES_ARR).trigger('change');
 
+            moment.locale('ja');
             //Date picker
             $('#start_date1').datetimepicker({
-                format: 'YYYY-MM-DD',
                 locale: 'ja',
+                format: 'YYYY/MM/DD',
+                dayViewHeaderFormat: 'YYYY年 MMMM',
             });
             $('#start_date2').datetimepicker({
-                format: 'YYYY-MM-DD',
                 locale: 'ja',
+                format: 'YYYY/MM/DD',
+                dayViewHeaderFormat: 'YYYY年 MMMM',
             });
             $('#start_date3').datetimepicker({
-                format: 'YYYY-MM-DD',
                 locale: 'ja',
+                format: 'YYYY/MM/DD',
+                dayViewHeaderFormat: 'YYYY年 MMMM',
             });
             $('#start_date4').datetimepicker({
-                format: 'YYYY-MM-DD',
                 locale: 'ja',
+                format: 'YYYY/MM/DD',
+                dayViewHeaderFormat: 'YYYY年 MMMM',
             });
             $('#start_date5').datetimepicker({
-                format: 'YYYY-MM-DD',
                 locale: 'ja',
+                format: 'YYYY/MM/DD',
+                dayViewHeaderFormat: 'YYYY年 MMMM',
             });
             $('#start_date6').datetimepicker({
-                format: 'YYYY-MM-DD',
                 locale: 'ja',
+                format: 'YYYY/MM/DD',
+                dayViewHeaderFormat: 'YYYY年 MMMM',
             });
 
             $('#start_date_time').datetimepicker({
@@ -310,7 +317,7 @@
                     return false;
                 }
 
-                var confirm_text = '変更してよろしいですか？';
+                var confirm_text = '更新してよろしいですか？';
 
                 $.confirm({
                     title: false,

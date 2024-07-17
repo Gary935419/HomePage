@@ -71,6 +71,7 @@
     <script src="{{ asset('adminlte/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js') }}"></script>
     <!-- InputMask -->
     <script src="{{ asset('adminlte/plugins/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('adminlte/plugins/moment/locale/ja.js') }}"></script>
     <script src="{{ asset('adminlte/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
     <!-- date-range-picker -->
     <script src="{{ asset('adminlte/plugins/daterangepicker/daterangepicker.js') }}"></script>

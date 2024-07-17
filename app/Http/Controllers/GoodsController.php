@@ -19,6 +19,8 @@ class GoodsController extends Controller
     {
         try {
             $paramsAll = request()->all();
+            $Goods = new Goods($this);
+            $this->data['S_PRODUCT_LABLES'] = $Goods->get_S_PRODUCT_LABLES();
 
             if (!isset($paramsAll['p_name']) || empty($paramsAll['p_name'])) {
                 throw new \OneException(1);
@@ -40,27 +42,29 @@ class GoodsController extends Controller
             }
             $p_contents = $paramsAll['p_contents'];
 
-            if (!isset($paramsAll['p_pdf_url']) || empty($paramsAll['p_pdf_url'])) {
-                throw new \OneException(1);
-            }
-            $p_pdf_url = $paramsAll['p_pdf_url'];
+//            if (!isset($paramsAll['p_pdf_url']) || empty($paramsAll['p_pdf_url'])) {
+//                throw new \OneException(1);
+//            }
+            $p_pdf_url = $paramsAll['p_pdf_url'] ?? "";
 
-            if (!isset($paramsAll['p_video_url']) || empty($paramsAll['p_video_url'])) {
-                throw new \OneException(1);
-            }
-            $p_video_url = $paramsAll['p_video_url'];
+//            if (!isset($paramsAll['p_video_url']) || empty($paramsAll['p_video_url'])) {
+//                throw new \OneException(1);
+//            }
+            $p_video_url = $paramsAll['p_video_url'] ?? "";
 
-            if (!isset($paramsAll['p_special_weburl']) || empty($paramsAll['p_special_weburl'])) {
-                throw new \OneException(1);
-            }
-            $p_special_weburl = $paramsAll['p_special_weburl'];
+//            if (!isset($paramsAll['p_special_weburl']) || empty($paramsAll['p_special_weburl'])) {
+//                throw new \OneException(1);
+//            }
+            $p_special_weburl = $paramsAll['p_special_weburl'] ?? "";
 
-            if (!isset($paramsAll['p_lables']) || empty($paramsAll['p_lables'])) {
-                throw new \OneException(1);
+//            if (!isset($paramsAll['p_lables']) || empty($paramsAll['p_lables'])) {
+//                throw new \OneException(1);
+//            }
+            $p_lables = $paramsAll['p_lables'] ?? array();
+            $p_lables_new = "";
+            if (!empty($p_lables)){
+                $p_lables_new = implode(",", $p_lables);
             }
-            $p_lables = $paramsAll['p_lables'];
-
-            $p_lables_new = implode(",", $p_lables);
 
 //            if (!isset($paramsAll['b_sort']) || empty($paramsAll['b_sort'])) {
 //                throw new \OneException(1);
@@ -71,12 +75,10 @@ class GoodsController extends Controller
             $p_open_flg = empty($paramsAll['p_open_flg'])?0:1;
             $is_del = 0;
 
-            $Goods = new Goods($this);
-
-            $S_PRODUCT_INFORMATION_info = $Goods->select_S_PRODUCT_INFORMATION_info($p_name);
-            if (!empty($S_PRODUCT_INFORMATION_info)){
-                throw new \OneException(2);
-            }
+//            $S_PRODUCT_INFORMATION_info = $Goods->select_S_PRODUCT_INFORMATION_info($p_name);
+//            if (!empty($S_PRODUCT_INFORMATION_info)){
+//                throw new \OneException(2);
+//            }
 
             //数据库事务处理
             DB::beginTransaction();
@@ -100,22 +102,34 @@ class GoodsController extends Controller
 
             DB::commit();
 
-            return view('goods/goods_add_complete', $this->data);
+//            $this->data['MSG_CODE'] = 200;
+//            $this->data['MSG'] = "製品情報の登録が完了しました。";
+            return redirect('/goods/goods_lists?msg_code=200&&msg=製品情報の登録が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('goods/goods_add', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('goods/goods_add', $this->data);
         }
     }
 
     public function get_goods_lists()
     {
         $paramsAll = request()->all();
+
+        $MSG_CODE = $paramsAll['msg_code'] ?? '';
+        if (!empty($MSG_CODE)){
+            $this->data['MSG_CODE'] = $MSG_CODE;
+            $this->data['MSG'] = $paramsAll['msg'];
+        }
+
         $this->data['p_name'] = $paramsAll['p_name'] ?? '';
         $this->data['PRODUCT_LABLES_ARR'] = $paramsAll['p_lables'] ?? array();
         $this->data['p_pdf_url'] = $paramsAll['p_pdf_url'] ?? '';
@@ -155,6 +169,8 @@ class GoodsController extends Controller
             $return_info = $info;
         }
 
+//        $sort = array_column($return_info,'id');
+//        array_multisort($sort,SORT_ASC,$return_info);
         $this->data['info'] = $return_info;
 
         $this->data['S_PRODUCT_LABLES'] = $Goods->get_S_PRODUCT_LABLES();
@@ -195,8 +211,8 @@ class GoodsController extends Controller
                 throw new \OneException(1);
             }
             $id = $paramsAll['id'];
-            $select_S_PRODUCT_INFORMATION_ID_info = $Goods->select_S_PRODUCT_INFORMATION_ID_info($id);
-            if (empty($select_S_PRODUCT_INFORMATION_ID_info)){
+            $this->data['info'] = $Goods->select_S_PRODUCT_INFORMATION_ID_info($id);
+            if (empty($this->data['info'])){
                 throw new \OneException(3);
             }
 
@@ -220,27 +236,29 @@ class GoodsController extends Controller
             }
             $p_contents = $paramsAll['p_contents'];
 
-            if (!isset($paramsAll['p_pdf_url']) || empty($paramsAll['p_pdf_url'])) {
-                throw new \OneException(1);
-            }
-            $p_pdf_url = $paramsAll['p_pdf_url'];
+//            if (!isset($paramsAll['p_pdf_url']) || empty($paramsAll['p_pdf_url'])) {
+//                throw new \OneException(1);
+//            }
+            $p_pdf_url = $paramsAll['p_pdf_url'] ?? "";
 
-            if (!isset($paramsAll['p_video_url']) || empty($paramsAll['p_video_url'])) {
-                throw new \OneException(1);
-            }
-            $p_video_url = $paramsAll['p_video_url'];
+//            if (!isset($paramsAll['p_video_url']) || empty($paramsAll['p_video_url'])) {
+//                throw new \OneException(1);
+//            }
+            $p_video_url = $paramsAll['p_video_url'] ?? "";
 
-            if (!isset($paramsAll['p_special_weburl']) || empty($paramsAll['p_special_weburl'])) {
-                throw new \OneException(1);
-            }
-            $p_special_weburl = $paramsAll['p_special_weburl'];
+//            if (!isset($paramsAll['p_special_weburl']) || empty($paramsAll['p_special_weburl'])) {
+//                throw new \OneException(1);
+//            }
+            $p_special_weburl = $paramsAll['p_special_weburl'] ?? "";
 
-            if (!isset($paramsAll['p_lables']) || empty($paramsAll['p_lables'])) {
-                throw new \OneException(1);
+//            if (!isset($paramsAll['p_lables']) || empty($paramsAll['p_lables'])) {
+//                throw new \OneException(1);
+//            }
+            $p_lables = $paramsAll['p_lables'] ?? array();
+            $p_lables_new = "";
+            if (!empty($p_lables)){
+                $p_lables_new = implode(",", $p_lables);
             }
-            $p_lables = $paramsAll['p_lables'];
-
-            $p_lables_new = implode(",", $p_lables);
 
 //            if (!isset($paramsAll['b_sort']) || empty($paramsAll['b_sort'])) {
 //                throw new \OneException(1);
@@ -270,17 +288,22 @@ class GoodsController extends Controller
             $Goods->update_S_PRODUCT_INFORMATION($id,$update_S_PRODUCT_INFORMATION_arr);
 
             DB::commit();
-
-            return view('goods/goods_edit_complete', $this->data);
+//
+//            $this->data['MSG_CODE'] = 200;
+//            $this->data['MSG'] = "編集処理完了。";
+            return redirect('/goods/goods_lists?msg_code=200&&msg=製品情報の編集が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('goods/goods_edit', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('goods/goods_edit', $this->data);
         }
     }
 
@@ -327,22 +350,30 @@ class GoodsController extends Controller
 
             DB::commit();
 
-            return view('goods/goods_lableadd_complete', $this->data);
+            return redirect('/goods/goods_lablelists?msg_code=200&&msg=情報タグの登録が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('goods/goods_lableadd', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('goods/goods_lableadd', $this->data);
         }
     }
 
     public function get_goods_lablelists()
     {
         $paramsAll = request()->all();
+        $MSG_CODE = $paramsAll['msg_code'] ?? '';
+        if (!empty($MSG_CODE)){
+            $this->data['MSG_CODE'] = $MSG_CODE;
+            $this->data['MSG'] = $paramsAll['msg'];
+        }
         $this->data['pr_name'] = $paramsAll['pr_name'] ?? '';
         $Goods = new Goods($this);
         $info = $Goods->search_lablegoods($paramsAll);
@@ -380,8 +411,8 @@ class GoodsController extends Controller
                 throw new \OneException(1);
             }
             $id = $paramsAll['id'];
-            $select_S_PRODUCT_LABLES_ID_info = $Goods->select_S_PRODUCT_LABLES_ID_info($id);
-            if (empty($select_S_PRODUCT_LABLES_ID_info)){
+            $this->data['info'] = $Goods->select_S_PRODUCT_LABLES_ID_info($id);
+            if (empty($this->data['info'])){
                 throw new \OneException(3);
             }
 
@@ -407,16 +438,19 @@ class GoodsController extends Controller
 
             DB::commit();
 
-            return view('goods/goods_lableedit_complete', $this->data);
+            return redirect('/goods/goods_lablelists?msg_code=200&&msg=情報タグの編集が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('goods/goods_lableedit', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('goods/goods_lableedit', $this->data);
         }
     }
 
@@ -477,22 +511,30 @@ class GoodsController extends Controller
 
             DB::commit();
 
-            return view('goods/goods_banneradd_complete', $this->data);
+            return redirect('/goods/goods_bannerlists?msg_code=200&&msg=製品バナーの登録が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('goods/goods_banneradd', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('goods/goods_banneradd', $this->data);
         }
     }
 
     public function get_goods_bannerlists()
     {
         $paramsAll = request()->all();
+        $MSG_CODE = $paramsAll['msg_code'] ?? '';
+        if (!empty($MSG_CODE)){
+            $this->data['MSG_CODE'] = $MSG_CODE;
+            $this->data['MSG'] = $paramsAll['msg'];
+        }
         $this->data['b_name'] = $paramsAll['b_name'] ?? '';
         $Goods = new Goods($this);
         $info = $Goods->search_bannergoods($paramsAll);
@@ -577,16 +619,19 @@ class GoodsController extends Controller
 
             DB::commit();
 
-            return view('goods/goods_banneredit_complete', $this->data);
+            return redirect('/goods/goods_bannerlists?msg_code=200&&msg=製品バナーの編集が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('goods/goods_banneredit', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('goods/goods_banneredit', $this->data);
         }
     }
 }

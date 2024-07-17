@@ -73,7 +73,7 @@
                                 <input type="hidden" value="{{ $info['id'] }}" name="id" id="id">
                                 <a href="/download/file_lists" class="btn btn-secondary">戻る</a>
                                 <button type="button" id="submit_btn" class="btn btn-success float-right">
-                                    変更
+                                    更新
                                 </button>
                             </div>
                         </form>
@@ -141,7 +141,7 @@
                     return false;
                 }
 
-                var confirm_text = '変更してよろしいですか？';
+                var confirm_text = '更新してよろしいですか？';
 
                 $.confirm({
                     title: false,

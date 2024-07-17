@@ -64,7 +64,7 @@ class Seminar extends Model
                     ->where('exhibition_dates6', '<=', $params['D_TO']);
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('CREATED_DT', 'DESC')
+                ->orderBy('id')
                 ->get()->toArray();
 
 
@@ -142,7 +142,7 @@ class Seminar extends Model
                 $m_goods = $m_goods->where('l_professions', 'like', '%'.$params['l_professions'].'%');
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('CREATED_DT', 'DESC')
+                ->orderBy('id')
                 ->get()->toArray();
 
             return $result;
@@ -216,9 +216,8 @@ class Seminar extends Model
                 $m_goods = $m_goods->where('s_name', 'like', '%'.$params['s_name'].'%');
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('CREATED_DT', 'DESC')
+                ->orderBy('id')
                 ->get()->toArray();
-
 
             return $result;
         } catch (\Exception $e) {

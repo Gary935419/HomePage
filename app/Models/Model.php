@@ -171,12 +171,18 @@ class Model extends EloquentModel
         return strpos($nbr, '.')!==false ? rtrim(rtrim($nbr, '0'), '.') : $nbr;
     }
 
-    public static function get_all_user_info($USER_ID)
+    public static function get_all_user_info($USER_ID_NOW,$USER_ID = "",$USER_NAME = "")
     {
         $results_sql = DB::connection(config('auth.db_connection'))->table(config('auth.table_name'))
             ->select(config('auth.table_columns', array('*')));
-        if ($USER_ID != 'admin'){
+        if ($USER_ID_NOW != 'admin'){
             $results_sql = $results_sql->where('USER_ID','!=','admin');
+        }
+        if (!empty($USER_ID)) {
+            $results_sql = $results_sql->where('USER_ID', 'like', '%'.$USER_ID.'%');
+        }
+        if (!empty($USER_NAME)) {
+            $results_sql = $results_sql->where('USER_NAME', 'like', '%'.$USER_NAME.'%');
         }
         $results = $results_sql->get()->toArray();
         return $results;

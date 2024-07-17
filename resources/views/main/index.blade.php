@@ -18,7 +18,7 @@
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
-        @if ($is_show)
+        @if ($is_show || !empty($USER_IDENTITY))
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">

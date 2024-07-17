@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Imports;
 use App\Models\Model;
 use App\Models\Admins;
 use App\Models\AuthGroupOtbSimpleGroup;
+use Illuminate\Support\Facades\Log;
 
 class UserInfoController extends Controller
 {
@@ -96,8 +98,12 @@ class UserInfoController extends Controller
      */
     public function get_admin_user_info()
     {
+        $paramsAll = request()->all();
+        $this->data['USER_ID'] = $paramsAll['USER_ID'] ?? '';
+        $this->data['USER_NAME'] = $paramsAll['USER_NAME'] ?? '';
+
         $user_id = session('USER_ID');
-        $clients_info = Model::get_all_user_info($user_id);
+        $clients_info = Model::get_all_user_info($user_id,$this->data['USER_ID'],$this->data['USER_NAME']);
         $this->data['clients_info'] = $clients_info;
         return view('userinfo/admin_user_info', $this->data);
     }
@@ -129,7 +135,7 @@ class UserInfoController extends Controller
             $USER_IDENTITY = !isset($params['USER_IDENTITY']) || empty($params['USER_IDENTITY']) ? 0 : $params['USER_IDENTITY'];
             $password = $params['PASSWORD'];
             $comfirm = $params['PASSWORD_CONFIRM'];
-
+            $this->data['MSG_CODE'] = 201;
             if ($password != $comfirm) {
                 $error_message = 'パスワードが確認用パスワード情報と一致しない。';
             } else {
@@ -144,14 +150,83 @@ class UserInfoController extends Controller
                 AuthGroupOtbSimpleGroup::add_user_role_group(array('USER_ID' => $user_id));
                 //created client id successfully
                 if (empty($error_message)) {
+                    $this->data['MSG_CODE'] = 200;
                     $this->data['created_user_id'] = $user_id;
                 }
             }
-
+            $this->data['MSG'] = $error_message;
             return view('userinfo/admin_add_user', $this->data);
         } catch (\Exception $e) {
-            $this->data['add_user_result'] = $e->getMessage();
+//            $this->data['add_user_result'] = $e->getMessage();
+            $this->data['MSG'] = $e->getMessage();
             return view('userinfo/admin_add_user', $this->data);
+        }
+    }
+
+    public function get_admin_edit_user($SEQ_NO)
+    {
+        try {
+            $this->data['SEQ_NO'] = $SEQ_NO;
+            $this->data['info'] = AuthGroupOtbSimpleGroup::get_user_info(array('SEQ_NO' => $SEQ_NO));
+            if (empty($this->data['info'])){
+                throw new \OneException(3);
+            }
+            return view('userinfo/admin_edit_user', $this->data);
+        } catch (\OneException $e) {
+            $this->data["ERROR_MESSAGE"] = $e->getMessage();
+            Log::error($e->getMessage());
+            return view('error/error', $this->data);
+        } catch (\Exception $e) {
+            $this->data["ERROR_MESSAGE"] = $e->getMessage();
+            Log::error($e->getMessage());
+            return view('error/error', $this->data);
+        }
+    }
+
+    public function post_admin_edit_user()
+    {
+        try {
+            $params = request()->all();
+            $SEQ_NO = $params['SEQ_NO'];
+            $info_old = AuthGroupOtbSimpleGroup::get_user_seq_no_info($SEQ_NO);
+            $user_id = $params['USER_ID'];
+            $USER_NAME = !isset($params['USER_NAME']) || empty($params['USER_NAME']) ? "" : $params['USER_NAME'];
+            $USER_IDENTITY = !isset($params['USER_IDENTITY']) || empty($params['USER_IDENTITY']) ? 0 : $params['USER_IDENTITY'];
+            $this->data['MSG_CODE'] = 201;
+            $error_message = "";
+            if (isset($params['PASSWORD']) && !empty($params['PASSWORD'])){
+                $password = $params['PASSWORD'];
+                $comfirm = $params['PASSWORD_CONFIRM'];
+
+                if ($password != $comfirm) {
+                    $error_message = 'パスワードが確認用パスワード情報と一致しない。';
+                } else {
+                    $Admins = new Admins($this);
+                    $error_message = $Admins->check_admin_user_password(array('PASSWORD' => $password));
+                }
+                if (!empty($error_message)) {
+                    $this->data['add_user_result'] = $error_message;
+                }else{
+                    AuthGroupOtbSimpleGroup::edit_user_pwd($user_id,$password,$USER_NAME,$USER_IDENTITY,$SEQ_NO);
+                }
+            }else{
+                AuthGroupOtbSimpleGroup::edit_user_no_pwd($user_id,$USER_NAME,$USER_IDENTITY,$SEQ_NO);
+            }
+
+            AuthGroupOtbSimpleGroup::del_user_role_group(array('USER_ID' => $info_old['USER_ID']));
+            AuthGroupOtbSimpleGroup::edit_add_user_role_group(array('USER_ID' => $user_id,'SEQ_NO' => $SEQ_NO));
+            //created client id successfully
+            if (empty($error_message)) {
+                $this->data['MSG_CODE'] = 200;
+                $this->data['created_user_id'] = $user_id;
+            }
+            $this->data['info'] = AuthGroupOtbSimpleGroup::get_user_seq_no_info($SEQ_NO);
+            $this->data['MSG'] = $error_message;
+            return view('userinfo/admin_edit_user', $this->data);
+        } catch (\Exception $e) {
+//            $this->data['add_user_result'] = $e->getMessage();
+            $this->data['MSG'] = $e->getMessage();
+            return view('userinfo/admin_edit_user', $this->data);
         }
     }
 
@@ -191,12 +266,26 @@ class UserInfoController extends Controller
 
     public function action_admin_remove_user()
     {
-        $client_user_id = request('client_id');
+//        $client_user_id = request('client_id');
+//
+//        $errormsg = AuthGroupOtbSimpleGroup::remove_admin_user(array('USER_ID' => $client_user_id, ));
+//
+//        $this->data['remove_user_result'] = $errormsg;
+//        $this->data['removed_user_id'] = $client_user_id;
+//        return view('userinfo/admin_remove_user', $this->data);
 
-        $errormsg = AuthGroupOtbSimpleGroup::remove_admin_user(array('USER_ID' => $client_user_id, ));
+        $paramsAll = request()->all();
+        $client_user_id =  $paramsAll['client_id'] ?? '';
+        $result = AuthGroupOtbSimpleGroup::remove_admin_user(array('USER_ID' => $client_user_id));
+        $this->data['MSG'] = $result['MSG'];
+        $this->data['MSG_CODE'] = $result['MSG_CODE'];
 
-        $this->data['remove_user_result'] = $errormsg;
-        $this->data['removed_user_id'] = $client_user_id;
-        return view('userinfo/admin_remove_user', $this->data);
+        $this->data['USER_ID'] = $paramsAll['USER_ID'] ?? '';
+        $this->data['USER_NAME'] = $paramsAll['USER_NAME'] ?? '';
+
+        $user_id = session('USER_ID');
+        $clients_info = Model::get_all_user_info($user_id,$this->data['USER_ID'],$this->data['USER_NAME']);
+        $this->data['clients_info'] = $clients_info;
+        return view('userinfo/admin_user_info', $this->data);
     }
 }

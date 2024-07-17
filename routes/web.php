@@ -65,6 +65,9 @@ Route::middleware(['auth.admin','req.trim'])->group(function () {
         // ユーザー追加
         $set->get('admin_add_user', 'UserInfoController@get_admin_add_user');
         $set->post('admin_add_user', 'UserInfoController@post_admin_add_user');
+        // ユーザー変更
+        $set->get('admin_edit_user/{SEQ_NO}', 'UserInfoController@get_admin_edit_user');
+        $set->post('admin_edit_user', 'UserInfoController@post_admin_edit_user');
         // パスワードリセット
         $set->get('force_password_change', 'UserInfoController@get_force_password_change');
         $set->post('force_password_change', 'UserInfoController@post_force_password_change');
@@ -77,19 +80,19 @@ Route::middleware(['auth.admin','req.trim'])->group(function () {
     Route::group(['prefix' => 'goods'], function ($set) {
         $set->get('goods_add', 'GoodsController@get_goods_add');
         $set->post('goods_regist', 'GoodsController@post_goods_regist');
-        $set->get('goods_lists/{recovery?}', 'GoodsController@get_goods_lists');
+        $set->get('goods_lists', 'GoodsController@get_goods_lists');
         $set->get('goods_edit/{id}', 'GoodsController@get_goods_edit');
         $set->post('goods_edit', 'GoodsController@post_goods_edit');
 
         $set->get('goods_lableadd', 'GoodsController@get_goods_lableadd');
         $set->post('goods_lableregist', 'GoodsController@post_goods_lableregist');
-        $set->get('goods_lablelists/{recovery?}', 'GoodsController@get_goods_lablelists');
+        $set->get('goods_lablelists', 'GoodsController@get_goods_lablelists');
         $set->get('goods_lableedit/{id}', 'GoodsController@get_goods_lableedit');
         $set->post('goods_lableedit', 'GoodsController@post_goods_lableedit');
 
         $set->get('goods_banneradd', 'GoodsController@get_goods_banneradd');
         $set->post('goods_bannerregist', 'GoodsController@post_goods_bannerregist');
-        $set->get('goods_bannerlists/{recovery?}', 'GoodsController@get_goods_bannerlists');
+        $set->get('goods_bannerlists', 'GoodsController@get_goods_bannerlists');
         $set->get('goods_banneredit/{id}', 'GoodsController@get_goods_banneredit');
         $set->post('goods_banneredit', 'GoodsController@post_goods_banneredit');
     });

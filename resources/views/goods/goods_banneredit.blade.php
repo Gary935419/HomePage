@@ -30,7 +30,24 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
+        @if(isset($MSG_CODE) && $MSG_CODE == 201)
+            <div class="card-body">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5><i class="icon fas fa-ban"></i>おしらせ!</h5>
+                    {{$MSG}}
+                </div>
+            </div>
+        @endif
+        @if(isset($MSG_CODE) && $MSG_CODE == 200)
+            <div class="card-body">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5><i class="icon fas fa-check"></i>おしらせ!</h5>
+                    {{$MSG}}
+                </div>
+            </div>
+        @endif
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -83,7 +100,7 @@
                                 <input type="hidden" value="{{ $info['id'] }}" name="id" id="id">
                                 <a href="/goods/goods_bannerlists" class="btn btn-secondary">戻る</a>
                                 <button type="button" id="submit_btn" class="btn btn-success float-right">
-                                    変更
+                                    更新
                                 </button>
                             </div>
                         </form>
@@ -150,6 +167,9 @@
                 if ($('#link_url').val() == "") {
                     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "リンク先URLを入力してください。";
                 }
+                if (!isValidHttpUrl($('#link_url').val())) {
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "リンク先URLは無効です。";
+                }
                 // if ($('#b_sort').val() == "") {
                 //     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "順番Numberを入力してください。";
                 // }
@@ -165,7 +185,7 @@
                     return false;
                 }
 
-                var confirm_text = '変更してよろしいですか？';
+                var confirm_text = '更新してよろしいですか？';
 
                 $.confirm({
                     title: false,
@@ -182,5 +202,13 @@
                 });
             });
         });
+        function isValidHttpUrl(string) {
+            try {
+                const newUrl = new URL(string);
+                return newUrl.protocol === 'http:' || newUrl.protocol === 'https:';
+            } catch (err) {
+                return false;
+            }
+        }
     </script>
 @endsection

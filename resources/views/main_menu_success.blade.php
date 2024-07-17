@@ -84,7 +84,7 @@
 {{--                                    <li class="nav-item">--}}
 {{--                                        <a href="/userinfo/password_change" class="nav-link @if (($controller ?? '') == 'Controller_Userinfo' && $action == 'password_change') active @endif">--}}
 {{--                                            <i class="far fa-circle nav-icon"></i>--}}
-{{--                                            <p>パスワードを変更</p>--}}
+{{--                                            <p>パスワードを更新</p>--}}
 {{--                                        </a>--}}
 {{--                                    </li>--}}
 {{--                                @endif--}}

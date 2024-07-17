@@ -30,7 +30,24 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
+        @if(isset($MSG_CODE) && $MSG_CODE == 201)
+            <div class="card-body">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5><i class="icon fas fa-ban"></i>おしらせ!</h5>
+                    {{$MSG}}
+                </div>
+            </div>
+        @endif
+        @if(isset($MSG_CODE) && $MSG_CODE == 200)
+            <div class="card-body">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5><i class="icon fas fa-check"></i>おしらせ!</h5>
+                    {{$MSG}}
+                </div>
+            </div>
+        @endif
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -151,6 +168,9 @@
                 if ($('#link_url').val() == "") {
                     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "リンク先URLを入力してください。";
                 }
+                if (!isValidHttpUrl($('#link_url').val())) {
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "リンク先URLは無効です。";
+                }
                 // if ($('#b_sort').val() == "") {
                 //     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "順番Numberを入力してください。";
                 // }
@@ -183,5 +203,13 @@
                 });
             });
         });
+        function isValidHttpUrl(string) {
+            try {
+                const newUrl = new URL(string);
+                return newUrl.protocol === 'http:' || newUrl.protocol === 'https:';
+            } catch (err) {
+                return false;
+            }
+        }
     </script>
 @endsection

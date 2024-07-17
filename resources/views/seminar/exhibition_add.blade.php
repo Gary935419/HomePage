@@ -165,7 +165,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">説明</label>
                                     <div class="editor-container" style="width: 100%">
-                                        <textarea class="form-control" id="p_contents" name="p_contents" placeholder="説明"></textarea>
+                                        <textarea class="form-control" rows="6" id="p_contents" name="p_contents" placeholder="説明"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -220,28 +220,34 @@
 
             //Date picker
             $('#start_date1').datetimepicker({
-                format: 'YYYY-MM-DD',
                 locale: 'ja',
+                format: 'YYYY/MM/DD',
+                dayViewHeaderFormat: 'YYYY年 MMMM',
             });
             $('#start_date2').datetimepicker({
-                format: 'YYYY-MM-DD',
                 locale: 'ja',
+                format: 'YYYY/MM/DD',
+                dayViewHeaderFormat: 'YYYY年 MMMM',
             });
             $('#start_date3').datetimepicker({
-                format: 'YYYY-MM-DD',
                 locale: 'ja',
+                format: 'YYYY/MM/DD',
+                dayViewHeaderFormat: 'YYYY年 MMMM',
             });
             $('#start_date4').datetimepicker({
-                format: 'YYYY-MM-DD',
                 locale: 'ja',
+                format: 'YYYY/MM/DD',
+                dayViewHeaderFormat: 'YYYY年 MMMM',
             });
             $('#start_date5').datetimepicker({
-                format: 'YYYY-MM-DD',
                 locale: 'ja',
+                format: 'YYYY/MM/DD',
+                dayViewHeaderFormat: 'YYYY年 MMMM',
             });
             $('#start_date6').datetimepicker({
-                format: 'YYYY-MM-DD',
                 locale: 'ja',
+                format: 'YYYY/MM/DD',
+                dayViewHeaderFormat: 'YYYY年 MMMM',
             });
 
             $('#start_date_time').datetimepicker({

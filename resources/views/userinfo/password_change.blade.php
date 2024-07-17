@@ -22,7 +22,7 @@
                         <!-- Horizontal Form -->
                         <div class="card card-info">
                             <div class="card-header">
-                                <h3 class="card-title">パスワードを変更する</h3>
+                                <h3 class="card-title">パスワードを変更</h3>
                             </div>
                             <!-- form start -->
                             <form class="form-horizontal" action='/userinfo/password_change' method='post'>
@@ -62,7 +62,7 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
                                     <button type="submit" id="btn_change_password" disabled class="btn btn-info">
-                                        確認処理
+                                        変更
                                     </button>
                                 </div>
                                 <!-- /.card-footer -->

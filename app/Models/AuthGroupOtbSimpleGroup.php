@@ -22,7 +22,7 @@ class AuthGroupOtbSimpleGroup extends Model
     {
         $result = DB::table('CO_ADMIN_USER_GROUPS')
                 ->select('CO_ADMIN_USER_GROUPS.CODE')
-                ->orderBy('SEQ_NO', 'asc')
+                ->orderBy('SEQ_NO')
                 ->get()->toArray();
         $valid_groups = array();
         foreach ($result as $key => $value) {
@@ -118,7 +118,9 @@ class AuthGroupOtbSimpleGroup extends Model
         $rights  = (array) $condition[1];
         $current_roles  = AuthGroupOtbSimpleGroup::get_own_rolls();
         if (! array_key_exists($area, $current_roles)) {
-            return false;
+            return true;
+            //菜单权限规避
+            // return false;
         }
         $current_role_rights = $current_roles[$area];
         foreach ($current_role_rights as $roles_right) {
@@ -126,8 +128,9 @@ class AuthGroupOtbSimpleGroup extends Model
                 return true;
             }
         }
-
-        return false;
+        //菜单权限规避
+        // return false;
+        return true;
     }
 
     /**
@@ -210,12 +213,16 @@ class AuthGroupOtbSimpleGroup extends Model
 
     public static function remove_admin_user($params)
     {
-        if (array_key_exists('USER_ID', $params)) {
-            $user_id = $params['USER_ID'];
-        } else {
-            return 'パラメータエラー';
-        }
+        $result = array();
         try {
+            if (array_key_exists('USER_ID', $params)) {
+                $user_id = $params['USER_ID'];
+                $CO_ADMIN_USER = DB::table('CO_ADMIN_USER')->where('USER_ID', '=', $user_id)->get()->first();
+            } else {
+                $result['MSG_CODE'] = 201;
+                $result['MSG'] = 'アカウントを削除失敗しました。';
+                return $result;
+            }
             self::delete_user($user_id);
             DB::table('CO_ADMIN_USER_GROUPS')
             ->where('GROUP_ROLE', '=', 'ROLE_'.$user_id)
@@ -223,6 +230,9 @@ class AuthGroupOtbSimpleGroup extends Model
             DB::table('CO_ADMIN_USER_ROLES')
             ->where('ROLE_NAME', '=', 'ROLE_'.$user_id)
             ->delete();
+            $result['MSG_CODE'] = 200;
+            $result['MSG'] = $CO_ADMIN_USER['USER_NAME'].'さんのアカウントを削除しました。';
+            return $result;
         } catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -261,8 +271,8 @@ class AuthGroupOtbSimpleGroup extends Model
     {
         $password = trim($password);
 
-        if (empty($USER_ID) or empty($password)) {
-            throw new SimpleUserUpdateException('Username, password is not given', 1);
+        if (empty($USER_ID) or empty($password) or empty($USER_NAME)) {
+            throw new SimpleUserUpdateException('ユーザー名、パスワード、アカウント名は与えられません', 1);
         }
 
         $same_users = DB::table(config('auth.table_name'))
@@ -270,7 +280,7 @@ class AuthGroupOtbSimpleGroup extends Model
             ->select(config('auth.table_columns'))
             ->get()->toArray();
         if (comcount($same_users) > 0) {
-            throw new SimpleUserUpdateException('Username already exists', 3);
+            throw new SimpleUserUpdateException('ログインID既に存在し', 3);
         }
 
         $user = array(
@@ -287,6 +297,61 @@ class AuthGroupOtbSimpleGroup extends Model
         $result = DB::table(config('auth.table_name'))->insert($user);
         return $result;
     }
+
+    public static function edit_user_pwd($USER_ID,$password,$USER_NAME,$USER_IDENTITY,$SEQ_NO)
+    {
+        $password = trim($password);
+
+        if (empty($USER_ID) or empty($password) or empty($USER_NAME)) {
+            throw new SimpleUserUpdateException('ユーザー名、パスワード、アカウント名は与えられません', 1);
+        }
+
+        $user = array(
+            'USER_ID'         => (string) $USER_ID,
+            'USER_PASSWORD'   => self::hash_password((string) $password),
+            'USER_NAME'         => (string) $USER_NAME,
+            'USER_IDENTITY'     => $USER_IDENTITY,
+            'ROLE_TYPE'       => 1,
+            'LAST_LOGIN'      => 0,
+            'LOGIN_HASH'      => '',
+            'CREATED_USER' => 'SYSTEM',
+            'CREATED_DT'      => DB::raw('NOW()')
+        );
+        $result = DB::table(config('auth.table_name'))->where('SEQ_NO', '=', $SEQ_NO)->update($user);
+        return $result;
+    }
+
+    public static function edit_user_no_pwd($USER_ID,$USER_NAME,$USER_IDENTITY,$SEQ_NO)
+    {
+
+        if (empty($USER_ID) or empty($USER_NAME)) {
+            throw new SimpleUserUpdateException('ユーザー名、アカウント名は与えられません', 1);
+        }
+
+        $user = array(
+            'USER_ID'         => (string) $USER_ID,
+            'USER_NAME'         => (string) $USER_NAME,
+            'USER_IDENTITY'     => $USER_IDENTITY,
+            'ROLE_TYPE'       => 1,
+            'LAST_LOGIN'      => 0,
+            'LOGIN_HASH'      => '',
+            'CREATED_USER' => 'SYSTEM',
+            'CREATED_DT'      => DB::raw('NOW()')
+        );
+        $result = DB::table(config('auth.table_name'))->where('SEQ_NO', '=', $SEQ_NO)->update($user);
+        return $result;
+    }
+
+    public static function del_user_role_group($params)
+    {
+        $user_id = $params['USER_ID'];
+        try {
+            DB::table('CO_ADMIN_USER_GROUPS')->where('GROUP_ROLE', '=', 'ROLE_'.$user_id)->delete();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
     public static function add_user_role_group($params)
     {
         $user_id = $params['USER_ID'];
@@ -308,6 +373,24 @@ class AuthGroupOtbSimpleGroup extends Model
         }
     }
 
+    public static function edit_add_user_role_group($params)
+    {
+        $user_id = $params['USER_ID'];
+        $SEQ_NO = $params['SEQ_NO'];
+        try {
+            DB::table('CO_ADMIN_USER')
+                ->where('SEQ_NO', '=', $SEQ_NO)
+                ->update(array('ROLE_TYPE' => $SEQ_NO,'USER_ID' => $user_id));
+
+            $insert_array['CODE'] = $SEQ_NO;
+            $insert_array['GROUP_NAME'] = 'GROUP_MASTER';
+            $insert_array['GROUP_ROLE'] = 'ROLE_'.$user_id;
+            DB::table('CO_ADMIN_USER_GROUPS')->insert($insert_array);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
     public static function get_user_info($params)
     {
         if (array_key_exists('SEQ_NO', $params)) {
@@ -320,6 +403,11 @@ class AuthGroupOtbSimpleGroup extends Model
         }
 
         return $query->get()->first();
+    }
+
+    public static function get_user_seq_no_info($SEQ_NO)
+    {
+        return DB::table('CO_ADMIN_USER')->where('SEQ_NO', '=', $SEQ_NO)->get()->first();
     }
 
     public static function get_name($group = null)

@@ -70,7 +70,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">説明</label>
                                     <div class="editor-container" style="width: 100%">
-                                        <textarea class="form-control" id="contents" name="contents" placeholder="製品説明"></textarea>
+                                        <textarea class="form-control" rows="6" id="contents" name="contents" placeholder="製品説明"></textarea>
                                     </div>
                                 </div>
                             </div>

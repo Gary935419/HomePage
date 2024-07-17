@@ -54,7 +54,7 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
                                     <button type="submit" id="btn_change_password" disabled class="btn btn-info">
-                                        確認処理
+                                        変更
                                     </button>
                                 </div>
                                 <input type="hidden" name="FORCED_CHANGE_PASSWORD_USER_ID" value="{{$USER_ID}}">

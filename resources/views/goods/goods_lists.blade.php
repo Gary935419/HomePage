@@ -12,7 +12,24 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
+        @if(isset($MSG_CODE) && $MSG_CODE == 201)
+            <div class="card-body">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5><i class="icon fas fa-ban"></i>おしらせ!</h5>
+                    {{$MSG}}
+                </div>
+            </div>
+        @endif
+        @if(isset($MSG_CODE) && $MSG_CODE == 200)
+            <div class="card-body">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5><i class="icon fas fa-check"></i>おしらせ!</h5>
+                    {{$MSG}}
+                </div>
+            </div>
+        @endif
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -140,18 +157,18 @@
         });
         $(function () {
             $("#table_show").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false,"searching":false,
+                "responsive": true, "lengthChange": false, "autoWidth": false,"searching":false,"ordering":false
                 // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
                 // "buttons": ["excel"]
             }).buttons().container().appendTo('#table_show_wrapper .col-md-6:eq(0)');
         });
     </script>
     <script type="text/javascript">
-        function del(id, p_name) {
+        function del(id, name) {
             $.confirm({
                 title: false,
                 theme: 'white',
-                content: '製品名 ' + p_name + ' 削除するかどうか?',
+                content: name + 'を削除してよろしいでしょうか？',
                 confirmButton: 'はい',
                 cancelButton: 'いいえ',
                 confirmButtonClass: 'btn-danger',
@@ -163,24 +180,26 @@
 
                     ajax.post(url, params, function(data) {
                         if (data['RESULT'] == "OK") {
-                            $.alert({
-                                title: false,
-                                theme: 'white',
-                                content: '削除処理完了。',
-                                confirmButton: 'OK',
-                                confirmButtonClass: 'btn-info',
-                                confirm: function () {
-                                    location.href = "/goods/goods_lists";
-                                }
-                            });
+                            // $.alert({
+                            //     title: false,
+                            //     theme: 'white',
+                            //     content: '削除処理完了。',
+                            //     confirmButton: 'OK',
+                            //     confirmButtonClass: 'btn-info',
+                            //     confirm: function () {
+                            //         location.href = "/goods/goods_lists";
+                            //     }
+                            // });
+                            location.href = "/goods/goods_lists?msg_code=200&&msg="+'製品情報の削除が完了しました。';
                         } else {
-                            $.alert({
-                                title: false,
-                                theme: 'white',
-                                content: data['MESSAGE'],
-                                confirmButton: 'OK',
-                                confirmButtonClass: 'btn-info',
-                            });
+                            // $.alert({
+                            //     title: false,
+                            //     theme: 'white',
+                            //     content: data['MESSAGE'],
+                            //     confirmButton: 'OK',
+                            //     confirmButtonClass: 'btn-info',
+                            // });
+                            location.href = "/goods/goods_lists?msg_code=201&&msg="+data['MESSAGE'];
                         }
                     });
                 },
