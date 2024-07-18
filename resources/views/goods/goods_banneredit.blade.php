@@ -34,8 +34,7 @@
             <div class="card-body">
                 <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h5><i class="icon fas fa-ban"></i>おしらせ!</h5>
-                    {{$MSG}}
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-ban"></i>{{$MSG}}</h5>
                 </div>
             </div>
         @endif
@@ -43,11 +42,12 @@
             <div class="card-body">
                 <div class="alert alert-success alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h5><i class="icon fas fa-check"></i>おしらせ!</h5>
-                    {{$MSG}}
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-check"></i>{{$MSG}}</h5>
                 </div>
             </div>
         @endif
+        <div id="targetArea">
+        </div>
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -79,8 +79,8 @@
                                 <div class="form-group">
                                     <label>公開フラグ</label>
                                     <select class="form-control select2" name="b_flg" id="b_flg" style="width: 100%;">
-                                        <option @if ($info['b_flg']==0) selected @endif value="0">公開</option>
-                                        <option @if ($info['b_flg']==1) selected @endif value="1">未公開</option>
+                                        <option @if ($info['b_flg']==0) selected @endif value="0">未公開</option>
+                                        <option @if ($info['b_flg']==1) selected @endif value="1">公開</option>
                                     </select>
                                 </div>
 
@@ -159,29 +159,33 @@
             $('#submit_btn').click(function() {
                 var errors_text = "";
                 if ($('#b_name').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "バナー名を入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・バナー名を入力してください。";
                 }
                 if ($('#b_url').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "バナー画像を入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・バナー画像を入力してください。";
                 }
                 if ($('#link_url').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "リンク先URLを入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・リンク先URLを入力してください。";
                 }
                 if (!isValidHttpUrl($('#link_url').val())) {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "リンク先URLは無効です。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・リンク先URLは正しいURLを入力してください。";
                 }
                 // if ($('#b_sort').val() == "") {
                 //     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "順番Numberを入力してください。";
                 // }
 
                 if (strlen(errors_text) > 0) {
-                    $.alert({
-                        title: false,
-                        theme: 'white',
-                        content: errors_text,
-                        confirmButton: 'はい',
-                        confirmButtonClass: 'btn-info',
-                    });
+                    // $.alert({
+                    //     title: false,
+                    //     theme: 'white',
+                    //     content: errors_text,
+                    //     confirmButton: 'はい',
+                    //     confirmButtonClass: 'btn-info',
+                    // });
+                    // return false;
+                    var divContent = "<div class='card-body'><div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> <h5 style='margin-bottom: 0rem;'><i class='icon fas fa-ban'></i>入力情報が正しくありません。<br><span style='font-size: 15px;'>"+errors_text+"</span></h5> </div> </div>";
+                    $('#targetArea').html(divContent);
+                    $('html, body').animate({scrollTop: 0}, 'slow');
                     return false;
                 }
 

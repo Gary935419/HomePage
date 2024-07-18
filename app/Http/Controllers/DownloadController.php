@@ -267,7 +267,7 @@ class DownloadController extends Controller
         $Download = new Download($this);
         $info = $Download->search_S_DOWNLOADS_CATEGORY($paramsAll);
         foreach ($info as $k=>$v){
-            $info[$k]['open_flg_str'] = $v['open_flg'] == 1 ?"未公開":"公開";
+            $info[$k]['open_flg_str'] = $v['open_flg'] == 0 ? "未公開" : "公開";
         }
 
         $this->data['info'] = $info;

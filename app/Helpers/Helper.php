@@ -310,3 +310,17 @@ if (!function_exists('getRandomNumber')) {
         return $code;
     }
 }
+
+if (!function_exists('getFilterVar')) {
+    /**
+     * @param string
+     */
+    function getFilterVar($str)
+    {
+        if (filter_var($str, FILTER_VALIDATE_URL)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}

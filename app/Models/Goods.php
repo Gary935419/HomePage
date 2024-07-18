@@ -62,18 +62,23 @@ class Goods extends Model
             if (isset($params['p_name']) && $params['p_name'] != '') {
                 $m_goods = $m_goods->where('p_name', 'like', '%'.$params['p_name'].'%');
             }
-            if (isset($params['p_pdf_url']) && $params['p_pdf_url'] != '') {
-                $m_goods = $m_goods->where('p_pdf_url', 'like', '%'.$params['p_pdf_url'].'%');
+
+            if (isset($params['p_pdf_url_have']) && !empty($params['p_pdf_url_have'])) {
+                $m_goods = $m_goods->whereNotNull('p_pdf_url');
             }
-            if (isset($params['p_video_url']) && $params['p_video_url'] != '') {
-                $m_goods = $m_goods->where('p_video_url', 'like', '%'.$params['p_video_url'].'%');
+
+            if (isset($params['p_video_url_have']) && !empty($params['p_video_url_have'])) {
+                $m_goods = $m_goods->whereNotNull('p_video_url');
             }
-            if (isset($params['p_special_weburl']) && $params['p_special_weburl'] != '') {
-                $m_goods = $m_goods->where('p_special_weburl', 'like', '%'.$params['p_special_weburl'].'%');
+
+            if (isset($params['p_special_weburl_have']) && !empty($params['p_special_weburl_have'])) {
+                $m_goods = $m_goods->whereNotNull('p_special_weburl');
             }
+
             if (isset($params['p_open_flg']) && !empty($params['p_open_flg'])) {
-                $m_goods = $m_goods->whereIn('p_open_flg', $params['p_open_flg']);
+                $m_goods = $m_goods->where('p_open_flg','=', $params['p_open_flg']);
             }
+
             $result = $m_goods->where('is_del', '=', 0)
                 ->orderBy('id')
                 ->get()->toArray();

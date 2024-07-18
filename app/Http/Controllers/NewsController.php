@@ -117,7 +117,7 @@ class NewsController extends Controller
             }else{
                 $info[$k]['type_name'] = "データエラー";
             }
-            $info[$k]['n_open_flg_str'] = $v['n_open_flg'] == 1 ?"未公開":"公開";
+            $info[$k]['n_open_flg_str'] = $v['n_open_flg'] == 0 ? "未公開" : "公開";
         }
 
         $this->data['info'] = $info;

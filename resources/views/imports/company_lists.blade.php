@@ -68,8 +68,8 @@
                                             <div class="form-group">
                                                 <label>公開フラグ</label>
                                                 <select class="form-control select2" name="open_flg[]" id="open_flg" multiple="multiple" data-placeholder="選択してください">
-                                                    <option value="0">公開</option>
-                                                    <option value="1">未公開</option>
+                                                    <option value="0">未公開</option>
+                                                    <option value="1">公開</option>
                                                 </select>
                                             </div>
                                         </div>

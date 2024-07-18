@@ -50,8 +50,7 @@
             <div class="card-body">
                 <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h5><i class="icon fas fa-ban"></i>おしらせ!</h5>
-                    {{$MSG}}
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-ban"></i>{{$MSG}}</h5>
                 </div>
             </div>
         @endif
@@ -59,11 +58,12 @@
             <div class="card-body">
                 <div class="alert alert-success alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h5><i class="icon fas fa-check"></i>おしらせ!</h5>
-                    {{$MSG}}
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-check"></i>{{$MSG}}</h5>
                 </div>
             </div>
         @endif
+        <div id="targetArea">
+        </div>
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -114,27 +114,17 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="inputName">確認フラグ</label><span style="color: red">「PDFをダウンロードする際に確認を行う」</span><br>
-                                    <div class="icheck-primary d-inline">
-                                        <input type="radio" id="radioPrimary1" name="p_flg" value="0" checked>
-                                        <label for="radioPrimary1">
-                                            未確認
-                                        </label>
-                                    </div>
-                                    <div class="icheck-primary d-inline" style="margin-left: 2%">
-                                        <input type="radio" id="radioPrimary2" name="p_flg" value="1">
-                                        <label for="radioPrimary2">
-                                            確認完了
-                                        </label>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" name="p_flg" id="p_flg" value="1">
+                                        <label for="p_flg" class="custom-control-label">PDFをダウンロードする際に確認を行う</label>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>公開フラグ</label>
-                                    <select class="form-control select2" name="p_open_flg" id="p_open_flg" style="width: 100%;">
-                                        <option selected="selected" value="0">公開</option>
-                                        <option value="1">未公開</option>
-                                    </select>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" name="p_open_flg" id="p_open_flg" value="0">
+                                        <label for="p_open_flg" class="custom-control-label">公開フラグ</label>
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
@@ -294,13 +284,13 @@
             $('#submit_btn').click(function() {
                 var errors_text = "";
                 if ($('#p_name').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "製品名を入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・製品名を入力してください。";
                 }
                 if ($('#p_logo').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "ロゴ画像を入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・ロゴ画像を入力してください。";
                 }
                 if ($('#p_main_img').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "メインイメージを入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・メインイメージを入力してください。";
                 }
                 // if ($('#p_pdf_url').val() == "") {
                 //     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "製品カタログ（PDF）を選択してください。";
@@ -309,29 +299,32 @@
                 //     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "製品動画URLを入力してください。";
                 // }
                 if ($('#p_video_url').val() != "" && !isValidHttpUrl($('#p_video_url').val())) {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "製品動画URLは無効です。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・製品動画URLは正しいURLを入力してください。";
                 }
                 // if ($('#p_special_weburl').val() == "") {
                 //     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "特設サイトURLを入力してください。";
                 // }
                 if ($('#p_special_weburl').val() != "" && !isValidHttpUrl($('#p_special_weburl').val())) {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "特設サイトURLは無効です。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・特設サイトURLは正しいURLを入力してください。";
                 }
                 // if ($('#p_lables').val() == "") {
                 //     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "タグを入力してください。";
                 // }
                 if ($('#p_contents').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "説明を入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・説明を入力してください。";
                 }
 
                 if (strlen(errors_text) > 0) {
-                    $.alert({
-                        title: false,
-                        theme: 'white',
-                        content: errors_text,
-                        confirmButton: 'はい',
-                        confirmButtonClass: 'btn-info',
-                    });
+                    // $.alert({
+                    //     title: false,
+                    //     theme: 'white',
+                    //     content: errors_text,
+                    //     confirmButton: 'はい',
+                    //     confirmButtonClass: 'btn-info',
+                    // });
+                    var divContent = "<div class='card-body'><div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> <h5 style='margin-bottom: 0rem;'><i class='icon fas fa-ban'></i>入力情報が正しくありません。<br><span style='font-size: 15px;'>"+errors_text+"</span></h5> </div> </div>";
+                    $('#targetArea').html(divContent);
+                    $('html, body').animate({scrollTop: 0}, 'slow');
                     return false;
                 }
 

@@ -53,8 +53,8 @@
                                 <div class="form-group">
                                     <label>公開フラグ</label>
                                     <select class="form-control select2" name="n_open_flg" id="n_open_flg" style="width: 100%;">
-                                        <option @if ($info['n_open_flg']==0) selected @endif value="0">公開</option>
-                                        <option @if ($info['n_open_flg']==1) selected @endif value="1">未公開</option>
+                                        <option @if ($info['n_open_flg']==0) selected @endif value="0">未公開</option>
+                                        <option @if ($info['n_open_flg']==1) selected @endif value="1">公開</option>
                                     </select>
                                 </div>
 

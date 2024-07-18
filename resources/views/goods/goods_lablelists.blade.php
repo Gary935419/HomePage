@@ -16,8 +16,7 @@
             <div class="card-body">
                 <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h5><i class="icon fas fa-ban"></i>おしらせ!</h5>
-                    {{$MSG}}
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-ban"></i>{{$MSG}}</h5>
                 </div>
             </div>
         @endif
@@ -25,8 +24,7 @@
             <div class="card-body">
                 <div class="alert alert-success alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h5><i class="icon fas fa-check"></i>おしらせ!</h5>
-                    {{$MSG}}
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-check"></i>{{$MSG}}</h5>
                 </div>
             </div>
         @endif

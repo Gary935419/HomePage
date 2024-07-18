@@ -16,8 +16,7 @@
             <div class="card-body">
                 <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h5><i class="icon fas fa-ban"></i>おしらせ!</h5>
-                    {{$MSG}}
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-ban"></i>{{$MSG}}</h5>
                 </div>
             </div>
         @endif
@@ -25,8 +24,7 @@
             <div class="card-body">
                 <div class="alert alert-success alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h5><i class="icon fas fa-check"></i>おしらせ!</h5>
-                    {{$MSG}}
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-check"></i>{{$MSG}}</h5>
                 </div>
             </div>
         @endif
@@ -69,29 +67,38 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
-                                                <label>製品カタログURL</label>
-                                                <input type="text" value="{{ $p_pdf_url }}" placeholder="製品カタログURL" name="p_pdf_url" class="form-control">
+                                                <label>公開フラグ</label>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input class="custom-control-input" type="checkbox" @if ($p_open_flg == 1) checked @endif name="p_open_flg" id="p_open_flg" value="1">
+                                                    <label for="p_open_flg" class="custom-control-label">公開中のみ表示する</label>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
-                                                <label>製品動画URL</label>
-                                                <input type="text" value="{{ $p_video_url }}" placeholder="製品動画URL" name="p_video_url" class="form-control">
+                                                <label>製品カタログ（PDF）</label>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input class="custom-control-input" type="checkbox" @if ($p_pdf_url_have == 1) checked @endif name="p_pdf_url_have" id="p_pdf_url_have" value="1">
+                                                    <label for="p_pdf_url_have" class="custom-control-label">製品カタログ（PDF）があり</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>製品動画</label>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input class="custom-control-input" type="checkbox" @if ($p_video_url_have == 1) checked @endif name="p_video_url_have" id="p_video_url_have" value="1">
+                                                    <label for="p_video_url_have" class="custom-control-label">製品動画があり</label>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label>特設サイトURL</label>
-                                                <input type="text" value="{{ $p_special_weburl }}" placeholder="特設サイトURL" name="p_special_weburl" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <div class="form-group">
-                                                <label>公開フラグ</label>
-                                                <select class="form-control select2" name="p_open_flg[]" id="p_open_flg" multiple="multiple" data-placeholder="選択してください">
-                                                    <option value="0">公開</option>
-                                                    <option value="1">未公開</option>
-                                                </select>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input class="custom-control-input" type="checkbox" @if ($p_special_weburl_have == 1) checked @endif name="p_special_weburl_have" id="p_special_weburl_have" value="1">
+                                                    <label for="p_special_weburl_have" class="custom-control-label">特設サイトURLがあり</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -115,9 +122,9 @@
                                         <tr>
                                             <td>{{$v['p_name']}}</td>
                                             <td>{{$v['p_lables_str']}}</td>
-                                            <td>{{$v['p_pdf_url']}}</td>
-                                            <td>{{$v['p_video_url']}}</td>
-                                            <td>{{$v['p_special_weburl']}}</td>
+                                            <td style="text-align: center"><a href="{{$v['p_pdf_url']}}" target="_blank"><img src="{{ asset('assets/img/products_i01.png') }}"></a></td>
+                                            <td style="text-align: center"><a href="{{$v['p_video_url']}}" target="_blank"><img src="{{ asset('assets/img/products_i02.png') }}"></a></td>
+                                            <td style="text-align: center"><a href="{{$v['p_special_weburl']}}" target="_blank"><img src="{{ asset('assets/img/products_i03.png') }}"></a></td>
                                             <td>{{$v['p_open_flg_str']}}</td>
                                             <td>{{empty($v['CREATED_DT'])?'-':$v['CREATED_DT']}}</td>
                                             <td>
@@ -151,9 +158,6 @@
             $('.select2').select2();
             var PRODUCT_LABLES_ARR = @json($PRODUCT_LABLES_ARR);
             $('#p_lables').val(PRODUCT_LABLES_ARR).trigger('change');
-
-            var OPEN_FLG_ARR = @json($OPEN_FLG_ARR);
-            $('#p_open_flg').val(OPEN_FLG_ARR).trigger('change');
         });
         $(function () {
             $("#table_show").DataTable({

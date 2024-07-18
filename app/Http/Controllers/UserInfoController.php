@@ -99,6 +99,13 @@ class UserInfoController extends Controller
     public function get_admin_user_info()
     {
         $paramsAll = request()->all();
+
+        $MSG_CODE = $paramsAll['msg_code'] ?? '';
+        if (!empty($MSG_CODE)){
+            $this->data['MSG_CODE'] = $MSG_CODE;
+            $this->data['MSG'] = $paramsAll['msg'];
+        }
+
         $this->data['USER_ID'] = $paramsAll['USER_ID'] ?? '';
         $this->data['USER_NAME'] = $paramsAll['USER_NAME'] ?? '';
 
@@ -145,16 +152,16 @@ class UserInfoController extends Controller
 
             if (!empty($error_message)) {
                 $this->data['add_user_result'] = $error_message;
+                $this->data['MSG'] = $error_message;
             }else{
                 AuthGroupOtbSimpleGroup::create_user($user_id, $password,$USER_NAME,$USER_IDENTITY);
                 AuthGroupOtbSimpleGroup::add_user_role_group(array('USER_ID' => $user_id));
-                //created client id successfully
-                if (empty($error_message)) {
-                    $this->data['MSG_CODE'] = 200;
-                    $this->data['created_user_id'] = $user_id;
-                }
+                // $this->data['MSG_CODE'] = 200;
+                // $this->data['MSG'] = "アカウント情報の登録が完了しました。";
+                // $this->data['created_user_id'] = $user_id;
+                return redirect('/userinfo/admin_user_info?msg_code=200&&msg=アカウント情報の登録が完了しました。');
             }
-            $this->data['MSG'] = $error_message;
+
             return view('userinfo/admin_add_user', $this->data);
         } catch (\Exception $e) {
 //            $this->data['add_user_result'] = $e->getMessage();
@@ -215,16 +222,17 @@ class UserInfoController extends Controller
 
             AuthGroupOtbSimpleGroup::del_user_role_group(array('USER_ID' => $info_old['USER_ID']));
             AuthGroupOtbSimpleGroup::edit_add_user_role_group(array('USER_ID' => $user_id,'SEQ_NO' => $SEQ_NO));
-            //created client id successfully
+
+            $this->data['MSG'] = $error_message;
             if (empty($error_message)) {
-                $this->data['MSG_CODE'] = 200;
-                $this->data['created_user_id'] = $user_id;
+                // $this->data['MSG_CODE'] = 200;
+                // $this->data['created_user_id'] = $user_id;
+                // $this->data['MSG'] = "アカウント情報の編集が完了しました。";
+                return redirect('/userinfo/admin_user_info?msg_code=200&&msg=アカウント情報の編集が完了しました。');
             }
             $this->data['info'] = AuthGroupOtbSimpleGroup::get_user_seq_no_info($SEQ_NO);
-            $this->data['MSG'] = $error_message;
             return view('userinfo/admin_edit_user', $this->data);
         } catch (\Exception $e) {
-//            $this->data['add_user_result'] = $e->getMessage();
             $this->data['MSG'] = $e->getMessage();
             return view('userinfo/admin_edit_user', $this->data);
         }

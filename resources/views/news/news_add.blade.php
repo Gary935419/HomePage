@@ -54,8 +54,8 @@
                                 <div class="form-group">
                                     <label>公開フラグ</label>
                                     <select class="form-control select2" name="n_open_flg" id="n_open_flg" style="width: 100%;">
-                                        <option selected="selected" value="0">公開</option>
-                                        <option value="1">未公開</option>
+                                        <option selected="selected" value="0">未公開</option>
+                                        <option value="1">公開</option>
                                     </select>
                                 </div>
 

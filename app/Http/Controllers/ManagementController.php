@@ -83,7 +83,7 @@ class ManagementController extends Controller
         $info = $Management->search_S_MANAGEMENT_SITE($paramsAll);
 
         foreach ($info as $k=>$v){
-            $info[$k]['open_flg_str'] = $v['open_flg'] == 1 ?"未公開":"公開";
+            $info[$k]['open_flg_str'] = $v['open_flg'] == 0 ? "未公開" : "公開";
         }
 
         $this->data['info'] = $info;

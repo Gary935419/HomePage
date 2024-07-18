@@ -16,8 +16,7 @@
             <div class="card-body">
                 <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h5><i class="icon fas fa-ban"></i>おしらせ!</h5>
-                    {{$MSG}}
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-ban"></i>{{$MSG}}</h5>
                 </div>
             </div>
         @endif
@@ -25,11 +24,12 @@
             <div class="card-body">
                 <div class="alert alert-success alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h5><i class="icon fas fa-check"></i>おしらせ!</h5>
-                    {{$MSG}}
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-check"></i>{{$MSG}}</h5>
                 </div>
             </div>
         @endif
+        <div id="targetArea">
+        </div>
         <!-- Main content -->
         <section class="content">
             <div class="row">
@@ -38,7 +38,7 @@
                         <div class="card-header">
                             <h3 class="card-title">アカウント追加</h3>
                         </div>
-                        <form class="form-horizontal" action='/userinfo/admin_add_user' method='post'>
+                        <form class="form-horizontal" action='/userinfo/admin_add_user' method='post' id="form">
                             <div class="card-body">
 {{--                                @if(isset($add_user_result))--}}
 {{--                                    <font size="2" color="#ff0000">{{$add_user_result}}</font> <br> <br>--}}
@@ -48,11 +48,11 @@
 {{--                                @endif--}}
                                 <div class="form-group">
                                     <label for="inputName">ログインID</label>
-                                    <input type="text" id="user_id" size="16" name="USER_ID" autocomplete="off" class="form-control">
+                                    <input type="text" id="USER_ID" size="16" name="USER_ID" autocomplete="off" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="inputName">アカウント名</label>
-                                    <input type="text" id="user_name" size="16" name="USER_NAME" autocomplete="off" class="form-control">
+                                    <input type="text" id="USER_NAME" size="16" name="USER_NAME" autocomplete="off" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="inputName">管理権限</label><br>
@@ -71,12 +71,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="inputClientCompany">パスワード</label>
-                                    <input id="new_password" type="password" size="16" autocomplete="new-password" name="PASSWORD"
+                                    <input id="PASSWORD" type="password" size="16" autocomplete="new-password" name="PASSWORD"
                                            class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="inputClientCompany">パスワードの再入力</label>
-                                    <input id="new_password_confirm" type="password" size="16" autocomplete="new-password" name="PASSWORD_CONFIRM"
+                                    <input id="PASSWORD_CONFIRM" type="password" size="16" autocomplete="new-password" name="PASSWORD_CONFIRM"
                                            class="form-control">
                                 </div>
 
@@ -84,7 +84,7 @@
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <a href="/userinfo/admin_user_info" class="btn btn-secondary">戻る</a>
-                                <button type="submit" id="btn_change_password" class="btn btn-success float-right">
+                                <button type="button" id="submit_btn" class="btn btn-success float-right">
                                     登録
                                 </button>
                             </div>
@@ -98,4 +98,47 @@
         </section>
         <!-- /.content -->
     </div>
+
+    <script>
+        $(function() {
+            $('#submit_btn').click(function() {
+                var errors_text = "";
+                if ($('#USER_ID').val() == "") {
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・ログインIDを入力してください。";
+                }
+                if ($('#USER_NAME').val() == "") {
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・アカウント名を入力してください。";
+                }
+                if ($('#PASSWORD').val() == "") {
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・パスワードを入力してください。";
+                }
+                if ($('#PASSWORD_CONFIRM').val() == "") {
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・パスワードの再入力を入力してください。";
+                }
+
+                if (strlen(errors_text) > 0) {
+                    var divContent = "<div class='card-body'><div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> <h5 style='margin-bottom: 0rem;'><i class='icon fas fa-ban'></i>入力情報が正しくありません。<br><span style='font-size: 15px;'>"+errors_text+"</span></h5> </div> </div>";
+                    $('#targetArea').html(divContent);
+                    $('html, body').animate({scrollTop: 0}, 'slow');
+                    return false;
+                }
+
+                var confirm_text = '登録してよろしいですか？';
+
+                $.confirm({
+                    title: false,
+                    theme: 'white',
+                    content: confirm_text,
+                    confirmButton: 'はい',
+                    cancelButton: 'いいえ',
+                    confirmButtonClass: 'btn-info',
+                    cancelButtonClass: 'btn-danger',
+                    confirm: function() {
+                        $("#submit_btn").attr('disabled', true);
+                        $('#form').submit();
+                    },
+                });
+            });
+        });
+    </script>
 @endsection

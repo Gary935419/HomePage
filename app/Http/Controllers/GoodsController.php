@@ -135,7 +135,10 @@ class GoodsController extends Controller
         $this->data['p_pdf_url'] = $paramsAll['p_pdf_url'] ?? '';
         $this->data['p_video_url'] = $paramsAll['p_video_url'] ?? '';
         $this->data['p_special_weburl'] = $paramsAll['p_special_weburl'] ?? '';
-        $this->data['OPEN_FLG_ARR'] = $paramsAll['p_open_flg'] ?? array();
+        $this->data['p_open_flg'] = $paramsAll['p_open_flg'] ?? 0;
+        $this->data['p_pdf_url_have'] = $paramsAll['p_pdf_url_have'] ?? 0;
+        $this->data['p_video_url_have'] = $paramsAll['p_video_url_have'] ?? 0;
+        $this->data['p_special_weburl_have'] = $paramsAll['p_special_weburl_have'] ?? 0;
 
         $Goods = new Goods($this);
         $info = $Goods->search_goods($paramsAll);
@@ -150,10 +153,7 @@ class GoodsController extends Controller
                     $info[$k]['p_lables_str'] = $info[$k]['p_lables_str'] . $select_S_PRODUCT_LABLES_info['pr_name'];
                 }
             }
-            $info[$k]['p_open_flg_str'] = $v['p_open_flg'] == 1 ?"未公開":"公開";
-//            $info[$k]['p_pdf_url'] = empty($v['p_pdf_url']) ?"製品カタログURLがあり":"製品カタログURLがありません";
-//            $info[$k]['p_video_url'] = empty($v['p_video_url']) ?"製品動画URLがあり":"製品動画URLがありません";
-//            $info[$k]['p_special_weburl'] = empty($v['p_special_weburl']) ?"特設サイトURLがあり":"特設サイトURLがありません";
+            $info[$k]['p_open_flg_str'] = $v['p_open_flg'] == 0 ? "未公開" : "公開";
         }
 
         if (!empty($this->data['PRODUCT_LABLES_ARR'])){
@@ -163,7 +163,6 @@ class GoodsController extends Controller
                 if (!empty($commonElements)){
                     $return_info[]=$vvv;
                 }
-//                $p_lables_str_search = implode(",", $this->data['PRODUCT_LABLES_ARR']);
             }
         }else{
             $return_info = $info;
@@ -539,7 +538,7 @@ class GoodsController extends Controller
         $Goods = new Goods($this);
         $info = $Goods->search_bannergoods($paramsAll);
         foreach ($info as $k=>$v){
-            $info[$k]['b_flg_str'] = $v['b_flg'] == 1 ?"未公開":"公開";
+            $info[$k]['b_flg_str'] = $v['b_flg'] == 0 ? "未公開" : "公開";
         }
         $this->data['info'] = $info;
         return view('goods/goods_bannerlists', $this->data);
