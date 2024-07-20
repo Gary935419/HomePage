@@ -64,7 +64,7 @@ class Admins extends Model
 //        }
         // 形式チェック
 //        if (preg_match(config('const.PASSWORD_VALIDATE_STRING_ADMIN'), $password)) {
-//            return 'スワードに無効な文字が含まれています。';
+//            return 'パスワードに無効な文字が含まれています。';
 //        }
         if (config('const.PASSWORD_REQUIRE_NUMBER_ADMIN')) {
             if (!preg_match(config('const.PASSWORD_VALIDATE_NUMBER_ADMIN'), $password)) {
@@ -73,12 +73,17 @@ class Admins extends Model
         }
         if (config('const.PASSWORD_REQUIRE_ALPHABET_ADMIN')) {
             if (!preg_match(config('const.PASSWORD_VALIDATE_ALPHABET_ADMIN'), $password)) {
-                return 'スワードは半角英数字で入力してください。';
+                return 'パスワードは半角英数字で入力してください。';
             }
         }
         if (config('const.PASSWORD_REQUIRE_SIGN_ADMIN')) {
             if (!preg_match(config('const.PASSWORD_VALIDATE_SIGN_ADMIN'), $password)) {
                 return 'パスワードには記号を含めてください。';
+            }
+        }
+        if (config('const.USER_ID_VALIDATE_STRING_ADMIN')) {
+            if (preg_match(config('const.USER_ID_VALIDATE_STRING_ADMIN'), $password)) {
+                return 'ロパスワードに無効な文字が含まれています。';
             }
         }
         return '';
@@ -157,4 +162,18 @@ class Admins extends Model
         return $user_info;
     }
 
+    public function check_admin_user_id($paras)
+    {
+        $USER_ID = array_key_exists('USER_ID', $paras) ? $paras['USER_ID'] : null;
+        if (is_null($USER_ID)) {
+            return 'ログインID設定情報は送信されません。';
+        }
+
+        if (config('const.USER_ID_VALIDATE_STRING_ADMIN')) {
+            if (preg_match(config('const.USER_ID_VALIDATE_STRING_ADMIN'), $USER_ID)) {
+                return 'ログインIDに無効な文字が含まれています。';
+            }
+        }
+        return '';
+    }
 }

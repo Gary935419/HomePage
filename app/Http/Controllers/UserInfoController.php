@@ -150,9 +150,16 @@ class UserInfoController extends Controller
                 $error_message = $Admins->check_admin_user_password(array('PASSWORD' => $password));
             }
 
-            if (!empty($error_message)) {
-                $this->data['add_user_result'] = $error_message;
-                $this->data['MSG'] = $error_message;
+            $check_admin_user_id_error_message = $Admins->check_admin_user_id(array('USER_ID' => $user_id));
+            if (!empty($error_message) && !empty($check_admin_user_id_error_message)){
+                $error_message = $error_message.",".$check_admin_user_id_error_message;
+            } elseif (empty($error_message) && !empty($check_admin_user_id_error_message)){
+                $error_message = $check_admin_user_id_error_message;
+            }
+
+            if (!empty(trim($error_message))) {
+                $this->data['add_user_result'] = trim($error_message);
+                $this->data['MSG'] = trim($error_message);
             }else{
                 AuthGroupOtbSimpleGroup::create_user($user_id, $password,$USER_NAME,$USER_IDENTITY);
                 AuthGroupOtbSimpleGroup::add_user_role_group(array('USER_ID' => $user_id));
@@ -192,9 +199,10 @@ class UserInfoController extends Controller
 
     public function post_admin_edit_user()
     {
+        $params = request()->all();
+        $SEQ_NO = $params['SEQ_NO'];
+        $Admins = new Admins($this);
         try {
-            $params = request()->all();
-            $SEQ_NO = $params['SEQ_NO'];
             $info_old = AuthGroupOtbSimpleGroup::get_user_seq_no_info($SEQ_NO);
             $user_id = $params['USER_ID'];
             $USER_NAME = !isset($params['USER_NAME']) || empty($params['USER_NAME']) ? "" : $params['USER_NAME'];
@@ -208,7 +216,6 @@ class UserInfoController extends Controller
                 if ($password != $comfirm) {
                     $error_message = 'パスワードが確認用パスワード情報と一致しない。';
                 } else {
-                    $Admins = new Admins($this);
                     $error_message = $Admins->check_admin_user_password(array('PASSWORD' => $password));
                 }
                 if (!empty($error_message)) {
@@ -220,19 +227,27 @@ class UserInfoController extends Controller
                 AuthGroupOtbSimpleGroup::edit_user_no_pwd($user_id,$USER_NAME,$USER_IDENTITY,$SEQ_NO);
             }
 
+            $check_admin_user_id_error_message = $Admins->check_admin_user_id(array('USER_ID' => $user_id));
+            if (!empty($error_message) && !empty($check_admin_user_id_error_message)){
+                $error_message = $error_message.",".$check_admin_user_id_error_message;
+            } elseif (empty($error_message) && !empty($check_admin_user_id_error_message)){
+                $error_message = $check_admin_user_id_error_message;
+            }
+
             AuthGroupOtbSimpleGroup::del_user_role_group(array('USER_ID' => $info_old['USER_ID']));
             AuthGroupOtbSimpleGroup::edit_add_user_role_group(array('USER_ID' => $user_id,'SEQ_NO' => $SEQ_NO));
 
-            $this->data['MSG'] = $error_message;
-            if (empty($error_message)) {
+            if (empty(trim($error_message))) {
                 // $this->data['MSG_CODE'] = 200;
                 // $this->data['created_user_id'] = $user_id;
                 // $this->data['MSG'] = "アカウント情報の編集が完了しました。";
                 return redirect('/userinfo/admin_user_info?msg_code=200&&msg=アカウント情報の編集が完了しました。');
             }
+            $this->data['MSG'] = $error_message;
             $this->data['info'] = AuthGroupOtbSimpleGroup::get_user_seq_no_info($SEQ_NO);
             return view('userinfo/admin_edit_user', $this->data);
         } catch (\Exception $e) {
+            $this->data['info'] = AuthGroupOtbSimpleGroup::get_user_seq_no_info($SEQ_NO);
             $this->data['MSG'] = $e->getMessage();
             return view('userinfo/admin_edit_user', $this->data);
         }

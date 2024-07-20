@@ -23,5 +23,7 @@ return array(
     'PASSWORD_REQUIRE_ALPHABET_ADMIN' => true,
     // パスワード記号必須
     'PASSWORD_REQUIRE_SIGN_ADMIN' => false,
+    // パスワード有効文字列
+    'USER_ID_VALIDATE_STRING_ADMIN' => '/[^a-zA-Z0-9_\-\s]/',
 
 );

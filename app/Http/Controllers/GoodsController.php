@@ -420,11 +420,6 @@ class GoodsController extends Controller
             }
             $pr_name = $paramsAll['pr_name'];
 
-//            if (!isset($paramsAll['pr_sort']) || empty($paramsAll['pr_sort'])) {
-//                throw new \OneException(1);
-//            }
-//            $pr_sort = $paramsAll['pr_sort'];
-
             //数据库事务处理
             DB::beginTransaction();
 
@@ -432,7 +427,6 @@ class GoodsController extends Controller
             $update_S_PRODUCT_LABLES_arr['pr_name'] = $pr_name;
             $update_S_PRODUCT_LABLES_arr['MODIFY_DT'] = date('Y-m-d',time());
             $update_S_PRODUCT_LABLES_arr['MODIFY_USER'] = session('USER_ID');
-//            $update_S_PRODUCT_LABLES_arr['pr_sort'] = $pr_sort;
             $Goods->update_S_PRODUCT_LABLES($id,$update_S_PRODUCT_LABLES_arr);
 
             DB::commit();
@@ -479,11 +473,6 @@ class GoodsController extends Controller
             }
             $link_url = $paramsAll['link_url'];
 
-//            if (!isset($paramsAll['b_sort']) || empty($paramsAll['b_sort'])) {
-//                throw new \OneException(1);
-//            }
-//            $b_sort = $paramsAll['b_sort'];
-
             $b_flg = empty($paramsAll['b_flg'])?0:1;
             $is_del = 0;
 
@@ -501,7 +490,6 @@ class GoodsController extends Controller
             $insert_S_PRODUCT_BANNERS_arr['b_name'] = $b_name;
             $insert_S_PRODUCT_BANNERS_arr['b_url'] = $b_url;
             $insert_S_PRODUCT_BANNERS_arr['link_url'] = $link_url;
-//            $insert_S_PRODUCT_BANNERS_arr['b_sort'] = $b_sort;
             $insert_S_PRODUCT_BANNERS_arr['CREATED_DT'] = date('Y-m-d',time());
             $insert_S_PRODUCT_BANNERS_arr['CREATED_USER'] = session('USER_ID');
             $insert_S_PRODUCT_BANNERS_arr['b_flg'] = $b_flg;
@@ -574,8 +562,9 @@ class GoodsController extends Controller
                 throw new \OneException(1);
             }
             $id = $paramsAll['id'];
-            $select_S_PRODUCT_LABLES_ID_info = $Goods->select_S_PRODUCT_BANNERS_ID_info($id);
-            if (empty($select_S_PRODUCT_LABLES_ID_info)){
+
+            $this->data['info'] = $Goods->select_S_PRODUCT_BANNERS_ID_info($id);
+            if (empty($this->data['info'])){
                 throw new \OneException(3);
             }
 
@@ -596,11 +585,6 @@ class GoodsController extends Controller
             }
             $link_url = $paramsAll['link_url'];
 
-//            if (!isset($paramsAll['b_sort']) || empty($paramsAll['b_sort'])) {
-//                throw new \OneException(1);
-//            }
-//            $b_sort = $paramsAll['b_sort'];
-
             $b_flg = empty($paramsAll['b_flg'])?0:1;
 
             //数据库事务处理
@@ -610,7 +594,6 @@ class GoodsController extends Controller
             $update_S_PRODUCT_BANNERS_arr['b_name'] = $b_name;
             $update_S_PRODUCT_BANNERS_arr['b_url'] = $b_url;
             $update_S_PRODUCT_BANNERS_arr['link_url'] = $link_url;
-//            $update_S_PRODUCT_BANNERS_arr['b_sort'] = $b_sort;
             $update_S_PRODUCT_BANNERS_arr['MODIFY_DT'] = date('Y-m-d',time());
             $update_S_PRODUCT_BANNERS_arr['MODIFY_USER'] = session('USER_ID');
             $update_S_PRODUCT_BANNERS_arr['b_flg'] = $b_flg;

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', '東海電子')
+@section('title', '東海電子株式会社')
 @section('content_top')
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -50,9 +50,9 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="#" class="brand-link">
-            <img src="{{ asset('adminlte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image elevation-3" style="opacity: .8;float: left;margin-left: 2rem;margin-right: 1rem;width: auto;">
-            <span class="brand-text font-weight-light">東海電子</span>
+        <a href="#" class="brand-link" style="display: block;padding: 1.5rem 0.1rem;transition: width .3s ease-in-out;white-space: nowrap;">
+            <img src="{{ asset('assets/web_img/common/footer_logo.png') }}" class="brand-image elevation-3" style="float: left;margin-left: 1rem;margin-top: -10px;max-height: 25px;width: auto;">
+            <span class="brand-text font-weight-light"></span>
         </a>
 
         <!-- Sidebar -->
@@ -277,7 +277,7 @@
     <!-- Main Footer -->
     <footer class="main-footer">
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2014-2021 <a href="#">東海電子</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; <a href="#">東海電子株式会社</a>.</strong> All rights reserved.
     </footer>
 </div>
 <!-- ./wrapper -->
