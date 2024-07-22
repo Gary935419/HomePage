@@ -11,7 +11,24 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
+        @if(isset($MSG_CODE) && $MSG_CODE == 201)
+            <div class="card-body">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-ban"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
+        @if(isset($MSG_CODE) && $MSG_CODE == 200)
+            <div class="card-body">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-check"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
+        <div id="targetArea">
+        </div>
         <section class="content">
             <div class="container-fluid">
                 <div class="col-md-12">
@@ -56,21 +73,15 @@
             $('#submit_btn').click(function() {
                 var errors_text = "";
                 if ($('#p_name').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "タグ名を入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・タグ名を入力してください。";
                 }
-
                 if ($('#p_type').val() == 0) {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "カテゴリを入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・カテゴリを入力してください。";
                 }
-
                 if (strlen(errors_text) > 0) {
-                    $.alert({
-                        title: false,
-                        theme: 'white',
-                        content: errors_text,
-                        confirmButton: 'はい',
-                        confirmButtonClass: 'btn-info',
-                    });
+                    var divContent = "<div class='card-body'><div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> <h5 style='margin-bottom: 0rem;'><i class='icon fas fa-ban'></i>入力情報が正しくありません。<br><span style='font-size: 15px;'>"+errors_text+"</span></h5> </div> </div>";
+                    $('#targetArea').html(divContent);
+                    $('html, body').animate({scrollTop: 0}, 'slow');
                     return false;
                 }
 

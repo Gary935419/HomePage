@@ -7,12 +7,27 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>企業一覧</h1>
+                        <h1>導入企業一覧</h1>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
+        @if(isset($MSG_CODE) && $MSG_CODE == 201)
+            <div class="card-body">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-ban"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
+        @if(isset($MSG_CODE) && $MSG_CODE == 200)
+            <div class="card-body">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-check"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -39,20 +54,6 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
-                                            <!-- text input -->
-                                            <div class="form-group">
-                                                <label>導入事例URL</label>
-                                                <input type="text" value="{{ $precedents_url }}" placeholder="導入事例URL" name="precedents_url" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <!-- text input -->
-                                            <div class="form-group">
-                                                <label>紹介動画URL</label>
-                                                <input type="text" value="{{ $video_url }}" placeholder="紹介動画URL" name="video_url" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label>タグ</label>
                                                 <select class="select2 form-control" id="c_lables" name="c_lables[]" multiple="multiple" data-placeholder="選択してください">
@@ -66,11 +67,29 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
-                                                <label>公開フラグ</label>
-                                                <select class="form-control select2" name="open_flg[]" id="open_flg" multiple="multiple" data-placeholder="選択してください">
-                                                    <option value="0">未公開</option>
-                                                    <option value="1">公開</option>
-                                                </select>
+                                                <label>&nbsp;</label>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input class="custom-control-input" type="checkbox" @if ($open_flg == 1) checked @endif name="open_flg" id="open_flg" value="1">
+                                                    <label for="open_flg" class="custom-control-label">公開中のみ表示する</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>&nbsp;</label>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input class="custom-control-input" type="checkbox" @if ($precedents_url_have == 1) checked @endif name="precedents_url_have" id="precedents_url_have" value="1">
+                                                    <label for="precedents_url_have" class="custom-control-label">導入事例URLがあり</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>&nbsp;</label>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input class="custom-control-input" type="checkbox" @if ($video_url_have == 1) checked @endif name="video_url_have" id="video_url_have" value="1">
+                                                    <label for="video_url_have" class="custom-control-label">紹介動画URLがあり</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -83,6 +102,7 @@
                                         <th>導入事例URL</th>
                                         <th>紹介動画URL</th>
                                         <th>タグ</th>
+                                        <th>公開フラグ</th>
                                         <th>作成時間</th>
                                         <th>アクション</th>
                                     </tr>
@@ -91,9 +111,10 @@
                                     @foreach($info as $v)
                                         <tr>
                                             <td>{{$v['c_name']}}</td>
-                                            <td>{{$v['precedents_url']}}</td>
-                                            <td>{{$v['video_url']}}</td>
+                                            <td style="text-align: center"><a href="{{$v['precedents_url']}}" target="_blank"><img src="{{ asset('assets/img/products_i03.png') }}"></a></td>
+                                            <td style="text-align: center"><a href="{{$v['video_url']}}" target="_blank"><img src="{{ asset('assets/img/products_i02.png') }}"></a></td>
                                             <td>{{$v['c_lables_str']}}</td>
+                                            <td>{{$v['open_flg_str']}}</td>
                                             <td>{{empty($v['CREATED_DT'])?'-':$v['CREATED_DT']}}</td>
                                             <td>
                                                 <a style="margin-left: 3%" class="btn btn-info btn-sm" href="#"
@@ -124,11 +145,6 @@
     <script>
         $(function () {
             $('.select2').select2();
-            var PRODUCT_LABLES_ARR = @json($PRODUCT_LABLES_ARR);
-            $('#c_lables').val(PRODUCT_LABLES_ARR).trigger('change');
-
-            var OPEN_FLG_ARR = @json($OPEN_FLG_ARR);
-            $('#open_flg').val(OPEN_FLG_ARR).trigger('change');
         });
 
         $(function () {
@@ -156,24 +172,26 @@
 
                     ajax.post(url, params, function(data) {
                         if (data['RESULT'] == "OK") {
-                            $.alert({
-                                title: false,
-                                theme: 'white',
-                                content: '削除処理完了。',
-                                confirmButton: 'OK',
-                                confirmButtonClass: 'btn-info',
-                                confirm: function () {
-                                    location.href = "/imports/company_lists";
-                                }
-                            });
+                            // $.alert({
+                            //     title: false,
+                            //     theme: 'white',
+                            //     content: '削除処理完了。',
+                            //     confirmButton: 'OK',
+                            //     confirmButtonClass: 'btn-info',
+                            //     confirm: function () {
+                            //         location.href = "/imports/company_lists";
+                            //     }
+                            // });
+                            location.href = "/imports/company_lists?msg_code=200&&msg="+'企業情報の削除が完了しました。';
                         } else {
-                            $.alert({
-                                title: false,
-                                theme: 'white',
-                                content: data['MESSAGE'],
-                                confirmButton: 'OK',
-                                confirmButtonClass: 'btn-info',
-                            });
+                            // $.alert({
+                            //     title: false,
+                            //     theme: 'white',
+                            //     content: data['MESSAGE'],
+                            //     confirmButton: 'OK',
+                            //     confirmButtonClass: 'btn-info',
+                            // });
+                            location.href = "/imports/company_lists?msg_code=201&&msg="+data['MESSAGE'];
                         }
                     });
                 },

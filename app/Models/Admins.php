@@ -19,7 +19,7 @@ class Admins extends Model
         $new_password = $paras['NEW_PASSWORD'];
         $user_id = array_key_exists('FORCED_CHANGE_PASSWORD_USER_ID', $paras) ? $paras['FORCED_CHANGE_PASSWORD_USER_ID'] : null;
         if ($original_password == $new_password) {
-            return '新的密码和现在的密码相同,请重新设定。';
+            return '新しいパスワードは現在のパスワードと同じですので、再設定してください。';
         }
         $password_general_check = self::check_admin_user_password(array('PASSWORD' => $new_password, ));
         if (!empty($password_general_check)) {
@@ -28,7 +28,7 @@ class Admins extends Model
         try {
             // 現在のパスワード必須にする
             if (!$force && is_null($original_password)) {
-                return '请输入现在的密码信息。';
+                return '現在のパスワード情報を入力してください。';
             }
 
             $password_info = array('password' => $new_password);
@@ -40,12 +40,12 @@ class Admins extends Model
             if ($changed) {
                 $result = '';
             } else {
-                $result = '密码修改失败';
+                $result = 'パスワードの変更に失敗しました。';
             }
         } catch (\Exception $e) {
             $result = $e->getMessage();
             if ($result == 'Old password is invalid') {
-                $result = '旧密码信息错误。';
+                $result = '古いパスワード情報が間違っている。';
             }
         }
         return $result;

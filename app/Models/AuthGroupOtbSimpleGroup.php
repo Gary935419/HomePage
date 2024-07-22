@@ -280,7 +280,7 @@ class AuthGroupOtbSimpleGroup extends Model
             ->select(config('auth.table_columns'))
             ->get()->toArray();
         if (comcount($same_users) > 0) {
-            throw new SimpleUserUpdateException('ログインID既に存在し', 3);
+            throw new SimpleUserUpdateException('そのログインIDは既に登録されています', 3);
         }
 
         $user = array(

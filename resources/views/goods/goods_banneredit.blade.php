@@ -77,22 +77,16 @@
                                 <div class="img_b_url"><img src="" alt=""></div>
 
                                 <div class="form-group">
-                                    <label>公開フラグ</label>
-                                    <select class="form-control select2" name="b_flg" id="b_flg" style="width: 100%;">
-                                        <option @if ($info['b_flg']==0) selected @endif value="0">未公開</option>
-                                        <option @if ($info['b_flg']==1) selected @endif value="1">公開</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
                                     <label for="exampleInputEmail1">リンク先URL</label>
                                     <input type="text" value="{{ $info['link_url'] }}" class="form-control" id="link_url" name="link_url" placeholder="リンク先URL">
                                 </div>
 
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="exampleInputEmail1">順番Number</label>--}}
-{{--                                    <input type="number" value="{{ $info['b_sort'] }}" class="form-control" id="b_sort" name="b_sort" placeholder="順番Number">--}}
-{{--                                </div>--}}
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" name="b_flg" id="b_flg" @if ($info['b_flg'] == 1) checked @endif value="1">
+                                        <label for="b_flg" class="custom-control-label">公開フラグ</label>
+                                    </div>
+                                </div>
 
                             </div>
 

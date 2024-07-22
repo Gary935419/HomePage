@@ -29,32 +29,38 @@ class NewsController extends Controller
             }
             $n_type = $paramsAll['n_type'];
 
-            if (!isset($paramsAll['n_contents']) || empty($paramsAll['n_contents'])) {
-                throw new \OneException(1);
-            }
-            $n_contents = $paramsAll['n_contents'];
+//            if (!isset($paramsAll['n_contents']) || empty($paramsAll['n_contents'])) {
+//                throw new \OneException(1);
+//            }
+//            $n_contents = $paramsAll['n_contents'];
+            $n_contents = $paramsAll['n_contents'] ?? "";
 
-            if (!isset($paramsAll['n_open_date']) || empty($paramsAll['n_open_date'])) {
-                throw new \OneException(1);
-            }
-            $n_open_date = $paramsAll['n_open_date'];
+//            if (!isset($paramsAll['n_open_date']) || empty($paramsAll['n_open_date'])) {
+//                throw new \OneException(1);
+//            }
+//            $n_open_date = $paramsAll['n_open_date'];
+            $n_open_date = $paramsAll['n_open_date'] ?? "";
 
-            if (!isset($paramsAll['n_close_date']) || empty($paramsAll['n_close_date'])) {
-                throw new \OneException(1);
-            }
-            $n_close_date = $paramsAll['n_close_date'];
+//            if (!isset($paramsAll['n_close_date']) || empty($paramsAll['n_close_date'])) {
+//                throw new \OneException(1);
+//            }
+//            $n_close_date = $paramsAll['n_close_date'];
+            $n_close_date = $paramsAll['n_close_date'] ?? "";
 
             $n_important_flg = empty($paramsAll['n_important_flg'])?0:1;
             $n_open_flg = empty($paramsAll['n_open_flg'])?0:1;
             $n_fixed_flg = empty($paramsAll['n_fixed_flg'])?0:1;
             $is_del = 0;
 
+            $fix_open_date = $paramsAll['fix_open_date'] ?? "";
+            $fix_close_date = $paramsAll['fix_close_date'] ?? "";
+
             $News = new News($this);
 
-            $S_NEWS_name_type = $News->select_S_NEWS_name_type($n_title,$n_type);
-            if (!empty($S_NEWS_name_type)){
-                throw new \OneException(9);
-            }
+//            $S_NEWS_name_type = $News->select_S_NEWS_name_type($n_title,$n_type);
+//            if (!empty($S_NEWS_name_type)){
+//                throw new \OneException(9);
+//            }
 
             //数据库事务处理
             DB::beginTransaction();
@@ -68,6 +74,8 @@ class NewsController extends Controller
             $insert_S_NEWS_arr['n_important_flg'] = $n_important_flg;
             $insert_S_NEWS_arr['n_open_flg'] = $n_open_flg;
             $insert_S_NEWS_arr['n_fixed_flg'] = $n_fixed_flg;
+            $insert_S_NEWS_arr['fix_open_date'] = $fix_open_date;
+            $insert_S_NEWS_arr['fix_close_date'] = $fix_close_date;
             $insert_S_NEWS_arr['CREATED_DT'] = date('Y-m-d',time());
             $insert_S_NEWS_arr['CREATED_USER'] = session('USER_ID');
             $insert_S_NEWS_arr['is_del'] = $is_del;
@@ -76,22 +84,32 @@ class NewsController extends Controller
 
             DB::commit();
 
-            return view('news/news_add_complete', $this->data);
+            return redirect('/news/news_lists?msg_code=200&&msg=ニュース情報の登録が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('news/news_add', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('news/news_add', $this->data);
         }
     }
 
     public function get_news_lists()
     {
         $paramsAll = request()->all();
+
+        $MSG_CODE = $paramsAll['msg_code'] ?? '';
+        if (!empty($MSG_CODE)){
+            $this->data['MSG_CODE'] = $MSG_CODE;
+            $this->data['MSG'] = $paramsAll['msg'];
+        }
+
         $this->data['key_str'] = $paramsAll['key_str'] ?? '';
         $this->data['n_type_arr'] = $paramsAll['n_type_arr'] ?? array();
         $this->data['n_open_flg'] = $paramsAll['n_open_flg'] ?? array();
@@ -172,24 +190,30 @@ class NewsController extends Controller
             }
             $n_type = $paramsAll['n_type'];
 
-            if (!isset($paramsAll['n_contents']) || empty($paramsAll['n_contents'])) {
-                throw new \OneException(1);
-            }
-            $n_contents = $paramsAll['n_contents'];
+//            if (!isset($paramsAll['n_contents']) || empty($paramsAll['n_contents'])) {
+//                throw new \OneException(1);
+//            }
+//            $n_contents = $paramsAll['n_contents'];
+            $n_contents = $paramsAll['n_contents'] ?? "";
 
-            if (!isset($paramsAll['n_open_date']) || empty($paramsAll['n_open_date'])) {
-                throw new \OneException(1);
-            }
-            $n_open_date = $paramsAll['n_open_date'];
+//            if (!isset($paramsAll['n_open_date']) || empty($paramsAll['n_open_date'])) {
+//                throw new \OneException(1);
+//            }
+//            $n_open_date = $paramsAll['n_open_date'];
+            $n_open_date = $paramsAll['n_open_date'] ?? "";
 
-            if (!isset($paramsAll['n_close_date']) || empty($paramsAll['n_close_date'])) {
-                throw new \OneException(1);
-            }
-            $n_close_date = $paramsAll['n_close_date'];
+//            if (!isset($paramsAll['n_close_date']) || empty($paramsAll['n_close_date'])) {
+//                throw new \OneException(1);
+//            }
+//            $n_close_date = $paramsAll['n_close_date'];
+            $n_close_date = $paramsAll['n_close_date'] ?? "";
 
             $n_important_flg = empty($paramsAll['n_important_flg'])?0:1;
             $n_open_flg = empty($paramsAll['n_open_flg'])?0:1;
             $n_fixed_flg = empty($paramsAll['n_fixed_flg'])?0:1;
+
+            $fix_open_date = $paramsAll['fix_open_date'] ?? "";
+            $fix_close_date = $paramsAll['fix_close_date'] ?? "";
 
             //数据库事务处理
             DB::beginTransaction();
@@ -203,6 +227,8 @@ class NewsController extends Controller
             $update_S_NEWS_arr['n_important_flg'] = $n_important_flg;
             $update_S_NEWS_arr['n_open_flg'] = $n_open_flg;
             $update_S_NEWS_arr['n_fixed_flg'] = $n_fixed_flg;
+            $update_S_NEWS_arr['fix_open_date'] = $fix_open_date;
+            $update_S_NEWS_arr['fix_close_date'] = $fix_close_date;
             $update_S_NEWS_arr['MODIFY_DT'] = date('Y-m-d',time());
             $update_S_NEWS_arr['MODIFY_USER'] = session('USER_ID');
 
@@ -210,16 +236,19 @@ class NewsController extends Controller
 
             DB::commit();
 
-            return view('news/news_edit_complete', $this->data);
+            return redirect('/news/news_lists?msg_code=200&&msg=ニュース情報の編集が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('news/news_add', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('news/news_add', $this->data);
         }
     }
 }

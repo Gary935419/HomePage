@@ -35,10 +35,10 @@ class ImportsController extends Controller
             }
             $guild_name = $paramsAll['guild_name'];
 
-            if (!isset($paramsAll['pr_contents']) || empty($paramsAll['pr_contents'])) {
+            if (!isset($paramsAll['guild_descriptions']) || empty($paramsAll['guild_descriptions'])) {
                 throw new \OneException(1);
             }
-            $pr_contents = $paramsAll['pr_contents'];
+            $guild_descriptions = $paramsAll['guild_descriptions'];
 
             if (!isset($paramsAll['pr_labels']) || empty($paramsAll['pr_labels'])) {
                 throw new \OneException(1);
@@ -48,6 +48,10 @@ class ImportsController extends Controller
             $pr_labels_new = implode(",", $pr_labels);
 
             $is_del = 0;
+
+            $main_flg = $paramsAll['main_flg'] ?? 0;
+            $main_img_url = $paramsAll['main_img_url'] ?? "";
+            $main_video_url = $paramsAll['main_video_url'] ?? "";
 
             $Imports = new Imports($this);
 
@@ -62,9 +66,13 @@ class ImportsController extends Controller
             $insert_S_PRECEDENTS_INFORMATION_arr = array();
             $insert_S_PRECEDENTS_INFORMATION_arr['pr_title'] = $pr_title;
             $insert_S_PRECEDENTS_INFORMATION_arr['pr_img_url'] = $pr_img_url;
-            $insert_S_PRECEDENTS_INFORMATION_arr['pr_contents'] = $pr_contents;
+            $insert_S_PRECEDENTS_INFORMATION_arr['pr_contents'] = $paramsAll['pr_contents'] ?? "";
             $insert_S_PRECEDENTS_INFORMATION_arr['guild_name'] = $guild_name;
+            $insert_S_PRECEDENTS_INFORMATION_arr['guild_descriptions'] = $guild_descriptions;
             $insert_S_PRECEDENTS_INFORMATION_arr['pr_labels'] = $pr_labels_new;
+            $insert_S_PRECEDENTS_INFORMATION_arr['main_flg'] = $main_flg;
+            $insert_S_PRECEDENTS_INFORMATION_arr['main_img_url'] = empty($main_flg) ? $main_img_url : "";
+            $insert_S_PRECEDENTS_INFORMATION_arr['main_video_url'] = !empty($main_flg) ? $main_video_url : "";
             $insert_S_PRECEDENTS_INFORMATION_arr['CREATED_DT'] = date('Y-m-d',time());
             $insert_S_PRECEDENTS_INFORMATION_arr['CREATED_USER'] = session('USER_ID');
             $insert_S_PRECEDENTS_INFORMATION_arr['is_del'] = $is_del;
@@ -72,22 +80,31 @@ class ImportsController extends Controller
 
             DB::commit();
 
-            return view('imports/recedents_add_complete', $this->data);
+            return redirect('/imports/recedents_lists?msg_code=200&&msg=事例情報の登録が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('imports/recedents_add', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('imports/recedents_add', $this->data);
         }
     }
 
     public function get_recedents_lists()
     {
         $paramsAll = request()->all();
+        $MSG_CODE = $paramsAll['msg_code'] ?? '';
+        if (!empty($MSG_CODE)){
+            $this->data['MSG_CODE'] = $MSG_CODE;
+            $this->data['MSG'] = $paramsAll['msg'];
+        }
+
         $this->data['pr_title'] = $paramsAll['pr_title'] ?? '';
         $this->data['guild_name'] = $paramsAll['guild_name'] ?? '';
         $this->data['PRODECT_LABLES_ARR'] = $paramsAll['pr_labels'] ?? array();
@@ -179,10 +196,10 @@ class ImportsController extends Controller
             }
             $guild_name = $paramsAll['guild_name'];
 
-            if (!isset($paramsAll['pr_contents']) || empty($paramsAll['pr_contents'])) {
+            if (!isset($paramsAll['guild_descriptions']) || empty($paramsAll['guild_descriptions'])) {
                 throw new \OneException(1);
             }
-            $pr_contents = $paramsAll['pr_contents'];
+            $guild_descriptions = $paramsAll['guild_descriptions'];
 
             if (!isset($paramsAll['pr_labels']) || empty($paramsAll['pr_labels'])) {
                 throw new \OneException(1);
@@ -191,6 +208,10 @@ class ImportsController extends Controller
 
             $pr_labels_new = implode(",", $pr_labels);
 
+            $main_flg = $paramsAll['main_flg'] ?? 0;
+            $main_img_url = $paramsAll['main_img_url'] ?? "";
+            $main_video_url = $paramsAll['main_video_url'] ?? "";
+
             //数据库事务处理
             DB::beginTransaction();
 
@@ -198,8 +219,12 @@ class ImportsController extends Controller
             $update_S_PRECEDENTS_arr['pr_title'] = $pr_title;
             $update_S_PRECEDENTS_arr['pr_img_url'] = $pr_img_url;
             $update_S_PRECEDENTS_arr['guild_name'] = $guild_name;
-            $update_S_PRECEDENTS_arr['pr_contents'] = $pr_contents;
+            $update_S_PRECEDENTS_arr['guild_descriptions'] = $guild_descriptions;
+            $update_S_PRECEDENTS_arr['pr_contents'] = $paramsAll['pr_contents'] ?? "";
             $update_S_PRECEDENTS_arr['pr_labels'] = $pr_labels_new;
+            $update_S_PRECEDENTS_arr['main_flg'] = $main_flg;
+            $update_S_PRECEDENTS_arr['main_img_url'] = empty($main_flg) ? $main_img_url : "";
+            $update_S_PRECEDENTS_arr['main_video_url'] = !empty($main_flg) ? $main_video_url : "";
             $update_S_PRECEDENTS_arr['MODIFY_DT'] = date('Y-m-d',time());
             $update_S_PRECEDENTS_arr['MODIFY_USER'] = session('USER_ID');
 
@@ -207,16 +232,19 @@ class ImportsController extends Controller
 
             DB::commit();
 
-            return view('imports/recedents_edit_complete', $this->data);
+            return redirect('/imports/recedents_lists?msg_code=200&&msg=事例情報の編集が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('imports/recedents_edit', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('imports/recedents_edit', $this->data);
         }
     }
 
@@ -249,22 +277,29 @@ class ImportsController extends Controller
             }
             $logo_url = $paramsAll['logo_url'];
 
-            if (!isset($paramsAll['precedents_url']) || empty($paramsAll['precedents_url'])) {
-                throw new \OneException(1);
-            }
-            $precedents_url = $paramsAll['precedents_url'];
+//            if (!isset($paramsAll['precedents_url']) || empty($paramsAll['precedents_url'])) {
+//                throw new \OneException(1);
+//            }
+//            $precedents_url = $paramsAll['precedents_url'];
+            $precedents_url = $paramsAll['precedents_url'] ?? "";
 
-            if (!isset($paramsAll['video_url']) || empty($paramsAll['video_url'])) {
-                throw new \OneException(1);
-            }
-            $video_url = $paramsAll['video_url'];
+//            if (!isset($paramsAll['video_url']) || empty($paramsAll['video_url'])) {
+//                throw new \OneException(1);
+//            }
+//            $video_url = $paramsAll['video_url'];
+            $video_url = $paramsAll['video_url'] ?? "";
 
-            if (!isset($paramsAll['c_lables']) || empty($paramsAll['c_lables'])) {
-                throw new \OneException(1);
-            }
-            $c_lables = $paramsAll['c_lables'];
+//            if (!isset($paramsAll['c_lables']) || empty($paramsAll['c_lables'])) {
+//                throw new \OneException(1);
+//            }
+//            $c_lables = $paramsAll['c_lables'];
+//            $c_lables_new = implode(",", $c_lables);
 
-            $c_lables_new = implode(",", $c_lables);
+            $c_lables = $paramsAll['c_lables'] ?? array();
+            $c_lables_new = "";
+            if (!empty($c_lables)){
+                $c_lables_new = implode(",", $c_lables);
+            }
 
             $select_flg = empty($paramsAll['select_flg'])?0:1;
             $open_flg = empty($paramsAll['open_flg'])?0:1;
@@ -272,10 +307,10 @@ class ImportsController extends Controller
 
             $Imports = new Imports($this);
 
-            $S_COMPANY_INFORMATION_info = $Imports->select_S_COMPANY_INFORMATION_info($c_name);
-            if (!empty($S_COMPANY_INFORMATION_info)){
-                throw new \OneException(7);
-            }
+//            $S_COMPANY_INFORMATION_info = $Imports->select_S_COMPANY_INFORMATION_info($c_name);
+//            if (!empty($S_COMPANY_INFORMATION_info)){
+//                throw new \OneException(7);
+//            }
 
             //数据库事务处理
             DB::beginTransaction();
@@ -296,27 +331,39 @@ class ImportsController extends Controller
 
             DB::commit();
 
-            return view('imports/company_add_complete', $this->data);
+            return redirect('/imports/company_lists?msg_code=200&&msg=企業情報の登録が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('imports/company_add', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('imports/company_add', $this->data);
         }
     }
 
     public function get_company_lists()
     {
         $paramsAll = request()->all();
+
+        $MSG_CODE = $paramsAll['msg_code'] ?? '';
+        if (!empty($MSG_CODE)){
+            $this->data['MSG_CODE'] = $MSG_CODE;
+            $this->data['MSG'] = $paramsAll['msg'];
+        }
+
         $this->data['c_name'] = $paramsAll['c_name'] ?? '';
         $this->data['precedents_url'] = $paramsAll['precedents_url'] ?? '';
         $this->data['video_url'] = $paramsAll['video_url'] ?? '';
         $this->data['PRODUCT_LABLES_ARR'] = $paramsAll['c_lables'] ?? array();
-        $this->data['OPEN_FLG_ARR'] = $paramsAll['open_flg'] ?? array();
+        $this->data['open_flg'] = $paramsAll['open_flg'] ?? 0;
+        $this->data['precedents_url_have'] = $paramsAll['precedents_url_have'] ?? 0;
+        $this->data['video_url_have'] = $paramsAll['video_url_have'] ?? 0;
 
         $Imports = new Imports($this);
         $info = $Imports->search_company($paramsAll);
@@ -331,6 +378,7 @@ class ImportsController extends Controller
                     $info[$k]['c_lables_str'] = $info[$k]['c_lables_str'] . $select_S_PRODECT_LABLES_info['p_name'];
                 }
             }
+            $info[$k]['open_flg_str'] = $v['open_flg'] == 0 ? "未公開" : "公開";
         }
 
         if (!empty($this->data['PRODUCT_LABLES_ARR'])){
@@ -405,22 +453,29 @@ class ImportsController extends Controller
             }
             $logo_url = $paramsAll['logo_url'];
 
-            if (!isset($paramsAll['precedents_url']) || empty($paramsAll['precedents_url'])) {
-                throw new \OneException(1);
-            }
-            $precedents_url = $paramsAll['precedents_url'];
+//            if (!isset($paramsAll['precedents_url']) || empty($paramsAll['precedents_url'])) {
+//                throw new \OneException(1);
+//            }
+//            $precedents_url = $paramsAll['precedents_url'];
+            $precedents_url = $paramsAll['precedents_url'] ?? "";
 
-            if (!isset($paramsAll['video_url']) || empty($paramsAll['video_url'])) {
-                throw new \OneException(1);
-            }
-            $video_url = $paramsAll['video_url'];
+//            if (!isset($paramsAll['video_url']) || empty($paramsAll['video_url'])) {
+//                throw new \OneException(1);
+//            }
+//            $video_url = $paramsAll['video_url'];
+            $video_url = $paramsAll['video_url'] ?? "";
 
-            if (!isset($paramsAll['c_lables']) || empty($paramsAll['c_lables'])) {
-                throw new \OneException(1);
-            }
-            $c_lables = $paramsAll['c_lables'];
+//            if (!isset($paramsAll['c_lables']) || empty($paramsAll['c_lables'])) {
+//                throw new \OneException(1);
+//            }
+//            $c_lables = $paramsAll['c_lables'];
+//            $c_lables_new = implode(",", $c_lables);
 
-            $c_lables_new = implode(",", $c_lables);
+            $c_lables = $paramsAll['c_lables'] ?? array();
+            $c_lables_new = "";
+            if (!empty($c_lables)){
+                $c_lables_new = implode(",", $c_lables);
+            }
 
             $select_flg = empty($paramsAll['select_flg'])?0:1;
             $open_flg = empty($paramsAll['open_flg'])?0:1;
@@ -445,16 +500,19 @@ class ImportsController extends Controller
 
             DB::commit();
 
-            return view('imports/company_edit_complete', $this->data);
+            return redirect('/imports/company_lists?msg_code=200&&msg=企業情報の編集が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('imports/company_add', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('imports/company_add', $this->data);
         }
     }
 
@@ -502,22 +560,32 @@ class ImportsController extends Controller
 
             DB::commit();
 
-            return view('imports/lable_add_complete', $this->data);
+            return redirect('/imports/lable_lists?msg_code=200&&msg=タグ情報の登録が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('imports/lable_add', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('imports/lable_add', $this->data);
         }
     }
 
     public function get_lable_lists()
     {
         $paramsAll = request()->all();
+
+        $MSG_CODE = $paramsAll['msg_code'] ?? '';
+        if (!empty($MSG_CODE)){
+            $this->data['MSG_CODE'] = $MSG_CODE;
+            $this->data['MSG'] = $paramsAll['msg'];
+        }
+
         $this->data['p_name'] = $paramsAll['p_name'] ?? '';
         $this->data['p_type_arr'] = $paramsAll['p_type_arr'] ?? array();
 
@@ -601,16 +669,19 @@ class ImportsController extends Controller
 
             DB::commit();
 
-            return view('imports/lable_edit_complete', $this->data);
+            return redirect('/imports/lable_lists?msg_code=200&&msg=タグ情報の編集が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('imports/lable_add', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('imports/lable_add', $this->data);
         }
     }
 }

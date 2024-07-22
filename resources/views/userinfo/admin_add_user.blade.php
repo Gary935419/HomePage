@@ -48,22 +48,22 @@
 {{--                                @endif--}}
                                 <div class="form-group">
                                     <label for="inputName">ログインID</label>
-                                    <input type="text" id="USER_ID" size="16" name="USER_ID" autocomplete="off" class="form-control">
+                                    <input type="text" id="USER_ID" size="16" name="USER_ID" value="{{ $USER_ID_NOW ?? '' }}" autocomplete="off" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="inputName">アカウント名</label>
-                                    <input type="text" id="USER_NAME" size="16" name="USER_NAME" autocomplete="off" class="form-control">
+                                    <input type="text" id="USER_NAME" size="16" name="USER_NAME" value="{{ $USER_NAME_NOW ?? '' }}" autocomplete="off" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="inputName">管理権限</label><br>
                                     <div class="icheck-primary d-inline">
-                                        <input type="radio" id="radioPrimary1" name="USER_IDENTITY" value="0" checked>
+                                        <input type="radio" id="radioPrimary1" @if (isset($USER_IDENTITY_NOW) && $USER_IDENTITY_NOW == 0) checked @endif name="USER_IDENTITY" value="0" checked>
                                         <label for="radioPrimary1">
                                             一般
                                         </label>
                                     </div>
                                     <div class="icheck-primary d-inline" style="margin-left: 2%">
-                                        <input type="radio" id="radioPrimary2" name="USER_IDENTITY" value="1">
+                                        <input type="radio" id="radioPrimary2" @if (isset($USER_IDENTITY_NOW) && $USER_IDENTITY_NOW == 1) checked @endif name="USER_IDENTITY" value="1">
                                         <label for="radioPrimary2">
                                             管理者
                                         </label>

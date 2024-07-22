@@ -111,6 +111,11 @@ class UserInfoController extends Controller
 
         $user_id = session('USER_ID');
         $clients_info = Model::get_all_user_info($user_id,$this->data['USER_ID'],$this->data['USER_NAME']);
+
+        $user_info = $this->Admins->get_user_info($user_id);
+        if ($user_info['USER_IDENTITY'] != 1){
+            return view('main/index', $this->data);
+        }
         $this->data['clients_info'] = $clients_info;
         return view('userinfo/admin_user_info', $this->data);
     }
@@ -138,18 +143,21 @@ class UserInfoController extends Controller
         try {
             $params = request()->all();
             $user_id = $params['USER_ID'];
+            $this->data['USER_ID_NOW'] = $user_id;
             $USER_NAME = !isset($params['USER_NAME']) || empty($params['USER_NAME']) ? 0 : $params['USER_NAME'];
+            $this->data['USER_NAME_NOW'] = $USER_NAME;
             $USER_IDENTITY = !isset($params['USER_IDENTITY']) || empty($params['USER_IDENTITY']) ? 0 : $params['USER_IDENTITY'];
+            $this->data['USER_IDENTITY_NOW'] = $USER_IDENTITY;
             $password = $params['PASSWORD'];
             $comfirm = $params['PASSWORD_CONFIRM'];
             $this->data['MSG_CODE'] = 201;
+            $Admins = new Admins($this);
             if ($password != $comfirm) {
-                $error_message = 'パスワードが確認用パスワード情報と一致しない。';
+                $error_message = '再入力されたパスワードが合致しません。';
             } else {
-                $Admins = new Admins($this);
+
                 $error_message = $Admins->check_admin_user_password(array('PASSWORD' => $password));
             }
-
             $check_admin_user_id_error_message = $Admins->check_admin_user_id(array('USER_ID' => $user_id));
             if (!empty($error_message) && !empty($check_admin_user_id_error_message)){
                 $error_message = $error_message.",".$check_admin_user_id_error_message;

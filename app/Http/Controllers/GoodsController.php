@@ -37,10 +37,11 @@ class GoodsController extends Controller
             }
             $p_main_img = $paramsAll['p_main_img'];
 
-            if (!isset($paramsAll['p_contents']) || empty($paramsAll['p_contents'])) {
-                throw new \OneException(1);
-            }
-            $p_contents = $paramsAll['p_contents'];
+//            if (!isset($paramsAll['p_contents']) || empty($paramsAll['p_contents'])) {
+//                throw new \OneException(1);
+//            }
+//            $p_contents = $paramsAll['p_contents'];
+            $p_contents = $paramsAll['p_contents'] ?? "";
 
 //            if (!isset($paramsAll['p_pdf_url']) || empty($paramsAll['p_pdf_url'])) {
 //                throw new \OneException(1);
@@ -230,10 +231,11 @@ class GoodsController extends Controller
             }
             $p_main_img = $paramsAll['p_main_img'];
 
-            if (!isset($paramsAll['p_contents']) || empty($paramsAll['p_contents'])) {
-                throw new \OneException(1);
-            }
-            $p_contents = $paramsAll['p_contents'];
+//            if (!isset($paramsAll['p_contents']) || empty($paramsAll['p_contents'])) {
+//                throw new \OneException(1);
+//            }
+//            $p_contents = $paramsAll['p_contents'];
+            $p_contents = $paramsAll['p_contents'] ?? "";
 
 //            if (!isset($paramsAll['p_pdf_url']) || empty($paramsAll['p_pdf_url'])) {
 //                throw new \OneException(1);
@@ -283,7 +285,6 @@ class GoodsController extends Controller
             $update_S_PRODUCT_INFORMATION_arr['p_open_flg'] = $p_open_flg;
             $update_S_PRODUCT_INFORMATION_arr['MODIFY_DT'] = date('Y-m-d',time());
             $update_S_PRODUCT_INFORMATION_arr['MODIFY_USER'] = session('USER_ID');
-//            $update_S_PRODUCT_INFORMATION_arr['b_sort'] = $b_sort;
             $Goods->update_S_PRODUCT_INFORMATION($id,$update_S_PRODUCT_INFORMATION_arr);
 
             DB::commit();

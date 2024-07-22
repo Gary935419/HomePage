@@ -12,7 +12,22 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
+        @if(isset($MSG_CODE) && $MSG_CODE == 201)
+            <div class="card-body">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-ban"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
+        @if(isset($MSG_CODE) && $MSG_CODE == 200)
+            <div class="card-body">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-check"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -50,15 +65,6 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-2">
-                                            <div class="form-group">
-                                                <label>公開フラグ</label>
-                                                <select class="form-control select2" name="n_open_flg[]" id="n_open_flg" multiple="multiple" data-placeholder="選択してください">
-                                                    <option value="0">未公開</option>
-                                                    <option value="1">公開</option>
-                                                </select>
-                                            </div>
-                                        </div>
 
                                         <div class="col-sm-2">
                                             <div class="form-group">
@@ -72,6 +78,16 @@
                                                     <input type="text" value="{{ $D_FROM_D_TO }}" class="form-control float-right" name="reservation" id="reservation">
                                                     <input type="hidden" class="form-control float-right" name="D_FROM" id="D_FROM">
                                                     <input type="hidden" class="form-control float-right" name="D_TO" id="D_TO">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>&nbsp;</label>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input class="custom-control-input" type="checkbox" @if ($n_open_flg == 1) checked @endif name="n_open_flg" id="n_open_flg" value="1">
+                                                    <label for="n_open_flg" class="custom-control-label">公開中のみ表示する</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -132,10 +148,6 @@
             var n_type_arr = @json($n_type_arr);
             $('#n_type_arr').val(n_type_arr).trigger('change');
 
-            var n_open_flg = @json($n_open_flg);
-            $('#n_open_flg').val(n_open_flg).trigger('change');
-
-
             // Date range picker
             $('#reservation').daterangepicker({
                 autoUpdateInput:false,
@@ -166,11 +178,11 @@
         });
     </script>
     <script type="text/javascript">
-        function del(id, p_name) {
+        function del(id, name) {
             $.confirm({
                 title: false,
                 theme: 'white',
-                content: 'タイトル ' + p_name + ' 削除するかどうか?',
+                content: 'タイトル ' + name + ' 削除するかどうか?',
                 confirmButton: 'はい',
                 cancelButton: 'いいえ',
                 confirmButtonClass: 'btn-danger',
@@ -182,24 +194,9 @@
 
                     ajax.post(url, params, function(data) {
                         if (data['RESULT'] == "OK") {
-                            $.alert({
-                                title: false,
-                                theme: 'white',
-                                content: '削除処理完了。',
-                                confirmButton: 'OK',
-                                confirmButtonClass: 'btn-info',
-                                confirm: function () {
-                                    location.href = "/news/news_lists";
-                                }
-                            });
+                            location.href = "/news/news_lists?msg_code=200&&msg="+'ニュース情報の削除が完了しました。';
                         } else {
-                            $.alert({
-                                title: false,
-                                theme: 'white',
-                                content: data['MESSAGE'],
-                                confirmButton: 'OK',
-                                confirmButtonClass: 'btn-info',
-                            });
+                            location.href = "/news/news_lists?msg_code=201&&msg="+data['MESSAGE'];
                         }
                     });
                 },

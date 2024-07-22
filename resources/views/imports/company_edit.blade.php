@@ -30,7 +30,24 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
+        @if(isset($MSG_CODE) && $MSG_CODE == 201)
+            <div class="card-body">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-ban"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
+        @if(isset($MSG_CODE) && $MSG_CODE == 200)
+            <div class="card-body">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-check"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
+        <div id="targetArea">
+        </div>
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -60,7 +77,7 @@
                                         <input type="hidden" value="{{ $info['logo_url'] }}" name="logo_url" id="logo_url" class="custom-file-input">
                                         <label class="custom-file-label" for="customFile" id="upload_logo_url">{{ $info['logo_url'] }}</label>
                                     </div>
-                                    <img src="{{ $info['logo_url'] }}" class="layui-upload-img" style="width:100px;height:100px;display: none;margin-top: 1%" id="logo_url_img">
+                                    <img src="{{ $info['logo_url'] }}" class="layui-upload-img" style="width:100px;height:100px;margin-top: 1%" id="logo_url_img">
                                 </div>
                                 <div class="img_logo_url"><img src="" alt=""></div>
 
@@ -86,21 +103,18 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>選抜フラグ</label>
-                                    <select class="form-control select2" name="select_flg" id="select_flg" style="width: 100%;">
-                                        <option @if ($info['select_flg']==0) selected @endif value="0">未選抜</option>
-                                        <option @if ($info['select_flg']==1) selected @endif value="1">選抜</option>
-                                    </select>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" name="select_flg" id="select_flg" @if ($info['select_flg'] == 1) checked @endif value="1">
+                                        <label for="select_flg" class="custom-control-label">選抜フラグ</label>
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>公開フラグ</label>
-                                    <select class="form-control select2" name="open_flg" id="open_flg" style="width: 100%;">
-                                        <option @if ($info['open_flg']==0) selected @endif value="0">未公開</option>
-                                        <option @if ($info['open_flg']==1) selected @endif value="1">公開</option>
-                                    </select>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" name="open_flg" id="open_flg" @if ($info['open_flg'] == 1) checked @endif value="1">
+                                        <label for="open_flg" class="custom-control-label">公開フラグ</label>
+                                    </div>
                                 </div>
-
 
                             </div>
                             <!-- /.card-body -->
@@ -177,32 +191,25 @@
             $('#submit_btn').click(function() {
                 var errors_text = "";
                 if ($('#c_name').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "企業名を入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・企業名を入力してください。";
                 }
                 if ($('#furigana_name').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "企業名フリガナ	を入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・企業名フリガナを入力してください。";
                 }
                 if ($('#logo_url').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "ロゴを入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・ロゴを入力してください。";
                 }
-                if ($('#precedents_url').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "導入事例URLを入力してください。";
+                if ($('#precedents_url').val() != "" && !isValidHttpUrl($('#precedents_url').val())) {
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・導入事例URLは正しいURLを入力してください。";
                 }
-                if ($('#c_lables').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "タグを入力してください。";
-                }
-                if ($('#video_url').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "紹介動画URL	を入力してください。";
+                if ($('#video_url').val() != "" && !isValidHttpUrl($('#video_url').val())) {
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・紹介動画URLは正しいURLを入力してください。";
                 }
 
                 if (strlen(errors_text) > 0) {
-                    $.alert({
-                        title: false,
-                        theme: 'white',
-                        content: errors_text,
-                        confirmButton: 'はい',
-                        confirmButtonClass: 'btn-info',
-                    });
+                    var divContent = "<div class='card-body'><div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> <h5 style='margin-bottom: 0rem;'><i class='icon fas fa-ban'></i>入力情報が正しくありません。<br><span style='font-size: 15px;'>"+errors_text+"</span></h5> </div> </div>";
+                    $('#targetArea').html(divContent);
+                    $('html, body').animate({scrollTop: 0}, 'slow');
                     return false;
                 }
 
@@ -223,5 +230,13 @@
                 });
             });
         });
+        function isValidHttpUrl(string) {
+            try {
+                const newUrl = new URL(string);
+                return newUrl.protocol === 'http:' || newUrl.protocol === 'https:';
+            } catch (err) {
+                return false;
+            }
+        }
     </script>
 @endsection

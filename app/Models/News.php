@@ -48,6 +48,9 @@ class News extends Model
             if (isset($params['D_TO']) && $params['D_TO'] != '') {
                 $m_goods = $m_goods->where('n_open_date', '<=', $params['D_TO']);
             }
+            if (isset($params['n_open_flg']) && !empty($params['n_open_flg'])) {
+                $m_goods = $m_goods->where('n_open_flg','=', $params['n_open_flg']);
+            }
             $result = $m_goods->where('is_del', '=', 0)
                 ->orderBy('id')
                 ->get()->toArray();

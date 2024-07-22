@@ -124,7 +124,7 @@
                         <a href="#" class="nav-link @if (($controller ?? '') == 'Controller_Imports') active @endif">
                             <i class="nav-icon far fa-plus-square"></i>
                             <p>
-                                導入情報
+                                導入企業
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -132,13 +132,13 @@
                             <li class="nav-item">
                                 <a href="/imports/recedents_lists" class="nav-link @if (($controller ?? '') == 'Controller_Imports' && ($action == 'recedents_lists' || $action == 'recedents_edit' || $action == 'recedents_add' || $action == 'recedents_regist'))) active @endif">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>事例一覧</p>
+                                    <p>導入事例一覧</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="/imports/company_lists" class="nav-link @if (($controller ?? '') == 'Controller_Imports' && ($action == 'company_lists' || $action == 'company_edit' || $action == 'company_add' || $action == 'company_regist'))) active @endif">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>企業一覧</p>
+                                    <p>導入企業一覧</p>
                                 </a>
                             </li>
                             <li class="nav-item">

@@ -146,15 +146,19 @@ class Imports extends Model
                 if (isset($params['c_name']) && $params['c_name'] != '') {
                 $m_goods = $m_goods->where('c_name', 'like', '%'.$params['c_name'].'%');
             }
-            if (isset($params['precedents_url']) && $params['precedents_url'] != '') {
-                $m_goods = $m_goods->where('precedents_url', 'like', '%'.$params['precedents_url'].'%');
+
+            if (isset($params['precedents_url_have']) && !empty($params['precedents_url_have'])) {
+                $m_goods = $m_goods->whereNotNull('precedents_url');
             }
-            if (isset($params['video_url']) && $params['video_url'] != '') {
-                $m_goods = $m_goods->where('video_url', 'like', '%'.$params['video_url'].'%');
+
+            if (isset($params['video_url_have']) && !empty($params['video_url_have'])) {
+                $m_goods = $m_goods->whereNotNull('video_url');
             }
+
             if (isset($params['open_flg']) && !empty($params['open_flg'])) {
-                $m_goods = $m_goods->whereIn('open_flg', $params['open_flg']);
+                $m_goods = $m_goods->where('open_flg','=', $params['open_flg']);
             }
+
             $result = $m_goods->where('is_del', '=', 0)
                 ->orderBy('id')
                 ->get()->toArray();

@@ -49,9 +49,18 @@
                     tokenUrl: "https://111143.cke-cs.com/token/dev/LzRR1kAjFfQJowpfgdfgjf7WrmUgcsSM6pQZ?limit=10"
                 }
             } )
-            .then( editor => {
-                window.editor = editor;
-            } )
+            .then(editor => {
+                // 设置编辑器容器的高度
+                editor.ui.view.editable.element.style.height = '500px';
+                // 确保高度在每次聚焦时保持一致
+                editor.ui.view.editable.element.addEventListener('focus', () => {
+                    editor.ui.view.editable.element.style.height = '500px';
+                });
+                // 确保高度在每次输入时保持一致
+                editor.model.document.on('change:data', () => {
+                    editor.ui.view.editable.element.style.height = '500px';
+                });
+            })
             .catch( handleSampleError );
 
         function handleSampleError( error ) {

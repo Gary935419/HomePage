@@ -121,13 +121,6 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" name="p_open_flg" id="p_open_flg" @if ($info['p_open_flg']==0) checked @endif value="0">
-                                        <label for="p_open_flg" class="custom-control-label">公開フラグ</label>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
                                     <label for="exampleInputEmail1">製品動画URL</label>
                                     <input type="text" value="{{ $info['p_video_url'] }}" class="form-control" id="p_video_url" name="p_video_url" placeholder="製品動画URL">
                                 </div>
@@ -157,6 +150,13 @@
                                     <label for="exampleInputEmail1">製品説明</label>
                                     <div class="editor-container" style="width: 100%">
                                         <textarea class="form-control" rows="6" id="p_contents" name="p_contents" placeholder="製品説明">{{$info['p_contents']}}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" name="p_open_flg" id="p_open_flg" @if ($info['p_open_flg'] == 1) checked @endif value="1">
+                                        <label for="p_open_flg" class="custom-control-label">公開フラグ</label>
                                     </div>
                                 </div>
                             </div>

@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">企業情報</h1>
+                        <h1 class="m-0">導入企業情報</h1>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -26,7 +26,7 @@
                             </div>
                             <div class="card-body">
                                 <p class="card-text">
-                                    <font size="3" color="#008080">企業情報が更新されました。</font>
+                                    <font size="3" color="#008080">導入企業情報が更新されました。</font>
                                 </p>
                                 <a href="javascript:" onclick="self.location=document.referrer;" class="btn btn-primary">戻る</a>
                             </div>

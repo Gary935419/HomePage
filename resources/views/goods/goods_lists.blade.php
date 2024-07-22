@@ -67,7 +67,7 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
-                                                <label>公開フラグ</label>
+                                                <label>&nbsp;</label>
                                                 <div class="custom-control custom-checkbox">
                                                     <input class="custom-control-input" type="checkbox" @if ($p_open_flg == 1) checked @endif name="p_open_flg" id="p_open_flg" value="1">
                                                     <label for="p_open_flg" class="custom-control-label">公開中のみ表示する</label>
@@ -76,7 +76,7 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
-                                                <label>製品カタログ（PDF）</label>
+                                                <label>&nbsp;</label>
                                                 <div class="custom-control custom-checkbox">
                                                     <input class="custom-control-input" type="checkbox" @if ($p_pdf_url_have == 1) checked @endif name="p_pdf_url_have" id="p_pdf_url_have" value="1">
                                                     <label for="p_pdf_url_have" class="custom-control-label">製品カタログ（PDF）があり</label>
@@ -85,7 +85,7 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
-                                                <label>製品動画</label>
+                                                <label>&nbsp;</label>
                                                 <div class="custom-control custom-checkbox">
                                                     <input class="custom-control-input" type="checkbox" @if ($p_video_url_have == 1) checked @endif name="p_video_url_have" id="p_video_url_have" value="1">
                                                     <label for="p_video_url_have" class="custom-control-label">製品動画があり</label>
@@ -94,7 +94,7 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
-                                                <label>特設サイトURL</label>
+                                                <label>&nbsp;</label>
                                                 <div class="custom-control custom-checkbox">
                                                     <input class="custom-control-input" type="checkbox" @if ($p_special_weburl_have == 1) checked @endif name="p_special_weburl_have" id="p_special_weburl_have" value="1">
                                                     <label for="p_special_weburl_have" class="custom-control-label">特設サイトURLがあり</label>
