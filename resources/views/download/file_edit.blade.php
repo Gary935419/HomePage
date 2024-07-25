@@ -12,7 +12,24 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
+        @if(isset($MSG_CODE) && $MSG_CODE == 201)
+            <div class="card-body">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-ban"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
+        @if(isset($MSG_CODE) && $MSG_CODE == 200)
+            <div class="card-body">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-check"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
+        <div id="targetArea">
+        </div>
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -51,19 +68,17 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>確認フラグ</label>
-                                    <select class="form-control select2" name="confirm_flg" id="confirm_flg" style="width: 100%;">
-                                        <option @if ($info['confirm_flg']==0) selected @endif value="0">未確認</option>
-                                        <option @if ($info['confirm_flg']==1) selected @endif value="1">確認完了</option>
-                                    </select>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" name="confirm_flg" id="confirm_flg" @if ($info['confirm_flg']==1) checked @endif value="1">
+                                        <label for="confirm_flg" class="custom-control-label">PDFをダウンロードする際に確認を行う</label>
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>公開フラグ</label>
-                                    <select class="form-control select2" name="open_flg" id="open_flg" style="width: 100%;">
-                                        <option @if ($info['open_flg']==0) selected @endif value="0">未公開</option>
-                                        <option @if ($info['open_flg']==1) selected @endif value="1">公開</option>
-                                    </select>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" name="open_flg" id="open_flg" @if ($info['open_flg'] == 1) checked @endif value="1">
+                                        <label for="open_flg" class="custom-control-label">公開フラグ</label>
+                                    </div>
                                 </div>
 
                             </div>
@@ -96,21 +111,34 @@
             var $ = layui.jquery
                 ,upload = layui.upload;
             var url = '/api/upload/pushFIle';
+            var u_flg = 0;
             //上传文件
             upload.render({
                 elem: '#upload_d_file_url'
                 ,url: url
                 ,field:"file"
                 ,data:{"dir":"media"}
-                ,accept: 'file'
-                ,done: function(res){
-                    if(res.STATUS == 0){
+                ,accept: 'file',
+                before: function(obj){
+                    obj.preview(function(index, file, result){
+                        if(file.type !== 'application/pdf') {
+                            layer.msg('アップロードできるのはPDFファイルのみです！');
+                            u_flg = 1;
+                            return false;
+                        }else {
+                            u_flg = 0;
+                        }
+                    });
+                },
+                done: function(res){
+                    if(res.STATUS == 0 && u_flg == 0){
                         $("#d_file_url").val(res.SRC);
                         $("#upload_d_file_url").html(res.SRC);
                         return layer.msg('アップロード成功');
-                    }else {
-                        return layer.msg('アップロード失敗');
                     }
+                },
+                error: function(){
+                    return layer.msg('アップロード失敗');
                 }
             });
         });
@@ -121,23 +149,19 @@
             $('#submit_btn').click(function() {
                 var errors_text = "";
                 if ($('#d_file_url').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "ファイルを選択してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・ファイルを選択してください。";
                 }
                 if ($('#d_file_name').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "ファイル名を入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・ファイル名を入力してください。";
                 }
                 if ($('#d_category').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "カテゴリを入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・カテゴリを入力してください。";
                 }
 
                 if (strlen(errors_text) > 0) {
-                    $.alert({
-                        title: false,
-                        theme: 'white',
-                        content: errors_text,
-                        confirmButton: 'はい',
-                        confirmButtonClass: 'btn-info',
-                    });
+                    var divContent = "<div class='card-body'><div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> <h5 style='margin-bottom: 0rem;'><i class='icon fas fa-ban'></i>入力情報が正しくありません。<br><span style='font-size: 15px;'>"+errors_text+"</span></h5> </div> </div>";
+                    $('#targetArea').html(divContent);
+                    $('html, body').animate({scrollTop: 0}, 'slow');
                     return false;
                 }
 

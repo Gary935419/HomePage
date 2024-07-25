@@ -51,8 +51,8 @@ class OneException extends Exception
         }
         $this->errorCode = $error_key;
         $this->message = $lang_msg;
-//        parent::__construct($lang_msg." ERROR CODE:{$formated_code}", $code, $previous);
         parent::__construct($lang_msg, $code, $previous);
+//        parent::__construct($lang_msg." ERROR CODE:{$formated_code}", $code, $previous);
     }
 
     /**

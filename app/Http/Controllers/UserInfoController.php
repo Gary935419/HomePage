@@ -37,11 +37,15 @@ class UserInfoController extends Controller
         } else {
             if (isset($params['FORCED_CHANGE_PASSWORD_USER_ID']) && !empty($params['FORCED_CHANGE_PASSWORD_USER_ID'])) {
                 $forced_chage_user = $params['FORCED_CHANGE_PASSWORD_USER_ID'];
-                $this->data['change_password_result'] = $change_password_result;
+//                $this->data['change_password_result'] = $change_password_result;
                 $this->data['USER_ID'] = $forced_chage_user;
+                $this->data['MSG_CODE'] = 201;
+                $this->data['MSG'] = $change_password_result;
                 return view('userinfo/password_change_forced', $this->data);
             } else {
-                $this->data['change_password_result'] = $change_password_result;
+//                $this->data['change_password_result'] = $change_password_result;
+                $this->data['MSG_CODE'] = 201;
+                $this->data['MSG'] = $change_password_result;
                 return view('userinfo/password_change', $this->data);
             }
         }
@@ -107,10 +111,10 @@ class UserInfoController extends Controller
         }
 
         $this->data['USER_ID'] = $paramsAll['USER_ID'] ?? '';
-        $this->data['USER_NAME'] = $paramsAll['USER_NAME'] ?? '';
+        $this->data['USER_NAME_NOW'] = $paramsAll['USER_NAME'] ?? '';
 
         $user_id = session('USER_ID');
-        $clients_info = Model::get_all_user_info($user_id,$this->data['USER_ID'],$this->data['USER_NAME']);
+        $clients_info = Model::get_all_user_info($user_id,$this->data['USER_ID'],$this->data['USER_NAME_NOW']);
 
         $user_info = $this->Admins->get_user_info($user_id);
         if ($user_info['USER_IDENTITY'] != 1){

@@ -65,8 +65,7 @@
                                         <th>会社名</th>
                                         <th>電話番号</th>
                                         <th>メール</th>
-                                        <th>ファイルパス</th>
-                                        <th>同意フラグ</th>
+                                        <th>ファイル名</th>
                                         <th>作成時間</th>
                                     </tr>
                                     </thead>
@@ -77,8 +76,7 @@
                                             <td>{{$v['company_name']}}</td>
                                             <td>{{$v['phone_number']}}</td>
                                             <td>{{$v['email']}}</td>
-                                            <td>{{$v['d_file_url']}}</td>
-                                            <td>{{$v['agreement_flg_str']}}</td>
+                                            <td>{{$v['d_file_name']}}</td>
                                             <td>{{empty($v['CREATED_DT'])?'-':$v['CREATED_DT']}}</td>
                                         </tr>
                                     @endforeach

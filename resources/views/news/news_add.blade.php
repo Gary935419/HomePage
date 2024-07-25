@@ -56,7 +56,7 @@
                                         <option value="2">セミナー展示会</option>
                                         <option value="3">ニュースリリース</option>
                                         <option value="4">メディア</option>
-                                        <option value="4">障害連絡</option>
+                                        <option value="5">障害連絡</option>
                                     </select>
                                 </div>
 

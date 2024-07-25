@@ -66,22 +66,30 @@ class DownloadController extends Controller
 
             DB::commit();
 
-            return view('/download/file_add_complete', $this->data);
+            return redirect('/download/file_lists?msg_code=200&&msg=ファイル情報の登録が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('download/file_add', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('download/file_add', $this->data);
         }
     }
 
     public function get_file_lists()
     {
         $paramsAll = request()->all();
+        $MSG_CODE = $paramsAll['msg_code'] ?? '';
+        if (!empty($MSG_CODE)){
+            $this->data['MSG_CODE'] = $MSG_CODE;
+            $this->data['MSG'] = $paramsAll['msg'];
+        }
         $this->data['d_file_name'] = $paramsAll['d_file_name'] ?? '';
         $this->data['d_category_arr'] = $paramsAll['d_category'] ?? array();
 
@@ -192,16 +200,19 @@ class DownloadController extends Controller
 
             DB::commit();
 
-            return view('/download/file_edit_complete', $this->data);
+            return redirect('/download/file_lists?msg_code=200&&msg=ファイル情報の編集が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('download/file_edit', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('download/file_edit', $this->data);
         }
     }
 
@@ -245,22 +256,30 @@ class DownloadController extends Controller
 
             DB::commit();
 
-            return view('/download/category_add_complete', $this->data);
+            return redirect('/download/category_lists?msg_code=200&&msg=カテゴリ情報の登録が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('download/category_add', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('download/category_add', $this->data);
         }
     }
 
     public function get_category_lists()
     {
         $paramsAll = request()->all();
+        $MSG_CODE = $paramsAll['msg_code'] ?? '';
+        if (!empty($MSG_CODE)){
+            $this->data['MSG_CODE'] = $MSG_CODE;
+            $this->data['MSG'] = $paramsAll['msg'];
+        }
         $this->data['category_name'] = $paramsAll['category_name'] ?? '';
         $this->data['open_flg'] = $paramsAll['open_flg'] ?? array();
 
@@ -330,16 +349,19 @@ class DownloadController extends Controller
 
             DB::commit();
 
-            return view('/download/category_edit_complete', $this->data);
+            return redirect('/download/category_lists?msg_code=200&&msg=カテゴリ情報の編集が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('download/category_edit', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('download/category_edit', $this->data);
         }
     }
 
@@ -353,10 +375,6 @@ class DownloadController extends Controller
 
         $Download = new Download($this);
         $info = $Download->search_S_DOWNLOADS_HISTORY($paramsAll);
-        foreach ($info as $k=>$v){
-            $info[$k]['agreement_flg_str'] = $v['agreement_flg'] == 1 ? "同意": "未同意";
-        }
-
         $this->data['info'] = $info;
 
         return view('/download/history_lists', $this->data);

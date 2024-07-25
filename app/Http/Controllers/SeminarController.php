@@ -32,10 +32,10 @@ class SeminarController extends Controller
             }
             $category = $paramsAll['category'];
 
-            if (!isset($paramsAll['apply_url']) || empty($paramsAll['apply_url'])) {
-                throw new \OneException(1);
-            }
-            $apply_url = $paramsAll['apply_url'];
+//            if (!isset($paramsAll['apply_url']) || empty($paramsAll['apply_url'])) {
+//                throw new \OneException(1);
+//            }
+            $apply_url = $paramsAll['apply_url'] ?? "";
 
             if (!isset($paramsAll['b_url']) || empty($paramsAll['b_url'])) {
                 throw new \OneException(1);
@@ -59,19 +59,19 @@ class SeminarController extends Controller
 
             $c_lables_new = implode(",", $c_lables);
 
-            if (!isset($paramsAll['address_info']) || empty($paramsAll['address_info'])) {
-                throw new \OneException(1);
-            }
-            $address_info = $paramsAll['address_info'];
-
+//            if (!isset($paramsAll['address_info']) || empty($paramsAll['address_info'])) {
+//                throw new \OneException(1);
+//            }
+            $address_info = $paramsAll['address_info'] ?? "";
+            $address_flg = empty($paramsAll['address_flg'])?0:1;
             $open_flg = empty($paramsAll['open_flg'])?0:1;
             $is_del = 0;
 
             $Seminar = new Seminar($this);
-            $S_SEMINARS_EXHIBITIONS_name_type = $Seminar->select_S_SEMINARS_EXHIBITIONS_name_type($title,$category);
-            if (!empty($S_SEMINARS_EXHIBITIONS_name_type)){
-                throw new \OneException(10);
-            }
+//            $S_SEMINARS_EXHIBITIONS_name_type = $Seminar->select_S_SEMINARS_EXHIBITIONS_name_type($title,$category);
+//            if (!empty($S_SEMINARS_EXHIBITIONS_name_type)){
+//                throw new \OneException(10);
+//            }
 
             //数据库事务处理
             DB::beginTransaction();
@@ -85,6 +85,7 @@ class SeminarController extends Controller
             $insert_S_SEMINARS_EXHIBITIONS_arr['opening_times'] = $opening_times;
             $insert_S_SEMINARS_EXHIBITIONS_arr['open_flg'] = $open_flg;
             $insert_S_SEMINARS_EXHIBITIONS_arr['c_lables'] = $c_lables_new;
+            $insert_S_SEMINARS_EXHIBITIONS_arr['address_flg'] = $address_flg;
             $insert_S_SEMINARS_EXHIBITIONS_arr['address_info'] = $address_info;
             $insert_S_SEMINARS_EXHIBITIONS_arr['exhibition_dates1'] = $paramsAll['exhibition_dates1'] ?? '';
             $insert_S_SEMINARS_EXHIBITIONS_arr['exhibition_dates2'] = $paramsAll['exhibition_dates2'] ?? '';
@@ -92,6 +93,10 @@ class SeminarController extends Controller
             $insert_S_SEMINARS_EXHIBITIONS_arr['exhibition_dates4'] = $paramsAll['exhibition_dates4'] ?? '';
             $insert_S_SEMINARS_EXHIBITIONS_arr['exhibition_dates5'] = $paramsAll['exhibition_dates5'] ?? '';
             $insert_S_SEMINARS_EXHIBITIONS_arr['exhibition_dates6'] = $paramsAll['exhibition_dates6'] ?? '';
+            $insert_S_SEMINARS_EXHIBITIONS_arr['exhibition_dates7'] = $paramsAll['exhibition_dates7'] ?? '';
+            $insert_S_SEMINARS_EXHIBITIONS_arr['exhibition_dates8'] = $paramsAll['exhibition_dates8'] ?? '';
+            $insert_S_SEMINARS_EXHIBITIONS_arr['exhibition_dates9'] = $paramsAll['exhibition_dates9'] ?? '';
+            $insert_S_SEMINARS_EXHIBITIONS_arr['exhibition_dates10'] = $paramsAll['exhibition_dates10'] ?? '';
             $insert_S_SEMINARS_EXHIBITIONS_arr['CREATED_DT'] = date('Y-m-d',time());
             $insert_S_SEMINARS_EXHIBITIONS_arr['CREATED_USER'] = session('USER_ID');
             $insert_S_SEMINARS_EXHIBITIONS_arr['is_del'] = $is_del;
@@ -100,22 +105,31 @@ class SeminarController extends Controller
 
             DB::commit();
 
-            return view('seminar/exhibition_add_complete', $this->data);
+            return redirect('/seminar/exhibition_lists?msg_code=200&&msg=セミナー展示会情報の登録が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('seminar/exhibition_add', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('seminar/exhibition_add', $this->data);
         }
     }
 
     public function get_exhibition_lists()
     {
         $paramsAll = request()->all();
+        $MSG_CODE = $paramsAll['msg_code'] ?? '';
+        if (!empty($MSG_CODE)){
+            $this->data['MSG_CODE'] = $MSG_CODE;
+            $this->data['MSG'] = $paramsAll['msg'];
+        }
+
         $this->data['title'] = $paramsAll['title'] ?? '';
         $this->data['n_type_arr'] = $paramsAll['n_type_arr'] ?? array();
 
@@ -141,7 +155,11 @@ class SeminarController extends Controller
             $exhibition_dates4 = empty($v['exhibition_dates4']) ? '' : $v['exhibition_dates4']."、";
             $exhibition_dates5 = empty($v['exhibition_dates5']) ? '' : $v['exhibition_dates5']."、";
             $exhibition_dates6 = empty($v['exhibition_dates6']) ? '' : $v['exhibition_dates6']."、";
-            $info[$k]['exhibition_dates_str'] =  $exhibition_dates1.$exhibition_dates2.$exhibition_dates3.$exhibition_dates4.$exhibition_dates5.$exhibition_dates6;
+            $exhibition_dates7 = empty($v['exhibition_dates7']) ? '' : $v['exhibition_dates7']."、";
+            $exhibition_dates8 = empty($v['exhibition_dates8']) ? '' : $v['exhibition_dates8']."、";
+            $exhibition_dates9 = empty($v['exhibition_dates9']) ? '' : $v['exhibition_dates9']."、";
+            $exhibition_dates10 = empty($v['exhibition_dates10']) ? '' : $v['exhibition_dates10']."、";
+            $info[$k]['exhibition_dates_str'] =  $exhibition_dates1.$exhibition_dates2.$exhibition_dates3.$exhibition_dates4.$exhibition_dates5.$exhibition_dates6.$exhibition_dates7.$exhibition_dates8.$exhibition_dates9.$exhibition_dates10;
         }
 
         $this->data['info'] = $info;
@@ -186,6 +204,7 @@ class SeminarController extends Controller
             if (empty($this->data['info'])){
                 throw new \OneException(3);
             }
+            $this->data['S_SEMINARS_EXHIBITIONS_LABLES_ARR'] = explode(",", $this->data['info']['c_lables']);
 
             if (!isset($paramsAll['title']) || empty($paramsAll['title'])) {
                 throw new \OneException(1);
@@ -224,11 +243,11 @@ class SeminarController extends Controller
 
             $c_lables_new = implode(",", $c_lables);
 
-            if (!isset($paramsAll['address_info']) || empty($paramsAll['address_info'])) {
-                throw new \OneException(1);
-            }
-            $address_info = $paramsAll['address_info'];
-
+//            if (!isset($paramsAll['address_info']) || empty($paramsAll['address_info'])) {
+//                throw new \OneException(1);
+//            }
+            $address_info = $paramsAll['address_info'] ?? "";
+            $address_flg = empty($paramsAll['address_flg'])?0:1;
             $open_flg = empty($paramsAll['open_flg'])?0:1;
 
             //数据库事务处理
@@ -243,6 +262,7 @@ class SeminarController extends Controller
             $update_S_SEMINARS_EXHIBITIONS_arr['opening_times'] = $opening_times;
             $update_S_SEMINARS_EXHIBITIONS_arr['open_flg'] = $open_flg;
             $update_S_SEMINARS_EXHIBITIONS_arr['c_lables'] = $c_lables_new;
+            $update_S_SEMINARS_EXHIBITIONS_arr['address_flg'] = $address_flg;
             $update_S_SEMINARS_EXHIBITIONS_arr['address_info'] = $address_info;
             $update_S_SEMINARS_EXHIBITIONS_arr['exhibition_dates1'] = $paramsAll['exhibition_dates1'] ?? '';
             $update_S_SEMINARS_EXHIBITIONS_arr['exhibition_dates2'] = $paramsAll['exhibition_dates2'] ?? '';
@@ -250,6 +270,10 @@ class SeminarController extends Controller
             $update_S_SEMINARS_EXHIBITIONS_arr['exhibition_dates4'] = $paramsAll['exhibition_dates4'] ?? '';
             $update_S_SEMINARS_EXHIBITIONS_arr['exhibition_dates5'] = $paramsAll['exhibition_dates5'] ?? '';
             $update_S_SEMINARS_EXHIBITIONS_arr['exhibition_dates6'] = $paramsAll['exhibition_dates6'] ?? '';
+            $update_S_SEMINARS_EXHIBITIONS_arr['exhibition_dates7'] = $paramsAll['exhibition_dates7'] ?? '';
+            $update_S_SEMINARS_EXHIBITIONS_arr['exhibition_dates8'] = $paramsAll['exhibition_dates8'] ?? '';
+            $update_S_SEMINARS_EXHIBITIONS_arr['exhibition_dates9'] = $paramsAll['exhibition_dates9'] ?? '';
+            $update_S_SEMINARS_EXHIBITIONS_arr['exhibition_dates10'] = $paramsAll['exhibition_dates10'] ?? '';
             $update_S_SEMINARS_EXHIBITIONS_arr['MODIFY_DT'] = date('Y-m-d',time());
             $update_S_SEMINARS_EXHIBITIONS_arr['MODIFY_USER'] = session('USER_ID');
 
@@ -257,16 +281,19 @@ class SeminarController extends Controller
 
             DB::commit();
 
-            return view('seminar/exhibition_edit_complete', $this->data);
+            return redirect('/seminar/exhibition_lists?msg_code=200&&msg=セミナー展示会情報の編集が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('seminar/exhibition_edit', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('seminar/exhibition_edit', $this->data);
         }
     }
 
@@ -343,22 +370,30 @@ class SeminarController extends Controller
 
             DB::commit();
 
-            return view('seminar/teacher_add_complete', $this->data);
+            return redirect('/seminar/teacher_lists?msg_code=200&&msg=講師情報の登録が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('seminar/teacher_add', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('seminar/teacher_add', $this->data);
         }
     }
 
     public function get_teacher_lists()
     {
         $paramsAll = request()->all();
+        $MSG_CODE = $paramsAll['msg_code'] ?? '';
+        if (!empty($MSG_CODE)){
+            $this->data['MSG_CODE'] = $MSG_CODE;
+            $this->data['MSG'] = $paramsAll['msg'];
+        }
         $this->data['l_name'] = $paramsAll['l_name'] ?? '';
         $this->data['l_professions'] = $paramsAll['l_professions'] ?? '';
 
@@ -460,16 +495,19 @@ class SeminarController extends Controller
 
             DB::commit();
 
-            return view('seminar/teacher_edit_complete', $this->data);
+            return redirect('/seminar/teacher_lists?msg_code=200&&msg=講師情報の編集が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('seminar/teacher_edit', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('seminar/teacher_edit', $this->data);
         }
     }
 
@@ -512,22 +550,30 @@ class SeminarController extends Controller
 
             DB::commit();
 
-            return view('seminar/lable_add_complete', $this->data);
+            return redirect('/seminar/lable_lists?msg_code=200&&msg=タグ情報の登録が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('seminar/teacher_add', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('seminar/teacher_add', $this->data);
         }
     }
 
     public function get_lable_lists()
     {
         $paramsAll = request()->all();
+        $MSG_CODE = $paramsAll['msg_code'] ?? '';
+        if (!empty($MSG_CODE)){
+            $this->data['MSG_CODE'] = $MSG_CODE;
+            $this->data['MSG'] = $paramsAll['msg'];
+        }
         $this->data['s_name'] = $paramsAll['s_name'] ?? '';
 
         $Seminar = new Seminar($this);
@@ -590,16 +636,19 @@ class SeminarController extends Controller
 
             DB::commit();
 
-            return view('seminar/lable_edit_complete', $this->data);
+            return redirect('/seminar/lable_lists?msg_code=200&&msg=タグ情報の編集が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('seminar/teacher_edit', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('seminar/teacher_edit', $this->data);
         }
     }
 }

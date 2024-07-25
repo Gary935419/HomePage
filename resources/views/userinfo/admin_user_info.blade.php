@@ -57,7 +57,7 @@
                                             <!-- text input -->
                                             <div class="form-group">
                                                 <label>アカウント名</label>
-                                                <input type="text" value="{{ $USER_NAME }}" placeholder="アカウント名" name="USER_NAME" class="form-control">
+                                                <input type="text" value="{{ $USER_NAME_NOW }}" placeholder="アカウント名" name="USER_NAME" class="form-control">
                                             </div>
                                         </div>
                                     </div>

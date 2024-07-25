@@ -30,6 +30,11 @@ class ManagementController extends Controller
             }
             $logo = $paramsAll['logo'];
 
+            if (!isset($paramsAll['url']) || empty($paramsAll['url'])) {
+                throw new \OneException(1);
+            }
+            $url = $paramsAll['url'];
+
             if (!isset($paramsAll['contents']) || empty($paramsAll['contents'])) {
                 throw new \OneException(1);
             }
@@ -52,6 +57,7 @@ class ManagementController extends Controller
             $insert_S_MANAGEMENT_SITE_arr['logo'] = $logo;
             $insert_S_MANAGEMENT_SITE_arr['contents'] = $contents;
             $insert_S_MANAGEMENT_SITE_arr['open_flg'] = $open_flg;
+            $insert_S_MANAGEMENT_SITE_arr['url'] = $url;
             $insert_S_MANAGEMENT_SITE_arr['CREATED_DT'] = date('Y-m-d',time());
             $insert_S_MANAGEMENT_SITE_arr['CREATED_USER'] = session('USER_ID');
             $insert_S_MANAGEMENT_SITE_arr['is_del'] = $is_del;
@@ -60,22 +66,30 @@ class ManagementController extends Controller
 
             DB::commit();
 
-            return view('management/site_add_complete', $this->data);
+            return redirect('/management/site_lists?msg_code=200&&msg=運営情報の登録が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('management/site_add', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('management/site_add', $this->data);
         }
     }
 
     public function get_site_lists()
     {
         $paramsAll = request()->all();
+        $MSG_CODE = $paramsAll['msg_code'] ?? '';
+        if (!empty($MSG_CODE)){
+            $this->data['MSG_CODE'] = $MSG_CODE;
+            $this->data['MSG'] = $paramsAll['msg'];
+        }
         $this->data['title'] = $paramsAll['title'] ?? '';
         $this->data['open_flg'] = $paramsAll['open_flg'] ?? array();
 
@@ -138,6 +152,11 @@ class ManagementController extends Controller
             }
             $logo = $paramsAll['logo'];
 
+            if (!isset($paramsAll['url']) || empty($paramsAll['url'])) {
+                throw new \OneException(1);
+            }
+            $url = $paramsAll['url'];
+
             if (!isset($paramsAll['contents']) || empty($paramsAll['contents'])) {
                 throw new \OneException(1);
             }
@@ -153,6 +172,7 @@ class ManagementController extends Controller
             $update_S_MANAGEMENT_SITE_arr['logo'] = $logo;
             $update_S_MANAGEMENT_SITE_arr['contents'] = $contents;
             $update_S_MANAGEMENT_SITE_arr['open_flg'] = $open_flg;
+            $update_S_MANAGEMENT_SITE_arr['url'] = $url;
             $update_S_MANAGEMENT_SITE_arr['MODIFY_DT'] = date('Y-m-d',time());
             $update_S_MANAGEMENT_SITE_arr['MODIFY_USER'] = session('USER_ID');
 
@@ -160,16 +180,19 @@ class ManagementController extends Controller
 
             DB::commit();
 
-            return view('management/site_edit_complete', $this->data);
+            return redirect('/management/site_lists?msg_code=200&&msg=運営情報の編集が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('management/site_edit', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            return view('error/error', $this->data);
+            $this->data['MSG_CODE'] = 201;
+            $this->data['MSG'] = $e->getMessage();
+            return view('management/site_edit', $this->data);
         }
     }
 }

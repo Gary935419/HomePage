@@ -12,7 +12,22 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
+        @if(isset($MSG_CODE) && $MSG_CODE == 201)
+            <div class="card-body">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-ban"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
+        @if(isset($MSG_CODE) && $MSG_CODE == 200)
+            <div class="card-body">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-check"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -127,24 +142,9 @@
 
                     ajax.post(url, params, function(data) {
                         if (data['RESULT'] == "OK") {
-                            $.alert({
-                                title: false,
-                                theme: 'white',
-                                content: '削除処理完了。',
-                                confirmButton: 'OK',
-                                confirmButtonClass: 'btn-info',
-                                confirm: function () {
-                                    location.href = "/download/file_lists";
-                                }
-                            });
+                            location.href = "/download/file_lists?msg_code=200&&msg="+'ファイル情報の削除が完了しました。';
                         } else {
-                            $.alert({
-                                title: false,
-                                theme: 'white',
-                                content: data['MESSAGE'],
-                                confirmButton: 'OK',
-                                confirmButtonClass: 'btn-info',
-                            });
+                            location.href = "/download/file_lists?msg_code=201&&msg="+data['MESSAGE'];
                         }
                     });
                 },

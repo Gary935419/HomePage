@@ -12,7 +12,22 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
+        @if(isset($MSG_CODE) && $MSG_CODE == 201)
+            <div class="card-body">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-ban"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
+        @if(isset($MSG_CODE) && $MSG_CODE == 200)
+            <div class="card-body">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-check"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -40,11 +55,11 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
-                                                <label>公開フラグ</label>
-                                                <select class="form-control select2" name="open_flg[]" id="open_flg" multiple="multiple" data-placeholder="選択してください">
-                                                    <option value="0">未公開</option>
-                                                    <option value="1">公開</option>
-                                                </select>
+                                                <label>&nbsp;</label>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input class="custom-control-input" type="checkbox" @if ($open_flg == 1) checked @endif name="open_flg" id="open_flg" value="1">
+                                                    <label for="open_flg" class="custom-control-label">公開中のみ表示する</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -122,24 +137,9 @@
 
                     ajax.post(url, params, function(data) {
                         if (data['RESULT'] == "OK") {
-                            $.alert({
-                                title: false,
-                                theme: 'white',
-                                content: '削除処理完了。',
-                                confirmButton: 'OK',
-                                confirmButtonClass: 'btn-info',
-                                confirm: function () {
-                                    location.href = "/download/category_lists";
-                                }
-                            });
+                            location.href = "/download/category_lists?msg_code=200&&msg="+'カテゴリ情報の削除が完了しました。';
                         } else {
-                            $.alert({
-                                title: false,
-                                theme: 'white',
-                                content: data['MESSAGE'],
-                                confirmButton: 'OK',
-                                confirmButtonClass: 'btn-info',
-                            });
+                            location.href = "/download/category_lists?msg_code=201&&msg="+data['MESSAGE'];
                         }
                     });
                 },

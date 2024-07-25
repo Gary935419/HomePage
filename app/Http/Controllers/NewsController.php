@@ -242,13 +242,13 @@ class NewsController extends Controller
             Log::error($e->getMessage());
             $this->data['MSG_CODE'] = 201;
             $this->data['MSG'] = $e->getMessage();
-            return view('news/news_add', $this->data);
+            return view('news/news_edit', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
             $this->data['MSG_CODE'] = 201;
             $this->data['MSG'] = $e->getMessage();
-            return view('news/news_add', $this->data);
+            return view('news/news_edit', $this->data);
         }
     }
 }

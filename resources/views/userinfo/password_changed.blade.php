@@ -22,7 +22,7 @@
                     <div class="col-lg-12">
                         <div class="card card-primary card-outline">
                             <div class="card-header">
-                                <h5 class="m-0">ヒント</h5>
+                                <h5 class="m-0">パスワードの更新</h5>
                             </div>
                             <div class="card-body">
                                 <p class="card-text">
@@ -32,7 +32,7 @@
                                         <font size="3" color="#008080">現在のパスワードは{{$PASSWORD_EXPIRE_TIME}}。</font>
                                     @endif
                                 </p>
-                                <a href="javascript:" onclick="self.location=document.referrer;" class="btn btn-primary">戻る</a>
+{{--                                <a href="javascript:" onclick="self.location=document.referrer;" class="btn btn-primary">戻る</a>--}}
                             </div>
                         </div>
                     </div>

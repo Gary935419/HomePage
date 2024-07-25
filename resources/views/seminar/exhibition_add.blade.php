@@ -30,7 +30,24 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
+        @if(isset($MSG_CODE) && $MSG_CODE == 201)
+            <div class="card-body">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-ban"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
+        @if(isset($MSG_CODE) && $MSG_CODE == 200)
+            <div class="card-body">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-check"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
+        <div id="targetArea">
+        </div>
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -74,11 +91,10 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>公開フラグ</label>
-                                    <select class="form-control select2" name="open_flg" id="open_flg" style="width: 100%;">
-                                        <option selected="selected" value="0">未公開</option>
-                                        <option value="1">公開</option>
-                                    </select>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" name="open_flg" id="open_flg" value="1">
+                                        <label for="open_flg" class="custom-control-label">公開フラグ</label>
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
@@ -93,58 +109,23 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>開催日1</label>
-                                    <div class="input-group date" id="start_date1" data-target-input="nearest">
-                                        <div class="input-group-append" data-target="#start_date1" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                        <input type="text" readonly name="exhibition_dates1" id="exhibition_dates1" class="form-control datetimepicker-input" data-target="#start_date1"/>
+                                    <label for="exampleInputEmail1">説明</label>
+                                    <div class="editor-container" style="width: 100%">
+                                        <textarea class="form-control" rows="6" id="p_contents" name="p_contents" placeholder="説明"></textarea>
                                     </div>
                                 </div>
+
                                 <div class="form-group">
-                                    <label>開催日2</label>
-                                    <div class="input-group date" id="start_date2" data-target-input="nearest">
-                                        <div class="input-group-append" data-target="#start_date2" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                        <input type="text" readonly name="exhibition_dates2" id="exhibition_dates2" class="form-control datetimepicker-input" data-target="#start_date2"/>
-                                    </div>
+                                    <label>開催場所フラグ</label>
+                                    <select class="form-control select2" name="address_flg" id="address_flg" style="width: 100%;">
+                                        <option value="0">オンライン</option>
+                                        <option value="1">オフライン</option>
+                                    </select>
                                 </div>
-                                <div class="form-group">
-                                    <label>開催日3</label>
-                                    <div class="input-group date" id="start_date3" data-target-input="nearest">
-                                        <div class="input-group-append" data-target="#start_date3" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                        <input type="text" readonly name="exhibition_dates3" id="exhibition_dates3" class="form-control datetimepicker-input" data-target="#start_date3"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>開催日4</label>
-                                    <div class="input-group date" id="start_date4" data-target-input="nearest">
-                                        <div class="input-group-append" data-target="#start_date4" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                        <input type="text" readonly name="exhibition_dates4" id="exhibition_dates4" class="form-control datetimepicker-input" data-target="#start_date4"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>開催日5</label>
-                                    <div class="input-group date" id="start_date5" data-target-input="nearest">
-                                        <div class="input-group-append" data-target="#start_date5" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                        <input type="text" readonly name="exhibition_dates5" id="exhibition_dates5" class="form-control datetimepicker-input" data-target="#start_date5"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>開催日6</label>
-                                    <div class="input-group date" id="start_date6" data-target-input="nearest">
-                                        <div class="input-group-append" data-target="#start_date6" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                        <input type="text" readonly name="exhibition_dates6" id="exhibition_dates6" class="form-control datetimepicker-input" data-target="#start_date6"/>
-                                    </div>
+
+                                <div class="form-group" style="display:none;" id="display_address_info">
+                                    <label for="exampleInputEmail1">開催場所</label>
+                                    <input type="text" class="form-control" id="address_info" name="address_info" placeholder="開催場所">
                                 </div>
 
                                 <div class="form-group">
@@ -158,14 +139,93 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">開催場所</label>
-                                    <input type="text" class="form-control" id="address_info" name="address_info" placeholder="開催場所">
+                                    <label>開催日1</label>
+                                    <div class="input-group date" id="start_date1" data-target-input="nearest">
+                                        <div class="input-group-append" data-target="#start_date1" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                        <input type="text" readonly name="exhibition_dates1" onchange="display_update(1)" id="exhibition_dates1" class="form-control datetimepicker-input" data-target="#start_date1"/>
+                                    </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">説明</label>
-                                    <div class="editor-container" style="width: 100%">
-                                        <textarea class="form-control" rows="6" id="p_contents" name="p_contents" placeholder="説明"></textarea>
+                                <div class="form-group" style="display:none;" id="display_start_date2">
+                                    <label>開催日2</label>
+                                    <div class="input-group date" id="start_date2" data-target-input="nearest">
+                                        <div class="input-group-append" data-target="#start_date2" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                        <input type="text" readonly name="exhibition_dates2" onchange="display_update(2)" id="exhibition_dates2" class="form-control datetimepicker-input" data-target="#start_date2"/>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display:none;" id="display_start_date3">
+                                    <label>開催日3</label>
+                                    <div class="input-group date" id="start_date3" data-target-input="nearest">
+                                        <div class="input-group-append" data-target="#start_date3" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                        <input type="text" readonly name="exhibition_dates3" onchange="display_update(3)" id="exhibition_dates3" class="form-control datetimepicker-input" data-target="#start_date3"/>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display:none;" id="display_start_date4">
+                                    <label>開催日4</label>
+                                    <div class="input-group date" id="start_date4" data-target-input="nearest">
+                                        <div class="input-group-append" data-target="#start_date4" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                        <input type="text" readonly name="exhibition_dates4" onchange="display_update(4)" id="exhibition_dates4" class="form-control datetimepicker-input" data-target="#start_date4"/>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display:none;" id="display_start_date5">
+                                    <label>開催日5</label>
+                                    <div class="input-group date" id="start_date5" data-target-input="nearest">
+                                        <div class="input-group-append" data-target="#start_date5" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                        <input type="text" readonly name="exhibition_dates5" onchange="display_update(5)" id="exhibition_dates5" class="form-control datetimepicker-input" data-target="#start_date5"/>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display:none;" id="display_start_date6">
+                                    <label>開催日6</label>
+                                    <div class="input-group date" id="start_date6" data-target-input="nearest">
+                                        <div class="input-group-append" data-target="#start_date6" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                        <input type="text" readonly name="exhibition_dates6" onchange="display_update(6)" id="exhibition_dates6" class="form-control datetimepicker-input" data-target="#start_date6"/>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display:none;" id="display_start_date7">
+                                    <label>開催日7</label>
+                                    <div class="input-group date" id="start_date7" data-target-input="nearest">
+                                        <div class="input-group-append" data-target="#start_date7" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                        <input type="text" readonly name="exhibition_dates7" onchange="display_update(7)" id="exhibition_dates7" class="form-control datetimepicker-input" data-target="#start_date7"/>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display:none;" id="display_start_date8">
+                                    <label>開催日8</label>
+                                    <div class="input-group date" id="start_date8" data-target-input="nearest">
+                                        <div class="input-group-append" data-target="#start_date8" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                        <input type="text" readonly name="exhibition_dates8" onchange="display_update(8)" id="exhibition_dates8" class="form-control datetimepicker-input" data-target="#start_date8"/>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display:none;" id="display_start_date9">
+                                    <label>開催日9</label>
+                                    <div class="input-group date" id="start_date9" data-target-input="nearest">
+                                        <div class="input-group-append" data-target="#start_date9" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                        <input type="text" readonly name="exhibition_dates9" onchange="display_update(9)" id="exhibition_dates9" class="form-control datetimepicker-input" data-target="#start_date9"/>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display:none;" id="display_start_date10">
+                                    <label>開催日10</label>
+                                    <div class="input-group date" id="start_date10" data-target-input="nearest">
+                                        <div class="input-group-append" data-target="#start_date10" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                        <input type="text" readonly name="exhibition_dates10" id="exhibition_dates10" class="form-control datetimepicker-input" data-target="#start_date10"/>
                                     </div>
                                 </div>
                             </div>
@@ -221,44 +281,114 @@
             //Date picker
             $('#start_date1').datetimepicker({
                 locale: 'ja',
-                format: 'YYYY/MM/DD',
-                dayViewHeaderFormat: 'YYYY年 MMMM',
+                format: 'YYYY-MM-DD',
+                // dayViewHeaderFormat: 'YYYY年 MMMM',
             });
+            $('#start_date1 input').focus(function() {
+                $('#start_date1').data("datetimepicker").show();
+                $('#display_start_date2').show();
+            });
+
             $('#start_date2').datetimepicker({
                 locale: 'ja',
-                format: 'YYYY/MM/DD',
-                dayViewHeaderFormat: 'YYYY年 MMMM',
+                format: 'YYYY-MM-DD',
             });
+            $('#start_date2 input').focus(function() {
+                $('#start_date2').data("datetimepicker").show();
+                $('#display_start_date3').show();
+            });
+
             $('#start_date3').datetimepicker({
                 locale: 'ja',
-                format: 'YYYY/MM/DD',
-                dayViewHeaderFormat: 'YYYY年 MMMM',
+                format: 'YYYY-MM-DD',
             });
+            $('#start_date3 input').focus(function() {
+                $('#start_date3').data("datetimepicker").show();
+                $('#display_start_date4').show();
+            });
+
             $('#start_date4').datetimepicker({
                 locale: 'ja',
-                format: 'YYYY/MM/DD',
-                dayViewHeaderFormat: 'YYYY年 MMMM',
+                format: 'YYYY-MM-DD',
             });
+            $('#start_date4 input').focus(function() {
+                $('#start_date4').data("datetimepicker").show();
+                $('#display_start_date5').show();
+            });
+
             $('#start_date5').datetimepicker({
                 locale: 'ja',
-                format: 'YYYY/MM/DD',
-                dayViewHeaderFormat: 'YYYY年 MMMM',
+                format: 'YYYY-MM-DD',
             });
+            $('#start_date5 input').focus(function() {
+                $('#start_date5').data("datetimepicker").show();
+                $('#display_start_date6').show();
+            });
+
             $('#start_date6').datetimepicker({
                 locale: 'ja',
-                format: 'YYYY/MM/DD',
-                dayViewHeaderFormat: 'YYYY年 MMMM',
+                format: 'YYYY-MM-DD',
+            });
+            $('#start_date6 input').focus(function() {
+                $('#start_date6').data("datetimepicker").show();
+                $('#display_start_date7').show();
+            });
+
+            $('#start_date7').datetimepicker({
+                locale: 'ja',
+                format: 'YYYY-MM-DD',
+            });
+            $('#start_date7 input').focus(function() {
+                $('#start_date7').data("datetimepicker").show();
+                $('#display_start_date8').show();
+            });
+
+            $('#start_date8').datetimepicker({
+                locale: 'ja',
+                format: 'YYYY-MM-DD',
+            });
+            $('#start_date8 input').focus(function() {
+                $('#start_date8').data("datetimepicker").show();
+                $('#display_start_date9').show();
+            });
+
+            $('#start_date9').datetimepicker({
+                locale: 'ja',
+                format: 'YYYY-MM-DD',
+            });
+            $('#start_date9 input').focus(function() {
+                $('#start_date9').data("datetimepicker").show();
+                $('#display_start_date10').show();
+            });
+
+            $('#start_date10').datetimepicker({
+                locale: 'ja',
+                format: 'YYYY-MM-DD',
+            });
+            $('#start_date10 input').focus(function() {
+                $('#start_date10').data("datetimepicker").show();
             });
 
             $('#start_date_time').datetimepicker({
                 format: 'HH:mm',
                 locale: 'ja'
             });
+            $('#start_date_time input').focus(function() {
+                $('#start_date_time').data("datetimepicker").show();
+            });
         });
     </script>
 
     <script>
         $(function() {
+            $('#address_flg').change(function() {
+                if($(this).val() == 1){
+                    $('#display_address_info').show();
+                }else {
+                    $('#display_address_info').hide();
+                    $('#address_info').val("");
+                }
+            });
             $('#b_url_img').click(function(){
                 var imgs = this;
                 var imgSrc=$(imgs).attr("src");
@@ -274,41 +404,34 @@
             $('#submit_btn').click(function() {
                 var errors_text = "";
                 if ($('#title').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "タイトルを入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・タイトルを入力してください。";
                 }
                 if ($('#category').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "カテゴリを入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・カテゴリを入力してください。";
                 }
-                if ($('#apply_url').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "申込URLを入力してください。";
+                if ($('#apply_url').val() != "" && !isValidHttpUrl($('#apply_url').val())) {
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・申込URLは正しいURLを入力してください。";
                 }
                 if ($('#b_url').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "バナー画像を入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・バナー画像を入力してください。";
                 }
-                if ($('#exhibition_dates1').val() == "" && $('#exhibition_dates2').val() == "" && $('#exhibition_dates3').val() == "" && $('#exhibition_dates4').val() == "" && $('#exhibition_dates5').val() == "" && $('#exhibition_dates6').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "開催日を入力してください。";
+                if ($('#exhibition_dates1').val() == "") {
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・開催日を入力してください。";
                 }
                 if ($('#opening_times').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "開催時間を入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・開催時間を入力してください。";
                 }
                 if ($('#p_contents').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "説明を入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・説明を入力してください。";
                 }
                 if ($('#c_lables').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "タグを入力してください。";
-                }
-                if ($('#address_info').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "開催場所を入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・タグを入力してください。";
                 }
 
                 if (strlen(errors_text) > 0) {
-                    $.alert({
-                        title: false,
-                        theme: 'white',
-                        content: errors_text,
-                        confirmButton: 'はい',
-                        confirmButtonClass: 'btn-info',
-                    });
+                    var divContent = "<div class='card-body'><div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> <h5 style='margin-bottom: 0rem;'><i class='icon fas fa-ban'></i>入力情報が正しくありません。<br><span style='font-size: 15px;'>"+errors_text+"</span></h5> </div> </div>";
+                    $('#targetArea').html(divContent);
+                    $('html, body').animate({scrollTop: 0}, 'slow');
                     return false;
                 }
 
@@ -329,5 +452,13 @@
                 });
             });
         });
+        function isValidHttpUrl(string) {
+            try {
+                const newUrl = new URL(string);
+                return newUrl.protocol === 'http:' || newUrl.protocol === 'https:';
+            } catch (err) {
+                return false;
+            }
+        }
     </script>
 @endsection

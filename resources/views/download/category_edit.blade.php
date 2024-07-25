@@ -12,7 +12,24 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
+        @if(isset($MSG_CODE) && $MSG_CODE == 201)
+            <div class="card-body">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-ban"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
+        @if(isset($MSG_CODE) && $MSG_CODE == 200)
+            <div class="card-body">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-check"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
+        <div id="targetArea">
+        </div>
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -32,11 +49,10 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>公開フラグ</label>
-                                    <select class="form-control select2" name="open_flg" id="open_flg" style="width: 100%;">
-                                        <option @if ($info['open_flg']==0) selected @endif value="0">未公開</option>
-                                        <option @if ($info['open_flg']==1) selected @endif value="1">公開</option>
-                                    </select>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" name="open_flg" id="open_flg" @if ($info['open_flg'] == 1) checked @endif value="1">
+                                        <label for="open_flg" class="custom-control-label">公開フラグ</label>
+                                    </div>
                                 </div>
 
                             </div>
@@ -67,17 +83,13 @@
             $('#submit_btn').click(function() {
                 var errors_text = "";
                 if ($('#category_name').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "カテゴリ名を入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・カテゴリ名を入力してください。";
                 }
 
                 if (strlen(errors_text) > 0) {
-                    $.alert({
-                        title: false,
-                        theme: 'white',
-                        content: errors_text,
-                        confirmButton: 'はい',
-                        confirmButtonClass: 'btn-info',
-                    });
+                    var divContent = "<div class='card-body'><div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> <h5 style='margin-bottom: 0rem;'><i class='icon fas fa-ban'></i>入力情報が正しくありません。<br><span style='font-size: 15px;'>"+errors_text+"</span></h5> </div> </div>";
+                    $('#targetArea').html(divContent);
+                    $('html, body').animate({scrollTop: 0}, 'slow');
                     return false;
                 }
 

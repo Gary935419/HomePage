@@ -185,6 +185,7 @@
             var $ = layui.jquery
                 ,upload = layui.upload;
             var url = '/api/upload/pushFIle';
+            var u_flg = 0;
             //普通图片上传
             var uploadInst = upload.render({
                 elem: '#upload_p_logo'
@@ -235,15 +236,27 @@
                 ,url: url
                 ,field:"file"
                 ,data:{"dir":"media"}
-                ,accept: 'file'
-                ,done: function(res){
-                    if(res.STATUS == 0){
+                ,accept: 'file',
+                before: function(obj){
+                    obj.preview(function(index, file, result){
+                        if(file.type !== 'application/pdf') {
+                            layer.msg('アップロードできるのはPDFファイルのみです！');
+                            u_flg = 1;
+                            return false;
+                        }else {
+                            u_flg = 0;
+                        }
+                    });
+                },
+                done: function(res){
+                    if(res.STATUS == 0 && u_flg == 0){
                         $("#p_pdf_url").val(res.SRC);
                         $("#upload_p_pdf_url").html(res.SRC);
                         return layer.msg('アップロード成功');
-                    }else {
-                        return layer.msg('アップロード失敗');
                     }
+                },
+                error: function(){
+                    return layer.msg('アップロード失敗');
                 }
             });
         });

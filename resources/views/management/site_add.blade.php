@@ -30,7 +30,24 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
+        @if(isset($MSG_CODE) && $MSG_CODE == 201)
+            <div class="card-body">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-ban"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
+        @if(isset($MSG_CODE) && $MSG_CODE == 200)
+            <div class="card-body">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-check"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
+        <div id="targetArea">
+        </div>
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -60,17 +77,26 @@
                                 <div class="img_logo"><img src="" alt=""></div>
 
                                 <div class="form-group">
-                                    <label>公開フラグ</label>
-                                    <select class="form-control select2" name="open_flg" id="open_flg" style="width: 100%;">
-                                        <option selected="selected" value="0">未公開</option>
-                                        <option value="1">公開</option>
-                                    </select>
+                                    <label for="exampleInputEmail1">URL</label>
+                                    <input type="text" class="form-control" id="url" name="url" placeholder="URL">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">タイトル</label>
+                                    <input type="text" class="form-control" id="title" name="title" placeholder="タイトル">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">説明</label>
                                     <div class="editor-container" style="width: 100%">
                                         <textarea class="form-control" rows="6" id="contents" name="contents" placeholder="製品説明"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" name="open_flg" id="open_flg" value="1">
+                                        <label for="open_flg" class="custom-control-label">公開フラグ</label>
                                     </div>
                                 </div>
                             </div>
@@ -142,23 +168,22 @@
             $('#submit_btn').click(function() {
                 var errors_text = "";
                 if ($('#title').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "タイトルを入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・タイトルを入力してください。";
                 }
                 if ($('#logo').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "ロゴ画像を入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・ロゴ画像を入力してください。";
                 }
                 if ($('#contents').val() == "") {
-                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "説明を入力してください。";
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・説明を入力してください。";
+                }
+                if ($('#url').val() != "" && !isValidHttpUrl($('#url').val())) {
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・URLは正しいURLを入力してください。";
                 }
 
                 if (strlen(errors_text) > 0) {
-                    $.alert({
-                        title: false,
-                        theme: 'white',
-                        content: errors_text,
-                        confirmButton: 'はい',
-                        confirmButtonClass: 'btn-info',
-                    });
+                    var divContent = "<div class='card-body'><div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> <h5 style='margin-bottom: 0rem;'><i class='icon fas fa-ban'></i>入力情報が正しくありません。<br><span style='font-size: 15px;'>"+errors_text+"</span></h5> </div> </div>";
+                    $('#targetArea').html(divContent);
+                    $('html, body').animate({scrollTop: 0}, 'slow');
                     return false;
                 }
 
@@ -179,5 +204,13 @@
                 });
             });
         });
+        function isValidHttpUrl(string) {
+            try {
+                const newUrl = new URL(string);
+                return newUrl.protocol === 'http:' || newUrl.protocol === 'https:';
+            } catch (err) {
+                return false;
+            }
+        }
     </script>
 @endsection

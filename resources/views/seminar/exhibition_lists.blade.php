@@ -12,7 +12,22 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
+        @if(isset($MSG_CODE) && $MSG_CODE == 201)
+            <div class="card-body">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-ban"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
+        @if(isset($MSG_CODE) && $MSG_CODE == 200)
+            <div class="card-body">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5 style="margin-bottom: 0rem;"><i class="icon fas fa-check"></i>{{$MSG}}</h5>
+                </div>
+            </div>
+        @endif
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -72,7 +87,6 @@
                                         <th>タイトル</th>
                                         <th>カテゴリ</th>
                                         <th>開催日</th>
-                                        <th>開催時間</th>
                                         <th>作成時間</th>
                                         <th>アクション</th>
                                     </tr>
@@ -83,7 +97,6 @@
                                             <td>{{$v['title']}}</td>
                                             <td>{{$v['type_name']}}</td>
                                             <td>{{$v['exhibition_dates_str']}}</td>
-                                            <td>{{$v['opening_times']}}</td>
                                             <td>{{empty($v['CREATED_DT'])?'-':$v['CREATED_DT']}}</td>
                                             <td>
                                                 <a style="margin-left: 3%" class="btn btn-info btn-sm" href="#"
@@ -163,24 +176,9 @@
 
                     ajax.post(url, params, function(data) {
                         if (data['RESULT'] == "OK") {
-                            $.alert({
-                                title: false,
-                                theme: 'white',
-                                content: '削除処理完了。',
-                                confirmButton: 'OK',
-                                confirmButtonClass: 'btn-info',
-                                confirm: function () {
-                                    location.href = "/seminar/exhibition_lists";
-                                }
-                            });
+                            location.href = "/seminar/exhibition_lists?msg_code=200&&msg="+'セミナー展示会情報の削除が完了しました。';
                         } else {
-                            $.alert({
-                                title: false,
-                                theme: 'white',
-                                content: data['MESSAGE'],
-                                confirmButton: 'OK',
-                                confirmButtonClass: 'btn-info',
-                            });
+                            location.href = "/seminar/exhibition_lists?msg_code=201&&msg="+data['MESSAGE'];
                         }
                     });
                 },

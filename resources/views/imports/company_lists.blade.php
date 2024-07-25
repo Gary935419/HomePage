@@ -172,25 +172,8 @@
 
                     ajax.post(url, params, function(data) {
                         if (data['RESULT'] == "OK") {
-                            // $.alert({
-                            //     title: false,
-                            //     theme: 'white',
-                            //     content: '削除処理完了。',
-                            //     confirmButton: 'OK',
-                            //     confirmButtonClass: 'btn-info',
-                            //     confirm: function () {
-                            //         location.href = "/imports/company_lists";
-                            //     }
-                            // });
                             location.href = "/imports/company_lists?msg_code=200&&msg="+'企業情報の削除が完了しました。';
                         } else {
-                            // $.alert({
-                            //     title: false,
-                            //     theme: 'white',
-                            //     content: data['MESSAGE'],
-                            //     confirmButton: 'OK',
-                            //     confirmButtonClass: 'btn-info',
-                            // });
                             location.href = "/imports/company_lists?msg_code=201&&msg="+data['MESSAGE'];
                         }
                     });
