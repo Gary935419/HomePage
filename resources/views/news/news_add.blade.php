@@ -173,6 +173,7 @@
             $('.select2').select2()
 
             $('#start_date').datetimepicker({
+                sideBySide: true,
                 format: 'YYYY-MM-DD HH:mm',
                 locale: 'ja',
                 icons: {
@@ -181,6 +182,7 @@
             });
 
             $('#end_date').datetimepicker({
+                sideBySide: true,
                 format: 'YYYY-MM-DD HH:mm',
                 locale: 'ja',
                 icons: {
@@ -197,6 +199,7 @@
             });
 
             $('#fix_start_date').datetimepicker({
+                sideBySide: true,
                 format: 'YYYY-MM-DD HH:mm',
                 locale: 'ja',
                 icons: {
@@ -205,6 +208,7 @@
             });
 
             $('#fix_end_date').datetimepicker({
+                sideBySide: true,
                 format: 'YYYY-MM-DD HH:mm',
                 locale: 'ja',
                 icons: {

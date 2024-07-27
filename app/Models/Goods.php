@@ -76,7 +76,12 @@ class Goods extends Model
             }
 
             if (isset($params['p_open_flg']) && !empty($params['p_open_flg'])) {
-                $m_goods = $m_goods->where('p_open_flg','=', $params['p_open_flg']);
+                if ($params['p_open_flg'] == 1){
+                    $p_open_flg = 0;
+                }else{
+                    $p_open_flg = 1;
+                }
+                $m_goods = $m_goods->where('p_open_flg','=', $p_open_flg);
             }
 
             $result = $m_goods->where('is_del', '=', 0)
@@ -273,6 +278,17 @@ class Goods extends Model
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+            throw $e;
+        }
+    }
+    public function select_PRODUCT_count()
+    {
+        try {
+            return DB::table('S_PRODUCT_INFORMATION')
+                ->select(DB::raw('count(*) as count'))
+                ->where('is_del','=',0)
+                ->value('count');
+        } catch(\Exception $e) {
             throw $e;
         }
     }

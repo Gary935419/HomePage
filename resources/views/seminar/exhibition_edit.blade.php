@@ -90,13 +90,6 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" name="open_flg" id="open_flg" @if ($info['open_flg'] == 1) checked @endif value="1">
-                                        <label for="open_flg" class="custom-control-label">公開フラグ</label>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
                                     <label>タグ</label>
                                     <select class="select2" id="c_lables" name="c_lables[]" multiple="multiple" data-placeholder="選択してください" style="width: 100%;">
                                         @if (isset($S_SEMINARS_EXHIBITIONS_LABLES))
@@ -225,6 +218,12 @@
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
                                         <input type="text" value="{{ empty($info['exhibition_dates10']) ? '' : $info['exhibition_dates10'] }}" readonly name="exhibition_dates10" id="exhibition_date10" class="form-control datetimepicker-input" data-target="#start_date10"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" name="open_flg" id="open_flg" @if ($info['open_flg'] == 1) checked @endif value="1">
+                                        <label for="open_flg" class="custom-control-label">公開フラグ</label>
                                     </div>
                                 </div>
                             </div>
@@ -430,6 +429,9 @@
                 }
                 if ($('#c_lables').val() == "") {
                     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・タグを入力してください。";
+                }
+                if ($('#address_flg option:selected').val() == 1 && $('#address_info').val() == ""){
+                    errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・開催場所を入力してください。";
                 }
 
                 if (strlen(errors_text) > 0) {

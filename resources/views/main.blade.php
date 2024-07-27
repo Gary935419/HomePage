@@ -92,7 +92,7 @@
 
                     <li class="nav-item @if (($controller ?? '') == 'Controller_Goods') menu-open @endif">
                         <a href="#" class="nav-link @if (($controller ?? '') == 'Controller_Goods') active @endif">
-                            <i class="nav-icon fas fa-table"></i>
+                            <i class="nav-icon fas fa-th-list"></i>
                             <p>
                                 製品情報
                                 <i class="right fas fa-angle-left"></i>
@@ -122,7 +122,7 @@
 
                     <li class="nav-item @if (($controller ?? '') == 'Controller_Imports') menu-open @endif">
                         <a href="#" class="nav-link @if (($controller ?? '') == 'Controller_Imports') active @endif">
-                            <i class="nav-icon far fa-plus-square"></i>
+                            <i class="nav-icon fas fa-building"></i>
                             <p>
                                 導入企業
                                 <i class="right fas fa-angle-left"></i>
@@ -152,7 +152,7 @@
 
                     <li class="nav-item @if (($controller ?? '') == 'Controller_News') menu-open @endif">
                         <a href="#" class="nav-link @if (($controller ?? '') == 'Controller_News') active @endif">
-                            <i class="nav-icon far fa-plus-square"></i>
+                            <i class="nav-icon fas fa-newspaper"></i>
                             <p>
                                 新着情報
                                 <i class="right fas fa-angle-left"></i>
@@ -170,7 +170,7 @@
 
                     <li class="nav-item @if (($controller ?? '') == 'Controller_Seminar') menu-open @endif">
                         <a href="#" class="nav-link @if (($controller ?? '') == 'Controller_Seminar') active @endif">
-                            <i class="nav-icon far fa-plus-square"></i>
+                            <i class="nav-icon fas fa-warehouse"></i>
                             <p>
                                 セミナー展示会情報
                                 <i class="right fas fa-angle-left"></i>
@@ -200,7 +200,7 @@
 
                     <li class="nav-item @if (($controller ?? '') == 'Controller_Management') menu-open @endif">
                         <a href="#" class="nav-link @if (($controller ?? '') == 'Controller_Seminar') active @endif">
-                            <i class="nav-icon far fa-plus-square"></i>
+                            <i class="nav-icon fas fa-university"></i>
                             <p>
                                 運営サイト情報
                                 <i class="right fas fa-angle-left"></i>
@@ -218,7 +218,7 @@
 
                     <li class="nav-item @if (($controller ?? '') == 'Controller_Download') menu-open @endif">
                         <a href="#" class="nav-link @if (($controller ?? '') == 'Controller_Download') active @endif">
-                            <i class="nav-icon far fa-plus-square"></i>
+                            <i class="nav-icon fas fa-file-powerpoint"></i>
                             <p>
                                 ダウンロード情報
                                 <i class="right fas fa-angle-left"></i>

@@ -208,4 +208,15 @@ class Download extends Model
             throw $e;
         }
     }
+    public function select_DOWNLOADS_HISTORY_count()
+    {
+        try {
+            return DB::table('S_DOWNLOADS_HISTORY')
+                ->select(DB::raw('count(*) as count'))
+                ->where('is_del','=',0)
+                ->value('count');
+        } catch(\Exception $e) {
+            throw $e;
+        }
+    }
 }

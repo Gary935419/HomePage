@@ -139,6 +139,11 @@ class UserInfoController extends Controller
 
     public function get_admin_add_user()
     {
+        $user_id = session('USER_ID');
+        $user_info = $this->Admins->get_user_info($user_id);
+        if ($user_info['USER_IDENTITY'] != 1){
+            return view('main/index', $this->data);
+        }
         return view('userinfo/admin_add_user', $this->data);
     }
 
@@ -192,6 +197,12 @@ class UserInfoController extends Controller
     public function get_admin_edit_user($SEQ_NO)
     {
         try {
+            $user_id = session('USER_ID');
+            $user_info = $this->Admins->get_user_info($user_id);
+            if ($user_info['USER_IDENTITY'] != 1){
+                return view('main/index', $this->data);
+            }
+
             $this->data['SEQ_NO'] = $SEQ_NO;
             $this->data['info'] = AuthGroupOtbSimpleGroup::get_user_info(array('SEQ_NO' => $SEQ_NO));
             if (empty($this->data['info'])){
@@ -301,13 +312,11 @@ class UserInfoController extends Controller
 
     public function action_admin_remove_user()
     {
-//        $client_user_id = request('client_id');
-//
-//        $errormsg = AuthGroupOtbSimpleGroup::remove_admin_user(array('USER_ID' => $client_user_id, ));
-//
-//        $this->data['remove_user_result'] = $errormsg;
-//        $this->data['removed_user_id'] = $client_user_id;
-//        return view('userinfo/admin_remove_user', $this->data);
+        $user_id = session('USER_ID');
+        $user_info = $this->Admins->get_user_info($user_id);
+        if ($user_info['USER_IDENTITY'] != 1){
+            return view('main/index', $this->data);
+        }
 
         $paramsAll = request()->all();
         $client_user_id =  $paramsAll['client_id'] ?? '';
@@ -316,10 +325,9 @@ class UserInfoController extends Controller
         $this->data['MSG_CODE'] = $result['MSG_CODE'];
 
         $this->data['USER_ID'] = $paramsAll['USER_ID'] ?? '';
-        $this->data['USER_NAME'] = $paramsAll['USER_NAME'] ?? '';
+        $this->data['USER_NAME_NOW'] = $paramsAll['USER_NAME'] ?? '';
 
-        $user_id = session('USER_ID');
-        $clients_info = Model::get_all_user_info($user_id,$this->data['USER_ID'],$this->data['USER_NAME']);
+        $clients_info = Model::get_all_user_info($user_id,$this->data['USER_ID'],$this->data['USER_NAME_NOW']);
         $this->data['clients_info'] = $clients_info;
         return view('userinfo/admin_user_info', $this->data);
     }

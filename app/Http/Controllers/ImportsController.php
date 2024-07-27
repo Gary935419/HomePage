@@ -55,10 +55,10 @@ class ImportsController extends Controller
 
             $Imports = new Imports($this);
 
-            $S_PRECEDENTS_INFORMATION_info = $Imports->select_S_PRECEDENTS_INFORMATION_info($pr_title);
-            if (!empty($S_PRECEDENTS_INFORMATION_info)){
-                throw new \OneException(6);
-            }
+//            $S_PRECEDENTS_INFORMATION_info = $Imports->select_S_PRECEDENTS_INFORMATION_info($pr_title);
+//            if (!empty($S_PRECEDENTS_INFORMATION_info)){
+//                throw new \OneException(6);
+//            }
 
             //数据库事务处理
             DB::beginTransaction();

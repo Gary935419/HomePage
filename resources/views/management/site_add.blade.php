@@ -82,11 +82,6 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">タイトル</label>
-                                    <input type="text" class="form-control" id="title" name="title" placeholder="タイトル">
-                                </div>
-
-                                <div class="form-group">
                                     <label for="exampleInputEmail1">説明</label>
                                     <div class="editor-container" style="width: 100%">
                                         <textarea class="form-control" rows="6" id="contents" name="contents" placeholder="製品説明"></textarea>

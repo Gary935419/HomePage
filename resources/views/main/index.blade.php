@@ -28,13 +28,13 @@
                         <!-- small box -->
                         <div class="small-box bg-info">
                             <div class="inner">
-                                <h3>15</h3>
-                                <p>新しい情報</p>
+                                <h3>{{$count1}}<sup style="font-size: 20px">件</sup></h3>
+                                <p>製品情報</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-bag"></i>
                             </div>
-                            <a href="#" class="small-box-footer">アカウント一覧 <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="/goods/goods_lists" class="small-box-footer">製品情報一覧 <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
@@ -42,14 +42,14 @@
                         <!-- small box -->
                         <div class="small-box bg-success">
                             <div class="inner">
-                                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                                <h3>{{$count2}}<sup style="font-size: 20px">件</sup></h3>
 
-                                <p>新しい情報</p>
+                                <p>導入企業情報</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-stats-bars"></i>
                             </div>
-                            <a href="#" class="small-box-footer">情報一览 <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="/imports/recedents_lists" class="small-box-footer">導入事例一覧 <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
@@ -57,14 +57,14 @@
                         <!-- small box -->
                         <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3>44</h3>
+                                <h3>{{$count3}}<sup style="font-size: 20px">件</sup></h3>
 
-                                <p>新しい情報</p>
+                                <p>導入企業情報</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
                             </div>
-                            <a href="#" class="small-box-footer">情報一览 <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="/imports/company_lists" class="small-box-footer">導入企業一覧 <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
@@ -72,14 +72,14 @@
                         <!-- small box -->
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                <h3>65</h3>
+                                <h3>{{$count4}}<sup style="font-size: 20px">件</sup></h3>
 
-                                <p>新しい情報</p>
+                                <p>ダウンロード情報</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-pie-graph"></i>
                             </div>
-                            <a href="#" class="small-box-footer">バナー一覧 <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="/download/history_lists" class="small-box-footer">ダウンロード履歴 <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
