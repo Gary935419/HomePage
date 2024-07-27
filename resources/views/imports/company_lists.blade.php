@@ -70,8 +70,8 @@
                                                 <label>公開フラグ</label>
                                                 <select id="open_flg" name="open_flg" class="form-control select2" style="width: 100%;">
                                                     <option value="0" selected>選択してください</option>
-                                                    <option @if ($open_flg == 1) checked @endif value="1">未公開</option>
-                                                    <option @if ($open_flg == 2) checked @endif value="2">公開</option>
+                                                    <option @if ($open_flg == 1) selected @endif value="1">未公開</option>
+                                                    <option @if ($open_flg == 2) selected @endif value="2">公開</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -114,12 +114,12 @@
                                             <td>{{$v['c_name']}}</td>
                                             <td style="text-align: center">
                                                 @if(!empty($v['precedents_url']))
-                                                    <a href="{{$v['precedents_url']}}" target="_blank"><img style="width: 8%" src="{{ asset('assets/img/products_i03.png') }}"></a>
+                                                    <a href="{{$v['precedents_url']}}" target="_blank"><img style="width: 15%" src="{{ asset('assets/img/products_i03.png') }}"></a>
                                                 @endif
                                             </td>
                                             <td style="text-align: center">
                                                 @if(!empty($v['video_url']))
-                                                    <a href="{{$v['video_url']}}" target="_blank"><img style="width: 8%" src="{{ asset('assets/img/products_i02.png') }}"></a>
+                                                    <a href="{{$v['video_url']}}" target="_blank"><img style="width: 15%" src="{{ asset('assets/img/products_i02.png') }}"></a>
                                                 @endif
                                             </td>
                                             <td>{{$v['c_lables_str']}}</td>

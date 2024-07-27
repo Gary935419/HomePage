@@ -11,7 +11,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Welcome {{ $USER_ID ?? '' }}</a></li>
+                            <li class="breadcrumb-item"><a href="#">ようこそ、{{ $USER_NAME ?? '' }}さん!</a></li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->

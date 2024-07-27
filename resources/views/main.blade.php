@@ -199,7 +199,7 @@
                     </li>
 
                     <li class="nav-item @if (($controller ?? '') == 'Controller_Management') menu-open @endif">
-                        <a href="#" class="nav-link @if (($controller ?? '') == 'Controller_Seminar') active @endif">
+                        <a href="#" class="nav-link @if (($controller ?? '') == 'Controller_Management') active @endif">
                             <i class="nav-icon fas fa-university"></i>
                             <p>
                                 運営サイト情報
@@ -262,7 +262,7 @@
 {{--                    <img src="{{ asset('adminlte/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">--}}
 {{--                </div>--}}
                 <div class="info">
-                    <a href="#" class="d-block">ようこそ、{{ $USER_NAME ?? '' }}さん </a>
+                    <a href="#" class="d-block">ようこそ、{{ $USER_NAME ?? '' }}さん!</a>
                 </div>
             </div>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

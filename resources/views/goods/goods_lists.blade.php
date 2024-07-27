@@ -70,8 +70,8 @@
                                                 <label>公開フラグ</label>
                                                 <select id="p_open_flg" name="p_open_flg" class="form-control select2" style="width: 100%;">
                                                     <option value="0" selected>選択してください</option>
-                                                    <option @if ($p_open_flg == 1) checked @endif value="1">未公開</option>
-                                                    <option @if ($p_open_flg == 2) checked @endif value="2">公開</option>
+                                                    <option @if ($p_open_flg == 1) selected @endif value="1">未公開</option>
+                                                    <option @if ($p_open_flg == 2) selected @endif value="2">公開</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -125,17 +125,17 @@
                                             <td>{{$v['p_lables_str']}}</td>
                                             <td style="text-align: center">
                                                 @if(!empty($v['p_pdf_url']))
-                                                    <a href="{{$v['p_pdf_url']}}" target="_blank"><img style="width: 8%" src="{{ asset('assets/img/products_i01.png') }}"></a>
+                                                    <a href="{{$v['p_pdf_url']}}" target="_blank"><img style="width: 15%" src="{{ asset('assets/img/products_i01.png') }}"></a>
                                                 @endif
                                             </td>
                                             <td style="text-align: center">
                                                 @if(!empty($v['p_video_url']))
-                                                    <a href="{{$v['p_video_url']}}" target="_blank"><img style="width: 8%" src="{{ asset('assets/img/products_i02.png') }}"></a>
+                                                    <a href="{{$v['p_video_url']}}" target="_blank"><img style="width: 15%" src="{{ asset('assets/img/products_i02.png') }}"></a>
                                                 @endif
                                             </td>
                                             <td style="text-align: center">
                                                 @if(!empty($v['p_special_weburl']))
-                                                    <a href="{{$v['p_special_weburl']}}" target="_blank"><img style="width: 8%" src="{{ asset('assets/img/products_i03.png') }}"></a>
+                                                    <a href="{{$v['p_special_weburl']}}" target="_blank"><img style="width: 15%" src="{{ asset('assets/img/products_i03.png') }}"></a>
                                                 @endif
                                             </td>
                                             <td>{{$v['p_open_flg_str']}}</td>
