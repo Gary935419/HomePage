@@ -684,4 +684,24 @@ class ImportsController extends Controller
             return view('imports/lable_add', $this->data);
         }
     }
+
+    public function get_recedents_details($id)
+    {
+        try {
+            $Imports = new Imports($this);
+            $this->data['info'] = $Imports->select_S_PRECEDENTS_ID_info($id);
+            if (empty($this->data['info'])){
+                throw new \OneException(3);
+            }
+            return view('imports/recedents_details', $this->data);
+        } catch (\OneException $e) {
+            $this->data["ERROR_MESSAGE"] = $e->getMessage();
+            Log::error($e->getMessage());
+            return view('error/error', $this->data);
+        } catch (\Exception $e) {
+            $this->data["ERROR_MESSAGE"] = $e->getMessage();
+            Log::error($e->getMessage());
+            return view('error/error', $this->data);
+        }
+    }
 }

@@ -1,5 +1,7 @@
 @extends('main')
 @section('content')
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.css">
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5-premium-features/42.0.2/ckeditor5-premium-features.css">
     <style>
         .img_pr_img_url {
             display: none;
@@ -116,10 +118,18 @@
                                     </div>
                                 </div>
 
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="exampleInputEmail1">記事</label>--}}
+{{--                                    <div class="editor-container" style="width: 100%">--}}
+{{--                                        <textarea class="editor" id="pr_contents" rows="5" name="pr_contents">--}}
+{{--                                            {{$info['pr_contents']}}--}}
+{{--                                        </textarea>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">記事</label>
-                                    <div class="editor-container" style="width: 100%">
-                                        <textarea class="editor" id="pr_contents" rows="5" name="pr_contents">
+                                    <div class="editor-container">
+                                        <textarea class="editor" id="editor" name="pr_contents">
                                             {{$info['pr_contents']}}
                                         </textarea>
                                     </div>
@@ -173,29 +183,41 @@
         </section>
         <!-- /.content -->
     </div>
-    <script>
-        ClassicEditor
-            .create( document.querySelector( '.editor' ), {
-                ckbox: {
-                    tokenUrl: "https://111143.cke-cs.com/token/dev/LzRR1kAjFfQJowpfgdfgjf7WrmUgcsSM6pQZ?limit=10"
-                }
-            } )
-            .then(editor => {
-                // 设置编辑器容器的高度
-                editor.ui.view.editable.element.style.height = '500px';
-                // 确保高度在每次聚焦时保持一致
-                editor.ui.view.editable.element.addEventListener('focus', () => {
-                    editor.ui.view.editable.element.style.height = '500px';
-                });
-                // 确保高度在每次输入时保持一致
-                editor.model.document.on('change:data', () => {
-                    editor.ui.view.editable.element.style.height = '500px';
-                });
-            })
-            .catch(error => {
-                console.error(error);
-            });
+    <script type="importmap">
+        {
+            "imports": {
+                "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.js",
+                "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/42.0.2/",
+                "ckeditor5-premium-features": "https://cdn.ckeditor.com/ckeditor5-premium-features/42.0.2/ckeditor5-premium-features.js",
+                "ckeditor5-premium-features/": "https://cdn.ckeditor.com/ckeditor5-premium-features/42.0.2/"
+            }
+        }
     </script>
+{{--    <script src="https://cdn.ckbox.io/ckbox/latest/ckbox.js"></script>--}}
+    <script type="module" src="{{ asset('assets/ckeditor/main.js') }}"></script>
+{{--    <script>--}}
+{{--        ClassicEditor--}}
+{{--            .create( document.querySelector( '.editor' ), {--}}
+{{--                ckbox: {--}}
+{{--                    tokenUrl: "https://111143.cke-cs.com/token/dev/LzRR1kAjFfQJowpfgdfgjf7WrmUgcsSM6pQZ?limit=10"--}}
+{{--                }--}}
+{{--            } )--}}
+{{--            .then(editor => {--}}
+{{--                // 设置编辑器容器的高度--}}
+{{--                editor.ui.view.editable.element.style.height = '500px';--}}
+{{--                // 确保高度在每次聚焦时保持一致--}}
+{{--                editor.ui.view.editable.element.addEventListener('focus', () => {--}}
+{{--                    editor.ui.view.editable.element.style.height = '500px';--}}
+{{--                });--}}
+{{--                // 确保高度在每次输入时保持一致--}}
+{{--                editor.model.document.on('change:data', () => {--}}
+{{--                    editor.ui.view.editable.element.style.height = '500px';--}}
+{{--                });--}}
+{{--            })--}}
+{{--            .catch(error => {--}}
+{{--                console.error(error);--}}
+{{--            });--}}
+{{--    </script>--}}
     <script>
         $(function () {
             $('.select2').select2();
@@ -303,7 +325,6 @@
                 if ($("input[name='main_flg']:checked").val() == 1 && $('#main_video_url').val() != "" && !isValidHttpUrl($('#main_video_url').val())) {
                     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・メイン動画URLは正しいURLを入力してください。";
                 }
-
                 if (strlen(errors_text) > 0) {
                     // $.alert({
                     //     title: false,

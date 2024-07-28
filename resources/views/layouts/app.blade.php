@@ -62,7 +62,8 @@
     <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/loader.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/ajax.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/php.full.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/common.js') }}"></script>
+{{--    <script type="text/javascript" src="{{ asset('assets/js/php.full.min.js') }}"></script>--}}
     <script type="text/javascript" src="{{ asset('assets/layui/layui.js') }}"></script>
 
     <!-- Select2 -->
@@ -87,7 +88,7 @@
     <script src="{{ asset('adminlte/plugins/dropzone/min/dropzone.min.js') }}"></script>
     <!-- CK Editor -->
     <script src="{{ asset('ckbox/ckbox.js') }}"></script>
-    <script src="{{ asset('ckeditor/build/ckeditor.js') }}"></script>
+{{--    <script src="{{ asset('ckeditor/build/ckeditor.js') }}"></script>--}}
 </head>
 
     @yield('content_top')

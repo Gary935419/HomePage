@@ -884,3 +884,42 @@ function specialSymbolEscape(val) {
     sword = put.innerText || put.textContent;
     return sword;
 }
+
+function strlen(string) {
+    var str = string + '';
+    var i = 0, chr = '', lgth = 0;
+    if (!this.php_js || !this.php_js.ini || !this.php_js.ini['unicode.semantics'] || this.php_js.ini['unicode.semantics'].local_value.toLowerCase() !== 'on') {
+        return string.length;
+    }
+    var getWholeChar = function (str, i) {
+        var code = str.charCodeAt(i);
+        var next = '', prev = '';
+        if (0xD800 <= code && code <= 0xDBFF) {
+            if (str.length <= (i + 1)) {
+                throw 'High surrogate without following low surrogate';
+            }
+            next = str.charCodeAt(i + 1);
+            if (0xDC00 > next || next > 0xDFFF) {
+                throw 'High surrogate without following low surrogate';
+            }
+            return str.charAt(i) + str.charAt(i + 1);
+        } else if (0xDC00 <= code && code <= 0xDFFF) {
+            if (i === 0) {
+                throw 'Low surrogate without preceding high surrogate';
+            }
+            prev = str.charCodeAt(i - 1);
+            if (0xD800 > prev || prev > 0xDBFF) {
+                throw 'Low surrogate without preceding high surrogate';
+            }
+            return false;
+        }
+        return str.charAt(i);
+    };
+    for (i = 0, lgth = 0; i < str.length; i++) {
+        if ((chr = getWholeChar(str, i)) === false) {
+            continue;
+        }
+        lgth++;
+    }
+    return lgth;
+}

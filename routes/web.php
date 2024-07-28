@@ -17,6 +17,82 @@ Route::get('/', function () {
     echo "Project:FRONT.HOME.PAGE";
 });
 
+Route::group(['prefix' => 'web'], function ($set) {
+    // aboutus
+    $set->get('aboutus', 'web\WebAboutusController@get_aboutus_index');
+    $set->get('aboutus/business', 'web\WebAboutusController@get_aboutus_business');
+    $set->get('aboutus/history', 'web\WebAboutusController@get_aboutus_history');
+    $set->get('aboutus/message', 'web\WebAboutusController@get_aboutus_message');
+    $set->get('aboutus/movie', 'web\WebAboutusController@get_aboutus_movie');
+    $set->get('aboutus/team', 'web\WebAboutusController@get_aboutus_team');
+
+    // contact
+    $set->get('contact', 'web\WebContactController@get_contact_index');
+    $set->get('contact/check', 'web\WebContactController@get_contact_check');
+    $set->get('contact/thanks', 'web\WebContactController@get_contact_thanks');
+
+    // customers
+    $set->get('customers', 'web\WebCustomersController@get_customers_index');
+    $set->get('customers/detail', 'web\WebCustomersController@get_customers_detail');
+
+    // downloadform
+    $set->get('downloadform', 'web\WebDownloadformController@get_downloadform_index');
+    $set->get('downloadform/detail', 'web\WebDownloadformController@get_downloadform_detail');
+    $set->get('downloadform/thanks', 'web\WebDownloadformController@get_downloadform_thanks');
+
+    //downloads
+    $set->get('downloads', 'web\WebDownloadsController@get_downloads_index');
+
+    //management
+    $set->get('management', 'web\WebManagementController@get_management_index');
+
+    //order
+    $set->get('order', 'web\WebOrderController@get_order_index');
+
+    //privacy
+    $set->get('privacy', 'web\WebPrivacyController@get_privacy_index');
+
+    // products
+    $set->get('products', 'web\WebProductsController@get_products_index');
+
+    // seminar
+    $set->get('seminar', 'web\WebSeminarController@get_seminar_index');
+    $set->get('seminar/seminar_fix', 'web\WebSeminarController@get_seminar_fix');
+    $set->get('seminar/t01', 'web\WebSeminarController@get_seminar_t01');
+    $set->get('seminar/t02', 'web\WebSeminarController@get_seminar_t02');
+    $set->get('seminar/t03', 'web\WebSeminarController@get_seminar_t03');
+    $set->get('seminar/t04', 'web\WebSeminarController@get_seminar_t04');
+    $set->get('seminar/t05', 'web\WebSeminarController@get_seminar_t05');
+    $set->get('seminar/t06', 'web\WebSeminarController@get_seminar_t06');
+    $set->get('seminar/t07', 'web\WebSeminarController@get_seminar_t07');
+    $set->get('seminar/t08', 'web\WebSeminarController@get_seminar_t08');
+    $set->get('seminar/t09', 'web\WebSeminarController@get_seminar_t09');
+    $set->get('seminar/t10', 'web\WebSeminarController@get_seminar_t10');
+    $set->get('seminar/t11', 'web\WebSeminarController@get_seminar_t11');
+    $set->get('seminar/t12', 'web\WebSeminarController@get_seminar_t12');
+    $set->get('seminar/t13', 'web\WebSeminarController@get_seminar_t13');
+    $set->get('seminar/t14', 'web\WebSeminarController@get_seminar_t14');
+
+    // simulations
+    $set->get('simulations', 'web\WebSimulationsController@get_simulations_index');
+
+    // sitemap
+    $set->get('sitemap', 'web\WebSitemapController@get_sitemap_index');
+
+    // support
+    $set->get('support', 'web\WebSupportController@get_support_index');
+
+    // technology
+    $set->get('technology', 'web\WebTechnologyController@get_technology_index');
+
+    // top
+    $set->get('top', 'web\WebTopController@get_top_index');
+
+    // topics
+    $set->get('topics', 'web\WebTopicsController@get_topics_index');
+    $set->get('topics/detail', 'web\WebTopicsController@get_topics_detail');
+});
+
 //Adminユーザー登録に関連するルーティングの配置です。
 Route::middleware(['auth.admin','req.trim'])->group(function () {
     // Adminホーム画面
@@ -116,6 +192,8 @@ Route::middleware(['auth.admin','req.trim'])->group(function () {
         $set->get('lable_lists/{recovery?}', 'ImportsController@get_lable_lists');
         $set->get('lable_edit/{id}', 'ImportsController@get_lable_edit');
         $set->post('lable_edit', 'ImportsController@post_lable_edit');
+
+        $set->get('recedents_details/{id}', 'ImportsController@get_recedents_details');
     });
 
     //新着情報
