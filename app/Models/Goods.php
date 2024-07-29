@@ -64,15 +64,15 @@ class Goods extends Model
             }
 
             if (isset($params['p_pdf_url_have']) && !empty($params['p_pdf_url_have'])) {
-                $m_goods = $m_goods->whereNotNull('p_pdf_url');
+                $m_goods = $m_goods->where('p_pdf_url','!=',"");
             }
 
             if (isset($params['p_video_url_have']) && !empty($params['p_video_url_have'])) {
-                $m_goods = $m_goods->whereNotNull('p_video_url');
+                $m_goods = $m_goods->where('p_video_url','!=',"");
             }
 
             if (isset($params['p_special_weburl_have']) && !empty($params['p_special_weburl_have'])) {
-                $m_goods = $m_goods->whereNotNull('p_special_weburl');
+                $m_goods = $m_goods->where('p_special_weburl','!=',"");
             }
 
             if (isset($params['p_open_flg']) && !empty($params['p_open_flg'])) {

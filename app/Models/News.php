@@ -35,10 +35,7 @@ class News extends Model
     {
         try {
             $m_goods = DB::table('S_NEWS');
-            if (isset($params['key_str']) && $params['key_str'] != '') {
-                $m_goods = $m_goods->where('n_title', 'like', '%'.$params['key_str'].'%')
-                    ->orWhere('n_contents', 'like', '%'.$params['key_str'].'%');
-            }
+
             if (isset($params['n_type_arr']) && !empty($params['n_type_arr'])) {
                 $m_goods = $m_goods->whereIn('n_type', $params['n_type_arr']);
             }
@@ -51,6 +48,10 @@ class News extends Model
             if (isset($params['n_open_flg']) && !empty($params['n_open_flg'])) {
                 $m_goods = $m_goods->where('n_open_flg','=', $params['n_open_flg']);
             }
+            if (isset($params['key_str']) && $params['key_str'] != '') {
+                $m_goods = $m_goods->where('n_title', 'like', '%'.$params['key_str'].'%');
+            }
+
             $result = $m_goods->where('is_del', '=', 0)
                 ->orderBy('id')
                 ->get()->toArray();

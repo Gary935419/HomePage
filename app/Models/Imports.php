@@ -148,11 +148,11 @@ class Imports extends Model
             }
 
             if (isset($params['precedents_url_have']) && !empty($params['precedents_url_have'])) {
-                $m_goods = $m_goods->whereNotNull('precedents_url');
+                $m_goods = $m_goods->where('precedents_url','!=',"");
             }
 
             if (isset($params['video_url_have']) && !empty($params['video_url_have'])) {
-                $m_goods = $m_goods->whereNotNull('video_url');
+                $m_goods = $m_goods->where('video_url','!=',"");
             }
 
             if (isset($params['open_flg']) && !empty($params['open_flg'])) {
