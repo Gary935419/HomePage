@@ -26,6 +26,7 @@ class Goods extends Model
         try {
             return DB::table('S_PRODUCT_INFORMATION')
                 ->where('p_name','=',$p_name)
+                ->where('is_del', '=', 0)
                 ->first();
         } catch(\Exception $e) {
             throw $e;
@@ -158,6 +159,7 @@ class Goods extends Model
         try {
             return DB::table('S_PRODUCT_LABLES')
                 ->where('pr_name','=',$pr_name)
+                ->where('is_del', '=', 0)
                 ->first();
         } catch(\Exception $e) {
             throw $e;
@@ -231,6 +233,14 @@ class Goods extends Model
 
             if (isset($params['b_name']) && $params['b_name'] != '') {
                 $m_goods = $m_goods->where('b_name', 'like', '%'.$params['b_name'].'%');
+            }
+            if (isset($params['b_flg']) && !empty($params['b_flg'])) {
+                if ($params['b_flg'] == 1){
+                    $b_flg = 0;
+                }else{
+                    $b_flg = 1;
+                }
+                $m_goods = $m_goods->where('b_flg','=', $b_flg);
             }
             $result = $m_goods->where('is_del', '=', 0)
                 ->orderBy('id')

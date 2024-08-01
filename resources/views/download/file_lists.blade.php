@@ -38,7 +38,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">
                                     <button type="button" onclick="location.href='/download/file_add'"
-                                            class="btn btn-block btn-success">情報登録
+                                            class="btn btn-block btn-success">新規登録
                                     </button>
                                 </h3>
                             </div>
@@ -82,7 +82,11 @@
                                     @foreach($info as $v)
                                         <tr>
                                             <td>{{$v['d_file_name']}}</td>
-                                            <td>{{$v['d_file_url']}}</td>
+                                            <td style="text-align: center">
+                                                @if(!empty($v['d_file_url']))
+                                                    <a href="{{$v['d_file_url']}}" target="_blank"><i style="color: black;font-size: 35px" class="far fa-file"></i></a>
+                                                @endif
+                                            </td>
                                             <td>{{$v['d_category_str']}}</td>
                                             <td>{{empty($v['CREATED_DT'])?'-':$v['CREATED_DT']}}</td>
                                             <td>
@@ -117,8 +121,27 @@
             var d_category_arr = @json($d_category_arr);
             $('#d_category').val(d_category_arr).trigger('change');
         });
+    </script>
+    <script>
         $(function () {
             $("#table_show").DataTable({
+                language: {
+                    "sProcessing": "処理中...",
+                    "sLengthMenu": "_MENU_ 件表示",
+                    "sZeroRecords": "データはありません。",
+                    "sInfo": " _TOTAL_ 件中 _START_ から _END_ まで表示",
+                    "sInfoEmpty": " 0 件中 0 から 0 まで表示",
+                    "sInfoFiltered": "（全 _MAX_ 件より抽出）",
+                    "sInfoPostFix": "",
+                    "sSearch": "検索:",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "先頭",
+                        "sPrevious": "前",
+                        "sNext": "次",
+                        "sLast": "最終"
+                    }
+                },
                 "responsive": true, "lengthChange": false, "autoWidth": false,"searching":false,"ordering":false
                 // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
                 // "buttons": ["excel"]

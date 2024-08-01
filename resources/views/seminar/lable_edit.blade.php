@@ -39,7 +39,7 @@
                         <form enctype="multipart/form-data" action="/seminar/lable_edit" method="post" id="form">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">タグ名</label>
+                                    <label for="exampleInputEmail1">タグ名<code> 必須</code></label>
                                     <input type="text" value="{{ $info['s_name'] }}" class="form-control" id="s_name" name="s_name" placeholder="タグ名">
                                 </div>
                             </div>

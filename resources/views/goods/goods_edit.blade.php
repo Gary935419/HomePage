@@ -78,12 +78,12 @@
                         <form enctype="multipart/form-data" action="/goods/goods_edit" method="post" id="form">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">製品名</label>
+                                    <label for="exampleInputEmail1">製品名<code> 必須</code></label>
                                     <input type="text" value="{{ $info['p_name'] }}" class="form-control" id="p_name" name="p_name" placeholder="製品名">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputFile">ロゴ画像</label>
+                                    <label for="exampleInputFile">ロゴ画像<code> 必須、推奨サイズ（530px X 135px）</code></label>
                                     <div class="custom-file">
                                         <input type="hidden" value="{{ $info['p_logo'] }}" name="p_logo" id="p_logo" class="custom-file-input">
                                         <label class="custom-file-label" for="customFile" id="upload_p_logo">{{ $info['p_logo'] }}</label>
@@ -93,7 +93,7 @@
                                 <div class="img_p_logo"><img src="" alt=""></div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputFile">メインイメージ</label>
+                                    <label for="exampleInputFile">メインイメージ<code> 必須、推奨サイズ（360px X 360px）</code></label>
                                     <div class="custom-file">
                                         <input type="hidden" value="{{ $info['p_main_img'] }}" name="p_main_img" id="p_main_img" class="custom-file-input">
                                         <label class="custom-file-label" for="customFile" id="upload_p_main_img">{{ $info['p_main_img'] }}</label>
@@ -103,7 +103,7 @@
                                 <div class="img_p_main_img"><img src="" alt=""></div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputFile">製品カタログ（PDF）</label>
+                                    <label for="exampleInputFile">製品カタログ（PDF）<code> PDFのみ</code></label>
                                     <button type="button" onclick="return clear_p_pdf_url()" class="btn btn-warning" style="padding: 0.1rem 0.5rem;">
                                         クリア
                                     </button>
@@ -121,12 +121,12 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">製品動画URL</label>
+                                    <label for="exampleInputEmail1">製品動画URL<code> Youtubeの動画URLのみ</code></label>
                                     <input type="text" value="{{ $info['p_video_url'] }}" class="form-control" id="p_video_url" name="p_video_url" placeholder="製品動画URL">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">特設サイトURL</label>
+                                    <label for="exampleInputEmail1">特設サイトURL<code> URLのみ</code></label>
                                     <input type="text" value="{{ $info['p_special_weburl'] }}" class="form-control" id="p_special_weburl" name="p_special_weburl" placeholder="特設サイトURL">
                                 </div>
 
@@ -147,7 +147,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">製品説明</label>
+                                    <label for="exampleInputEmail1">説明<code> 必須</code></label>
                                     <div class="editor-container" style="width: 100%">
                                         <textarea class="form-control" rows="6" id="p_contents" name="p_contents" placeholder="製品説明">{{$info['p_contents']}}</textarea>
                                     </div>
@@ -156,7 +156,7 @@
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox">
                                         <input class="custom-control-input" type="checkbox" name="p_open_flg" id="p_open_flg" @if ($info['p_open_flg'] == 1) checked @endif value="1">
-                                        <label for="p_open_flg" class="custom-control-label">公開フラグ</label>
+                                        <label for="p_open_flg" class="custom-control-label">公開フラグ<code> 必須</code></label>
                                     </div>
                                 </div>
                             </div>

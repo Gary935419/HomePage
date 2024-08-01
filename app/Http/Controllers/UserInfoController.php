@@ -110,11 +110,12 @@ class UserInfoController extends Controller
             $this->data['MSG'] = $paramsAll['msg'];
         }
 
-        $this->data['USER_ID'] = $paramsAll['USER_ID'] ?? '';
+        $this->data['USER_ID_NOW'] = $paramsAll['USER_ID'] ?? '';
         $this->data['USER_NAME_NOW'] = $paramsAll['USER_NAME'] ?? '';
 
         $user_id = session('USER_ID');
-        $clients_info = Model::get_all_user_info($user_id,$this->data['USER_ID'],$this->data['USER_NAME_NOW']);
+        $this->data['USER_ID'] = session('USER_ID');
+        $clients_info = Model::get_all_user_info($user_id,$this->data['USER_ID_NOW'],$this->data['USER_NAME_NOW']);
 
         $user_info = $this->Admins->get_user_info($user_id);
         if ($user_info['USER_IDENTITY'] != 1){
@@ -237,7 +238,7 @@ class UserInfoController extends Controller
                 $comfirm = $params['PASSWORD_CONFIRM'];
 
                 if ($password != $comfirm) {
-                    $error_message = 'パスワードが確認用パスワード情報と一致しない。';
+                    $error_message = 'パスワードが確認用パスワード情報と一致しません。';
                 } else {
                     $error_message = $Admins->check_admin_user_password(array('PASSWORD' => $password));
                 }

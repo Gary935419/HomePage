@@ -114,7 +114,7 @@
                                     <li class="nav-item">
                                         <a href="/goods/goods_lists" class="nav-link @if (($controller ?? '') == 'Controller_Goods' && ($action == 'goods_lists' || $action == 'goods_edit' || $action == 'goods_add' || $action == 'goods_regist'))) active @endif">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>情報一覧</p>
+                                            <p>製品一覧</p>
                                         </a>
                                     </li>
                                 @endif

@@ -35,6 +35,11 @@ class ImportsController extends Controller
             }
             $guild_name = $paramsAll['guild_name'];
 
+            if (!isset($paramsAll['guild_logo']) || empty($paramsAll['guild_logo'])) {
+                throw new \OneException(1);
+            }
+            $guild_logo = $paramsAll['guild_logo'];
+
             if (!isset($paramsAll['guild_descriptions']) || empty($paramsAll['guild_descriptions'])) {
                 throw new \OneException(1);
             }
@@ -68,6 +73,7 @@ class ImportsController extends Controller
             $insert_S_PRECEDENTS_INFORMATION_arr['pr_img_url'] = $pr_img_url;
             $insert_S_PRECEDENTS_INFORMATION_arr['pr_contents'] = $paramsAll['pr_contents'] ?? "";
             $insert_S_PRECEDENTS_INFORMATION_arr['guild_name'] = $guild_name;
+            $insert_S_PRECEDENTS_INFORMATION_arr['guild_logo'] = $guild_logo;
             $insert_S_PRECEDENTS_INFORMATION_arr['guild_descriptions'] = $guild_descriptions;
             $insert_S_PRECEDENTS_INFORMATION_arr['pr_labels'] = $pr_labels_new;
             $insert_S_PRECEDENTS_INFORMATION_arr['main_flg'] = $main_flg;
@@ -123,7 +129,7 @@ class ImportsController extends Controller
                 }
             }
         }
-
+        $return_info = array();
         if (!empty($this->data['PRODECT_LABLES_ARR'])){
             foreach ($info as $kkk=>$vvv){
                 $pr_labels_array_search_arr = explode(",", $vvv['pr_labels']);
@@ -196,6 +202,11 @@ class ImportsController extends Controller
             }
             $guild_name = $paramsAll['guild_name'];
 
+            if (!isset($paramsAll['guild_logo']) || empty($paramsAll['guild_logo'])) {
+                throw new \OneException(1);
+            }
+            $guild_logo = $paramsAll['guild_logo'];
+
             if (!isset($paramsAll['guild_descriptions']) || empty($paramsAll['guild_descriptions'])) {
                 throw new \OneException(1);
             }
@@ -219,6 +230,7 @@ class ImportsController extends Controller
             $update_S_PRECEDENTS_arr['pr_title'] = $pr_title;
             $update_S_PRECEDENTS_arr['pr_img_url'] = $pr_img_url;
             $update_S_PRECEDENTS_arr['guild_name'] = $guild_name;
+            $update_S_PRECEDENTS_arr['guild_logo'] = $guild_logo;
             $update_S_PRECEDENTS_arr['guild_descriptions'] = $guild_descriptions;
             $update_S_PRECEDENTS_arr['pr_contents'] = $paramsAll['pr_contents'] ?? "";
             $update_S_PRECEDENTS_arr['pr_labels'] = $pr_labels_new;
@@ -380,7 +392,7 @@ class ImportsController extends Controller
             }
             $info[$k]['open_flg_str'] = $v['open_flg'] == 0 ? "未公開" : "公開";
         }
-
+        $return_info = array();
         if (!empty($this->data['PRODUCT_LABLES_ARR'])){
             foreach ($info as $kkk=>$vvv){
                 $c_lables_array_search_arr = explode(",", $vvv['c_lables']);

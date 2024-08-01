@@ -62,17 +62,17 @@
                         <form enctype="multipart/form-data" action="/imports/company_regist" method="post" id="form">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">企業名</label>
+                                    <label for="exampleInputEmail1">企業名<code> 必須</code></label>
                                     <input type="text" class="form-control" id="c_name" name="c_name" placeholder="企業名">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">企業名フリガナ</label>
+                                    <label for="exampleInputEmail1">企業名フリガナ<code> 必須</code></label>
                                     <input type="text" class="form-control" id="furigana_name" name="furigana_name" placeholder="企業名フリガナ">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputFile">ロゴ</label>
+                                    <label for="exampleInputFile">ロゴ<code> 必須、推奨サイズ（200～100px X 60px）</code></label>
                                     <div class="custom-file">
                                         <input type="hidden" name="logo_url" id="logo_url" class="custom-file-input">
                                         <label class="custom-file-label" for="customFile" id="upload_logo_url">ファイルを選択</label>
@@ -82,12 +82,12 @@
                                 <div class="img_logo_url"><img src="" alt=""></div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">導入事例URL</label>
+                                    <label for="exampleInputEmail1">導入事例URL<code> URLのみ</code></label>
                                     <input type="text" class="form-control" id="precedents_url" name="precedents_url" placeholder="導入事例URL">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">紹介動画URL	</label>
+                                    <label for="exampleInputEmail1">紹介動画URL<code> Youtubeの動画URLのみ</code></label>
                                     <input type="text" class="form-control" id="video_url" name="video_url" placeholder="紹介動画URL	">
                                 </div>
 

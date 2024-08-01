@@ -48,20 +48,32 @@ class Seminar extends Model
                 $m_goods = $m_goods->whereIn('category', $params['n_type_arr']);
             }
             if (isset($params['D_FROM']) && $params['D_FROM'] != '') {
-                $m_goods = $m_goods->where('exhibition_dates1', '>=', $params['D_FROM'])
-                    ->orWhere('exhibition_dates2', '>=', $params['D_FROM'])
-                    ->orWhere('exhibition_dates3', '>=', $params['D_FROM'])
-                    ->orWhere('exhibition_dates4', '>=', $params['D_FROM'])
-                    ->orWhere('exhibition_dates5', '>=', $params['D_FROM'])
-                    ->orWhere('exhibition_dates6', '>=', $params['D_FROM']);
+                $m_goods = $m_goods->where(function ($m_goods) use ($params) {
+                    $m_goods->where('exhibition_dates1', '>=', $params['D_FROM'])
+                        ->orWhere('exhibition_dates2', '>=', $params['D_FROM'])
+                        ->orWhere('exhibition_dates3', '>=', $params['D_FROM'])
+                        ->orWhere('exhibition_dates4', '>=', $params['D_FROM'])
+                        ->orWhere('exhibition_dates5', '>=', $params['D_FROM'])
+                        ->orWhere('exhibition_dates6', '>=', $params['D_FROM'])
+                        ->orWhere('exhibition_dates7', '>=', $params['D_FROM'])
+                        ->orWhere('exhibition_dates8', '>=', $params['D_FROM'])
+                        ->orWhere('exhibition_dates9', '>=', $params['D_FROM'])
+                        ->orWhere('exhibition_dates10', '>=', $params['D_FROM']);
+                });
             }
             if (isset($params['D_TO']) && $params['D_TO'] != '') {
-                $m_goods = $m_goods->where('exhibition_dates1', '<=', $params['D_TO'])
-                    ->where('exhibition_dates2', '<=', $params['D_TO'])
-                    ->where('exhibition_dates3', '<=', $params['D_TO'])
-                    ->where('exhibition_dates4', '<=', $params['D_TO'])
-                    ->where('exhibition_dates5', '<=', $params['D_TO'])
-                    ->where('exhibition_dates6', '<=', $params['D_TO']);
+                $m_goods = $m_goods->where(function ($m_goods) use ($params) {
+                    $m_goods->where('exhibition_dates1', '<=', $params['D_TO'])
+                        ->orWhere('exhibition_dates2', '<=', $params['D_TO'])
+                        ->orWhere('exhibition_dates3', '<=', $params['D_TO'])
+                        ->orWhere('exhibition_dates4', '<=', $params['D_TO'])
+                        ->orWhere('exhibition_dates5', '<=', $params['D_TO'])
+                        ->orWhere('exhibition_dates6', '<=', $params['D_TO'])
+                        ->orWhere('exhibition_dates7', '<=', $params['D_TO'])
+                        ->orWhere('exhibition_dates8', '<=', $params['D_TO'])
+                        ->orWhere('exhibition_dates9', '<=', $params['D_TO'])
+                        ->orWhere('exhibition_dates10', '<=', $params['D_TO']);
+                });
             }
             $result = $m_goods->where('is_del', '=', 0)
                 ->orderBy('id')

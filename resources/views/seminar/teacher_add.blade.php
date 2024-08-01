@@ -62,12 +62,12 @@
                         <form enctype="multipart/form-data" action="/seminar/teacher_regist" method="post" id="form">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">名前</label>
+                                    <label for="exampleInputEmail1">名前<code> 必須</code></label>
                                     <input type="text" class="form-control" id="l_name" name="l_name" placeholder="名前">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputFile">写真</label>
+                                    <label for="exampleInputFile">写真<code> 必須、推奨サイズ（840px X 480px）</code></label>
                                     <div class="custom-file">
                                         <input type="hidden" name="b_url" id="b_url" class="custom-file-input">
                                         <label class="custom-file-label" for="customFile" id="upload_b_url">ファイルを選択</label>
@@ -77,27 +77,27 @@
                                 <div class="img_b_url"><img src="" alt=""></div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">専門分野</label>
+                                    <label for="exampleInputEmail1">専門分野<code> 必須</code></label>
                                     <input type="text" class="form-control" id="l_professions" name="l_professions" placeholder="専門分野">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">経歴・資格</label>
+                                    <label for="exampleInputEmail1">経歴・資格<code> 必須</code></label>
                                     <input type="text" class="form-control" id="l_career_qualifications" name="l_career_qualifications" placeholder="経歴・資格">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">セミナー実績</label>
+                                    <label for="exampleInputEmail1">セミナー実績<code> 必須</code></label>
                                     <input type="text" class="form-control" id="l_seminar_results" name="l_seminar_results" placeholder="セミナー実績">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">エリア</label>
+                                    <label for="exampleInputEmail1">エリア<code> 必須</code></label>
                                     <input type="text" class="form-control" id="l_area" name="l_area" placeholder="エリア">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">フリーテキスト</label>
+                                    <label for="exampleInputEmail1">フリーテキスト<code> 必須</code></label>
                                     <div class="editor-container" style="width: 100%">
                                         <textarea class="form-control" rows="6" id="l_contents" name="l_contents" placeholder="フリーテキスト"></textarea>
                                     </div>

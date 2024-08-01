@@ -44,7 +44,7 @@
                         <form enctype="multipart/form-data" action="/download/category_regist" method="post" id="form">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">カテゴリ名</label>
+                                    <label for="exampleInputEmail1">カテゴリ名<code> 必須</code></label>
                                     <input type="text" class="form-control" id="category_name" name="category_name" placeholder="カテゴリ名">
                                 </div>
 

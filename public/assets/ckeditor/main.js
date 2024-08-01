@@ -30,6 +30,7 @@ import {
 	Link,
 	LinkImage,
 	List,
+    MediaEmbed,
 	ListProperties,
 	Paragraph,
 	PasteFromOffice,
@@ -78,6 +79,7 @@ const editorConfig = {
 			'insertImage',
 			'ckbox',
 			'insertTable',
+            'mediaEmbed',
 			'codeBlock',
 			'htmlEmbed',
 			'|',
@@ -119,6 +121,7 @@ const editorConfig = {
 		Link,
 		LinkImage,
 		List,
+        MediaEmbed,
 		ListProperties,
 		Paragraph,
 		PasteFromOffice,
@@ -158,6 +161,9 @@ const editorConfig = {
             },
 		]
 	},
+    mediaEmbed: {
+        previewsInData: true
+    },
 	htmlSupport: {
 		allow: [
 			{

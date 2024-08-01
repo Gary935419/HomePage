@@ -148,15 +148,17 @@ class GoodsController extends Controller
             $info[$k]['p_lables_str'] = "";
             foreach ($p_lables_array as $kk=>$vv){
                 $select_S_PRODUCT_LABLES_info = $Goods->select_S_PRODUCT_LABLES_info($vv);
-                if ($kk>0){
-                    $info[$k]['p_lables_str'] = $info[$k]['p_lables_str'] .",". $select_S_PRODUCT_LABLES_info['pr_name'];
-                }else{
-                    $info[$k]['p_lables_str'] = $info[$k]['p_lables_str'] . $select_S_PRODUCT_LABLES_info['pr_name'];
+                if (empty($select_S_PRODUCT_LABLES_info['is_del'])){
+                    if ($kk>0){
+                        $info[$k]['p_lables_str'] = $info[$k]['p_lables_str'] .",". $select_S_PRODUCT_LABLES_info['pr_name'];
+                    }else{
+                        $info[$k]['p_lables_str'] = $info[$k]['p_lables_str'] . $select_S_PRODUCT_LABLES_info['pr_name'];
+                    }
                 }
             }
             $info[$k]['p_open_flg_str'] = $v['p_open_flg'] == 0 ? "未公開" : "公開";
         }
-
+        $return_info = array();
         if (!empty($this->data['PRODUCT_LABLES_ARR'])){
             foreach ($info as $kkk=>$vvv){
                 $p_lables_array_search_arr = explode(",", $vvv['p_lables']);
@@ -350,7 +352,7 @@ class GoodsController extends Controller
 
             DB::commit();
 
-            return redirect('/goods/goods_lablelists?msg_code=200&&msg=情報タグの登録が完了しました。');
+            return redirect('/goods/goods_lablelists?msg_code=200&&msg=タグの登録が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
             Log::error($e->getMessage());
@@ -421,6 +423,11 @@ class GoodsController extends Controller
             }
             $pr_name = $paramsAll['pr_name'];
 
+            $S_PRODUCT_LABLES_info = $Goods->select_S_PRODUCT_LABLES_info_one($pr_name);
+            if (!empty($S_PRODUCT_LABLES_info) && $S_PRODUCT_LABLES_info['id'] != $id){
+                throw new \OneException(4);
+            }
+
             //数据库事务处理
             DB::beginTransaction();
 
@@ -432,7 +439,7 @@ class GoodsController extends Controller
 
             DB::commit();
 
-            return redirect('/goods/goods_lablelists?msg_code=200&&msg=情報タグの編集が完了しました。');
+            return redirect('/goods/goods_lablelists?msg_code=200&&msg=タグの編集が完了しました。');
         } catch (\OneException $e) {
             DB::rollBack();
             Log::error($e->getMessage());
@@ -524,6 +531,8 @@ class GoodsController extends Controller
             $this->data['MSG'] = $paramsAll['msg'];
         }
         $this->data['b_name'] = $paramsAll['b_name'] ?? '';
+        $this->data['b_flg'] = $paramsAll['b_flg'] ?? 0;
+
         $Goods = new Goods($this);
         $info = $Goods->search_bannergoods($paramsAll);
         foreach ($info as $k=>$v){

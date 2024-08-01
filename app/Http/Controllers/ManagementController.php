@@ -91,7 +91,7 @@ class ManagementController extends Controller
             $this->data['MSG'] = $paramsAll['msg'];
         }
         $this->data['title'] = $paramsAll['title'] ?? '';
-        $this->data['open_flg'] = $paramsAll['open_flg'] ?? array();
+        $this->data['open_flg'] = $paramsAll['open_flg'] ?? 0;
 
         $Management = new Management($this);
         $info = $Management->search_S_MANAGEMENT_SITE($paramsAll);

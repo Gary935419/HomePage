@@ -63,7 +63,7 @@ return [
             )
         ),
 //        'goods_lableregist' => array(
-//            'REF_NAME' => '製品情報_情報タグ登録',
+//            'REF_NAME' => '製品情報_タグ登録',
 //            'goods' => array(
 //                'goods_lableadd',
 //                'goods_lableregist',

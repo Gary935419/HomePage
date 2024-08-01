@@ -38,7 +38,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">
                                     <button type="button" onclick="location.href='/imports/lable_add'"
-                                            class="btn btn-block btn-success">情報登録
+                                            class="btn btn-block btn-success">新規登録
                                     </button>
                                 </h3>
                             </div>
@@ -110,14 +110,34 @@
     </div>
     <script>
         $(function () {
-            $(function () {
-                $('.select2').select2();
-                var p_type_arr = @json($p_type_arr);
-                $('#p_type_arr').val(p_type_arr).trigger('change');
-            });
+            $('.select2').select2();
+            var p_type_arr = @json($p_type_arr);
+            $('#p_type_arr').val(p_type_arr).trigger('change');
+        });
+    </script>
+    <script>
+        $(function () {
             $("#table_show").DataTable({
+                language: {
+                    "sProcessing": "処理中...",
+                    "sLengthMenu": "_MENU_ 件表示",
+                    "sZeroRecords": "データはありません。",
+                    "sInfo": " _TOTAL_ 件中 _START_ から _END_ まで表示",
+                    "sInfoEmpty": " 0 件中 0 から 0 まで表示",
+                    "sInfoFiltered": "（全 _MAX_ 件より抽出）",
+                    "sInfoPostFix": "",
+                    "sSearch": "検索:",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "先頭",
+                        "sPrevious": "前",
+                        "sNext": "次",
+                        "sLast": "最終"
+                    }
+                },
                 "responsive": true, "lengthChange": false, "autoWidth": false,"searching":false,"ordering":false
                 // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                // "buttons": ["excel"]
             }).buttons().container().appendTo('#table_show_wrapper .col-md-6:eq(0)');
         });
     </script>

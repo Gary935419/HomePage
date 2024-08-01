@@ -46,12 +46,12 @@
                         <form enctype="multipart/form-data" action="/news/news_edit" method="post" id="form">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">タイトル	</label>
+                                    <label for="exampleInputEmail1">タイトル<code> 必須</code></label>
                                     <input type="text" value="{{ $info['n_title'] }}" class="form-control" id="n_title" name="n_title" placeholder="タイトル">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>カテゴリ</label>
+                                    <label>カテゴリ<code> 必須</code></label>
                                     <select class="form-control select2" name="n_type" id="n_type" style="width: 100%;">
                                         <option @if ($info['n_type']==1) selected @endif value="1">新着情報</option>
                                         <option @if ($info['n_type']==2) selected @endif value="2">セミナー展示会</option>
@@ -70,7 +70,7 @@
 {{--                                    </div>--}}
 {{--                                </div>--}}
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">記事</label>
+                                    <label for="exampleInputEmail1">本文<code> 必須</code></label>
                                     <div class="editor-container">
                                         <textarea class="editor" id="editor" name="n_contents">
                                             {{$info['n_contents']}}
@@ -93,7 +93,7 @@
                                 </div>
 
                                 <div class="form-group" id="n_open_date_see" style="display: @if ($info['n_open_flg'] == 1) block @else none @endif">
-                                    <label>公開日時</label>
+                                    <label>公開日時<code> 必須、「年月日 時分」で入力</code></label>
                                     <div class="input-group date" id="start_date" data-target-input="nearest">
                                         <div class="input-group-append" data-target="#start_date" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -103,7 +103,7 @@
                                 </div>
 
                                 <div class="form-group" id="n_close_date_see" style="display: @if ($info['n_open_flg'] == 1) block @else none @endif">
-                                    <label>終了日時</label>
+                                    <label>終了日時<code> 「年月日 時分」で入力</code></label>
                                     <div class="input-group date" id="end_date" data-target-input="nearest">
                                         <div class="input-group-append" data-target="#end_date" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -115,12 +115,12 @@
                                 <div class="form-group" id="n_fixed_flg_see" style="display: @if ($info['n_open_flg'] == 1) block @else none @endif">
                                     <div class="custom-control custom-checkbox">
                                         <input class="custom-control-input" type="checkbox" name="n_fixed_flg" id="n_fixed_flg" @if ($info['n_fixed_flg'] == 1) checked @endif value="1">
-                                        <label for="n_fixed_flg" class="custom-control-label">固定フラグ</label>
+                                        <label for="n_fixed_flg" class="custom-control-label">先頭固定フラグ</label>
                                     </div>
                                 </div>
 
                                 <div class="form-group" id="fix_open_date_see" style="display: @if ($info['n_fixed_flg'] == 1) block @else none @endif">
-                                    <label>固定公開日時</label>
+                                    <label>固定公開日時<code> 必須、「年月日 時分」で入力</code></label>
                                     <div class="input-group date" id="fix_start_date" data-target-input="nearest">
                                         <div class="input-group-append" data-target="#fix_start_date" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -130,7 +130,7 @@
                                 </div>
 
                                 <div class="form-group" id="fix_close_date_see" style="display: @if ($info['n_fixed_flg'] == 1) block @else none @endif">
-                                    <label>固定終了日時</label>
+                                    <label>固定終了日時<code> 「年月日 時分」で入力</code></label>
                                     <div class="input-group date" id="fix_end_date" data-target-input="nearest">
                                         <div class="input-group-append" data-target="#fix_end_date" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>

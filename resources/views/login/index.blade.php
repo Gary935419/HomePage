@@ -19,15 +19,16 @@
 <div class="register-box">
     <div class="register-logo">
         <a href="#"><b>東海電子株式会社</b></a>
+        <p style="margin: auto">HP-CMS</p>
     </div>
 
     <div class="card">
         <div class="card-body register-card-body">
-            <p class="login-box-msg">Welcome Login</p>
+            <p class="login-box-msg">ようこそ</p>
 
             <form action='/login' method="post">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="USER_ID" id="USER_ID" placeholder="Account">
+                    <input type="text" class="form-control" name="USER_ID" id="USER_ID" placeholder="ログインID">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-user"></span>
@@ -35,7 +36,7 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" name="USER_PASSWORD" id="USER_PASSWORD" placeholder="Password">
+                    <input type="password" class="form-control" name="USER_PASSWORD" id="USER_PASSWORD" placeholder="パスワード">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
@@ -48,7 +49,7 @@
                 <div class="row">
                     <!-- /.col -->
                     <div class="col-lg-12">
-                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        <button type="submit" class="btn btn-primary btn-block">ログイン</button>
                     </div>
                     <!-- /.col -->
                 </div>

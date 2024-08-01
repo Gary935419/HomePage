@@ -17,6 +17,14 @@ Route::get('/', function () {
     echo "Project:FRONT.HOME.PAGE";
 });
 
+//Apiに関連するルーティングの配置です。
+Route::middleware(['req.trim'])->group(function () {
+    Route::group(['prefix' => 'webapi'], function ($app) {
+        $app->post('topics/topics_search', 'api\web\TopicsController@post_topics_search');
+        $app->post('download/download_from_add', 'api\web\DownloadController@post_download_from_add');
+    });
+});
+
 Route::group(['prefix' => 'web'], function ($set) {
     // aboutus
     $set->get('aboutus', 'web\WebAboutusController@get_aboutus_index');
@@ -33,12 +41,11 @@ Route::group(['prefix' => 'web'], function ($set) {
 
     // customers
     $set->get('customers', 'web\WebCustomersController@get_customers_index');
-    $set->get('customers/detail', 'web\WebCustomersController@get_customers_detail');
+    $set->get('customers/detail/{id}', 'web\WebCustomersController@get_customers_detail');
 
     // downloadform
-    $set->get('downloadform', 'web\WebDownloadformController@get_downloadform_index');
-    $set->get('downloadform/detail', 'web\WebDownloadformController@get_downloadform_detail');
-    $set->get('downloadform/thanks', 'web\WebDownloadformController@get_downloadform_thanks');
+    $set->get('downloadform/{id}', 'web\WebDownloadformController@get_downloadform_index');
+    $set->get('downloadform_thanks', 'web\WebDownloadformController@get_downloadform_thanks');
 
     //downloads
     $set->get('downloads', 'web\WebDownloadsController@get_downloads_index');
@@ -58,20 +65,7 @@ Route::group(['prefix' => 'web'], function ($set) {
     // seminar
     $set->get('seminar', 'web\WebSeminarController@get_seminar_index');
     $set->get('seminar/seminar_fix', 'web\WebSeminarController@get_seminar_fix');
-    $set->get('seminar/t01', 'web\WebSeminarController@get_seminar_t01');
-    $set->get('seminar/t02', 'web\WebSeminarController@get_seminar_t02');
-    $set->get('seminar/t03', 'web\WebSeminarController@get_seminar_t03');
-    $set->get('seminar/t04', 'web\WebSeminarController@get_seminar_t04');
-    $set->get('seminar/t05', 'web\WebSeminarController@get_seminar_t05');
-    $set->get('seminar/t06', 'web\WebSeminarController@get_seminar_t06');
-    $set->get('seminar/t07', 'web\WebSeminarController@get_seminar_t07');
-    $set->get('seminar/t08', 'web\WebSeminarController@get_seminar_t08');
-    $set->get('seminar/t09', 'web\WebSeminarController@get_seminar_t09');
-    $set->get('seminar/t10', 'web\WebSeminarController@get_seminar_t10');
-    $set->get('seminar/t11', 'web\WebSeminarController@get_seminar_t11');
-    $set->get('seminar/t12', 'web\WebSeminarController@get_seminar_t12');
-    $set->get('seminar/t13', 'web\WebSeminarController@get_seminar_t13');
-    $set->get('seminar/t14', 'web\WebSeminarController@get_seminar_t14');
+    $set->get('teacher/detail/{id}', 'web\WebSeminarController@get_teacher_detail');
 
     // simulations
     $set->get('simulations', 'web\WebSimulationsController@get_simulations_index');
@@ -90,7 +84,7 @@ Route::group(['prefix' => 'web'], function ($set) {
 
     // topics
     $set->get('topics', 'web\WebTopicsController@get_topics_index');
-    $set->get('topics/detail', 'web\WebTopicsController@get_topics_detail');
+    $set->get('topics/detail/{id}', 'web\WebTopicsController@get_topics_detail');
 });
 
 //Adminユーザー登録に関連するルーティングの配置です。

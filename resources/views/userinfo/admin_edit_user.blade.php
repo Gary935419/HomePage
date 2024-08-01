@@ -47,15 +47,15 @@
 {{--                                    <font size="2" color="#28a745">アカウント　{{$created_user_id}}　更新された。</font> <br> <br>--}}
 {{--                                @endif--}}
                                 <div class="form-group">
-                                    <label for="inputName">ログインID</label>
+                                    <label for="inputName">ログインID<code> 必須、半角英数字・ハイフン・アンダーバーのみ</code></label>
                                     <input type="text" id="USER_ID" size="16" value="{{ $info['USER_ID'] }}" name="USER_ID" autocomplete="off" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputName">アカウント名</label>
+                                    <label for="inputName">アカウント名<code> 必須</code></label>
                                     <input type="text" id="USER_NAME" size="16" value="{{ $info['USER_NAME'] }}" name="USER_NAME" autocomplete="off" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputName">管理権限</label><br>
+                                    <label for="inputName">管理権限<code> 必須</code></label><br>
                                     <div class="icheck-primary d-inline">
                                         <input type="radio" id="radioPrimary1" name="USER_IDENTITY" @if ($info['USER_IDENTITY']==0) checked @endif value="0" >
                                         <label for="radioPrimary1">
@@ -70,12 +70,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputClientCompany">パスワード</label>
+                                    <label for="inputClientCompany">パスワード<code> 必須、8文字以上でかつ英大文字・英小文字・数字がそれぞれ1文字以上含まれるもの</code></label>
                                     <input id="PASSWORD" type="password" size="16" autocomplete="new-password" name="PASSWORD"
                                            class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputClientCompany">パスワードの再入力</label>
+                                    <label for="inputClientCompany">パスワードの再入力<code> 必須</code></label>
                                     <input id="PASSWORD_CONFIRM" type="password" size="16" autocomplete="new-password" name="PASSWORD_CONFIRM"
                                            class="form-control">
                                 </div>

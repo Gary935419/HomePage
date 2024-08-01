@@ -34,7 +34,7 @@
                             <div class="icon">
                                 <i class="ion ion-bag"></i>
                             </div>
-                            <a href="/goods/goods_lists" class="small-box-footer">製品情報一覧 <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="/goods/goods_lists" class="small-box-footer">製品一覧 <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->

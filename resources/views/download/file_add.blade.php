@@ -44,12 +44,12 @@
                         <form enctype="multipart/form-data" action="/download/file_regist" method="post" id="form">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">ファイル名</label>
+                                    <label for="exampleInputEmail1">ファイル名<code> 必須、PDFファイルのみ</code></label>
                                     <input type="text" class="form-control" id="d_file_name" name="d_file_name" placeholder="ファイル名">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputFile">ファイル</label>
+                                    <label for="exampleInputFile">ファイル<code> 必須</code></label>
                                     <div class="custom-file">
                                         <input type="hidden" name="d_file_url" id="d_file_url" class="custom-file-input">
                                         <label class="custom-file-label" for="customFile" id="upload_d_file_url">ファイルを選択</label>
@@ -57,7 +57,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>カテゴリ</label>
+                                    <label>カテゴリ<code> 必須</code></label>
                                     <select class="select2" id="d_category" name="d_category[]" multiple="multiple" data-placeholder="選択してください" style="width: 100%;">
                                         @if (isset($S_DOWNLOADS_CATEGORY))
                                             @foreach($S_DOWNLOADS_CATEGORY as $val)

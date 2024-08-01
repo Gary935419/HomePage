@@ -52,6 +52,11 @@ class SeminarController extends Controller
             }
             $opening_times = $paramsAll['opening_times'];
 
+            if (!isset($paramsAll['closeing_times']) || empty($paramsAll['closeing_times'])) {
+                throw new \OneException(1);
+            }
+            $closeing_times = $paramsAll['closeing_times'];
+
             if (!isset($paramsAll['c_lables']) || empty($paramsAll['c_lables'])) {
                 throw new \OneException(1);
             }
@@ -83,6 +88,7 @@ class SeminarController extends Controller
             $insert_S_SEMINARS_EXHIBITIONS_arr['b_url'] = $b_url;
             $insert_S_SEMINARS_EXHIBITIONS_arr['p_contents'] = $p_contents;
             $insert_S_SEMINARS_EXHIBITIONS_arr['opening_times'] = $opening_times;
+            $insert_S_SEMINARS_EXHIBITIONS_arr['closeing_times'] = $closeing_times;
             $insert_S_SEMINARS_EXHIBITIONS_arr['open_flg'] = $open_flg;
             $insert_S_SEMINARS_EXHIBITIONS_arr['c_lables'] = $c_lables_new;
             $insert_S_SEMINARS_EXHIBITIONS_arr['address_flg'] = $address_flg;
@@ -111,12 +117,16 @@ class SeminarController extends Controller
             Log::error($e->getMessage());
             $this->data['MSG_CODE'] = 201;
             $this->data['MSG'] = $e->getMessage();
+            $Seminar = new Seminar($this);
+            $this->data['S_SEMINARS_EXHIBITIONS_LABLES'] = $Seminar->get_S_SEMINARS_EXHIBITIONS_LABLES();
             return view('seminar/exhibition_add', $this->data);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
             $this->data['MSG_CODE'] = 201;
             $this->data['MSG'] = $e->getMessage();
+            $Seminar = new Seminar($this);
+            $this->data['S_SEMINARS_EXHIBITIONS_LABLES'] = $Seminar->get_S_SEMINARS_EXHIBITIONS_LABLES();
             return view('seminar/exhibition_add', $this->data);
         }
     }
@@ -236,6 +246,11 @@ class SeminarController extends Controller
             }
             $opening_times = $paramsAll['opening_times'];
 
+            if (!isset($paramsAll['closeing_times']) || empty($paramsAll['closeing_times'])) {
+                throw new \OneException(1);
+            }
+            $closeing_times = $paramsAll['closeing_times'];
+
             if (!isset($paramsAll['c_lables']) || empty($paramsAll['c_lables'])) {
                 throw new \OneException(1);
             }
@@ -260,6 +275,7 @@ class SeminarController extends Controller
             $update_S_SEMINARS_EXHIBITIONS_arr['b_url'] = $b_url;
             $update_S_SEMINARS_EXHIBITIONS_arr['p_contents'] = $p_contents;
             $update_S_SEMINARS_EXHIBITIONS_arr['opening_times'] = $opening_times;
+            $update_S_SEMINARS_EXHIBITIONS_arr['closeing_times'] = $closeing_times;
             $update_S_SEMINARS_EXHIBITIONS_arr['open_flg'] = $open_flg;
             $update_S_SEMINARS_EXHIBITIONS_arr['c_lables'] = $c_lables_new;
             $update_S_SEMINARS_EXHIBITIONS_arr['address_flg'] = $address_flg;

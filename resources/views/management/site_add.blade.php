@@ -62,12 +62,12 @@
                         <form enctype="multipart/form-data" action="/management/site_regist" method="post" id="form">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">タイトル</label>
+                                    <label for="exampleInputEmail1">タイトル<code> 必須</code></label>
                                     <input type="text" class="form-control" id="title" name="title" placeholder="タイトル">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputFile">バナー画像</label>
+                                    <label for="exampleInputFile">バナー画像<code> 必須、推奨サイズ（280px X 140px）</code></label>
                                     <div class="custom-file">
                                         <input type="hidden" name="logo" id="logo" class="custom-file-input">
                                         <label class="custom-file-label" for="customFile" id="upload_logo">ファイルを選択</label>
@@ -77,12 +77,12 @@
                                 <div class="img_logo"><img src="" alt=""></div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">URL</label>
+                                    <label for="exampleInputEmail1">URL<code> 必須</code></label>
                                     <input type="text" class="form-control" id="url" name="url" placeholder="URL">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">説明</label>
+                                    <label for="exampleInputEmail1">説明<code> 必須</code></label>
                                     <div class="editor-container" style="width: 100%">
                                         <textarea class="form-control" rows="6" id="contents" name="contents" placeholder="製品説明"></textarea>
                                     </div>

@@ -62,12 +62,12 @@
                         <form enctype="multipart/form-data" action="/goods/goods_bannerregist" method="post" id="form">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">バナー名</label>
+                                    <label for="exampleInputEmail1">バナー名<code> 必須</code></label>
                                     <input type="text" class="form-control" id="b_name" name="b_name" placeholder="バナー名">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputFile">バナー画像</label>
+                                    <label for="exampleInputFile">バナー画像<code> 必須、推奨サイズ（790px X 295px）</code></label>
                                     <div class="custom-file">
                                         <input type="hidden" name="b_url" id="b_url" class="custom-file-input">
                                         <label class="custom-file-label" for="customFile" id="upload_b_url">ファイルを選択</label>
@@ -77,7 +77,7 @@
                                 <div class="img_b_url"><img src="" alt=""></div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">リンク先URL</label>
+                                    <label for="exampleInputEmail1">リンク先URL<code> 必須</code></label>
                                     <input type="text" class="form-control" id="link_url" name="link_url" placeholder="リンク先URL">
                                 </div>
 

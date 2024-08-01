@@ -27,9 +27,9 @@ class LoginController extends Controller
             if ($password_expired_time != null && $current_time >= $password_expired_time) {
                 return view('userinfo/password_change_forced', ['USER_ID' => $params['USER_ID']]);
             }
-            return redirect('/admin');
+            return redirect('/news/news_lists');
         }
         // ログイン失敗
-        return view('login/index', ['ERROR' => 'アカウント番号またはパスワードが間違っています。']);
+        return view('login/index', ['ERROR' => 'ログインIDまたはパスワードが間違っています。']);
     }
 }

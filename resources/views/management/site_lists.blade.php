@@ -38,7 +38,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">
                                     <button type="button" onclick="location.href='/management/site_add'"
-                                            class="btn btn-block btn-success">情報登録
+                                            class="btn btn-block btn-success">新規登録
                                     </button>
                                 </h3>
                             </div>
@@ -55,11 +55,12 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
-                                                <label>&nbsp;</label>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input class="custom-control-input" type="checkbox" @if ($open_flg == 1) checked @endif name="open_flg" id="open_flg" value="1">
-                                                    <label for="open_flg" class="custom-control-label">公開中のみ表示する</label>
-                                                </div>
+                                                <label>公開フラグ</label>
+                                                <select id="open_flg" name="open_flg" class="form-control select2" style="width: 100%;">
+                                                    <option value="0" selected>選択してください</option>
+                                                    <option @if ($open_flg == 1) selected @endif value="1">未公開</option>
+                                                    <option @if ($open_flg == 2) selected @endif value="2">公開</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -112,8 +113,27 @@
             var open_flg = @json($open_flg);
             $('#open_flg').val(open_flg).trigger('change');
         });
+    </script>
+    <script>
         $(function () {
             $("#table_show").DataTable({
+                language: {
+                    "sProcessing": "処理中...",
+                    "sLengthMenu": "_MENU_ 件表示",
+                    "sZeroRecords": "データはありません。",
+                    "sInfo": " _TOTAL_ 件中 _START_ から _END_ まで表示",
+                    "sInfoEmpty": " 0 件中 0 から 0 まで表示",
+                    "sInfoFiltered": "（全 _MAX_ 件より抽出）",
+                    "sInfoPostFix": "",
+                    "sSearch": "検索:",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "先頭",
+                        "sPrevious": "前",
+                        "sNext": "次",
+                        "sLast": "最終"
+                    }
+                },
                 "responsive": true, "lengthChange": false, "autoWidth": false,"searching":false,"ordering":false
                 // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
                 // "buttons": ["excel"]

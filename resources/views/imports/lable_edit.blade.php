@@ -39,12 +39,12 @@
                         <form enctype="multipart/form-data" action="/imports/lable_edit" method="post" id="form">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">タグ名</label>
+                                    <label for="exampleInputEmail1">タグ名<code> 必須</code></label>
                                     <input type="text" value="{{ $info['p_name'] }}" class="form-control" id="p_name" name="p_name" placeholder="タグ名">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>カテゴリ</label>
+                                    <label>カテゴリ<code> 必須</code></label>
                                     <select class="form-control select2" name="p_type" id="p_type" style="width: 100%;">
                                         <option @if ($info['p_type']==1) selected @endif value="1">業種別</option>
                                         <option @if ($info['p_type']==2) selected @endif value="2">点呼種別</option>

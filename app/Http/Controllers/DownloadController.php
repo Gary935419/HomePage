@@ -107,7 +107,7 @@ class DownloadController extends Controller
                 }
             }
         }
-
+        $return_info = array();
         if (!empty($this->data['d_category_arr'])){
             foreach ($info as $kkk=>$vvv){
                 $d_category_array_search_arr = explode(",", $vvv['d_category']);

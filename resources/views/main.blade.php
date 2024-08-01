@@ -34,7 +34,7 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                <a class="nav-link" href="https://www.tokai-denshi.co.jp/" role="button" target="_blank">
                     <i class="fas fa-expand-arrows-alt"></i>
                 </a>
             </li>
@@ -50,10 +50,10 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="#" class="brand-link" style="display: block;padding: 1.5rem 0.1rem;transition: width .3s ease-in-out;white-space: nowrap;">
+        <div class="brand-link" style="display: block;padding: 1.5rem 0.1rem;transition: width .3s ease-in-out;white-space: nowrap;">
             <img src="{{ asset('assets/web_img/common/footer_logo.png') }}" class="brand-image elevation-3" style="float: left;margin-left: 1rem;margin-top: -10px;max-height: 25px;width: auto;">
             <span class="brand-text font-weight-light"></span>
-        </a>
+        </div>
 
         <!-- Sidebar -->
         <div class="sidebar">
@@ -64,31 +64,30 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
-                    <li class="nav-item">
-                        <a href="/admin" class="nav-link @if (($controller ?? '') == 'Controller_Main' && $action == 'index') active @endif">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>コンソール</p>
+{{--                    <li class="nav-item">--}}
+{{--                        <a href="/admin" class="nav-link @if (($controller ?? '') == 'Controller_Main' && $action == 'index') active @endif">--}}
+{{--                            <i class="nav-icon fas fa-tachometer-alt"></i>--}}
+{{--                            <p>コンソール</p>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+
+                    <li class="nav-item @if (($controller ?? '') == 'Controller_News') menu-open @endif">
+                        <a href="#" class="nav-link @if (($controller ?? '') == 'Controller_News') active @endif">
+                            <i class="nav-icon fas fa-newspaper"></i>
+                            <p>
+                                新着情報
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="/news/news_lists" class="nav-link @if (($controller ?? '') == 'Controller_News' && ($action == 'news_lists' || $action == 'news_edit' || $action == 'news_add' || $action == 'news_regist'))) active @endif">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>ニュース一覧</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
-                    @if (!empty($USER_IDENTITY))
-                        <li class="nav-item @if (($controller ?? '') == 'Controller_Userinfo') menu-open @endif">
-                            <a href="#" class="nav-link @if (($controller ?? '') == 'Controller_Userinfo') active @endif">
-                                <i class="nav-icon fas fa-solid fa-users"></i>
-                                <p>
-                                    アカウント管理
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="/userinfo/admin_user_info" class="nav-link @if (($controller ?? '') == 'Controller_Userinfo' && ($action == 'admin_user_info' || $action == 'force_password_change' || $action == 'admin_user_rights_setting')) active @endif">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>アカウント一覧</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    @endif
 
                     <li class="nav-item @if (($controller ?? '') == 'Controller_Goods') menu-open @endif">
                         <a href="#" class="nav-link @if (($controller ?? '') == 'Controller_Goods') active @endif">
@@ -102,7 +101,7 @@
                             <li class="nav-item">
                                 <a href="/goods/goods_lists" class="nav-link @if (($controller ?? '') == 'Controller_Goods' && ($action == 'goods_lists' || $action == 'goods_edit' || $action == 'goods_add' || $action == 'goods_regist'))) active @endif">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>情報一覧</p>
+                                    <p>製品一覧</p>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -145,24 +144,6 @@
                                 <a href="/imports/lable_lists" class="nav-link @if (($controller ?? '') == 'Controller_Imports' && ($action == 'lable_lists' || $action == 'lable_edit' || $action == 'lable_add' || $action == 'lable_regist'))) active @endif">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>タグ一覧</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item @if (($controller ?? '') == 'Controller_News') menu-open @endif">
-                        <a href="#" class="nav-link @if (($controller ?? '') == 'Controller_News') active @endif">
-                            <i class="nav-icon fas fa-newspaper"></i>
-                            <p>
-                                新着情報
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="/news/news_lists" class="nav-link @if (($controller ?? '') == 'Controller_News' && ($action == 'news_lists' || $action == 'news_edit' || $action == 'news_add' || $action == 'news_regist'))) active @endif">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>ニュース一覧</p>
                                 </a>
                             </li>
                         </ul>
@@ -245,6 +226,26 @@
                             </li>
                         </ul>
                     </li>
+
+                    @if (!empty($USER_IDENTITY))
+                        <li class="nav-item @if (($controller ?? '') == 'Controller_Userinfo') menu-open @endif">
+                            <a href="#" class="nav-link @if (($controller ?? '') == 'Controller_Userinfo') active @endif">
+                                <i class="nav-icon fas fa-solid fa-users"></i>
+                                <p>
+                                    アカウント管理
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/userinfo/admin_user_info" class="nav-link @if (($controller ?? '') == 'Controller_Userinfo' && ($action == 'admin_user_info' || $action == 'force_password_change' || $action == 'admin_user_rights_setting')) active @endif">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>アカウント一覧</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -277,7 +278,7 @@
     <!-- Main Footer -->
     <footer class="main-footer">
         <!-- Default to the left -->
-        <strong>Copyright &copy; <a href="#">東海電子株式会社</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; <a href="https://www.tokai-denshi.co.jp/" target="_blank">東海電子HP</a>.</strong> All rights reserved.
     </footer>
 </div>
 <!-- ./wrapper -->

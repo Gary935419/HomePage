@@ -26,7 +26,7 @@
                             </div>
                             <div class="card-body">
                                 <p class="card-text">
-                                    <font size="3" color="#008080">製品情報タグが登録されました。</font>
+                                    <font size="3" color="#008080">タグが登録されました。</font>
                                 </p>
                                 <a href="javascript:" onclick="self.location=document.referrer;" class="btn btn-primary">戻る</a>
                             </div>

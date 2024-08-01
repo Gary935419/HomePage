@@ -184,7 +184,7 @@ class Model extends EloquentModel
         if (!empty($USER_NAME)) {
             $results_sql = $results_sql->where('USER_NAME', 'like', '%'.$USER_NAME.'%');
         }
-        $results = $results_sql->get()->toArray();
+        $results = $results_sql->orderBy('CREATED_DT','DESC')->get()->toArray();
         return $results;
     }
 

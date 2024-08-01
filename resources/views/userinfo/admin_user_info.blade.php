@@ -50,7 +50,7 @@
                                             <!-- text input -->
                                             <div class="form-group">
                                                 <label>ログインID</label>
-                                                <input type="text" value="{{ $USER_ID }}" placeholder="ログインID" name="USER_ID" class="form-control">
+                                                <input type="text" value="{{ $USER_ID_NOW }}" placeholder="ログインID" name="USER_ID" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
@@ -93,11 +93,17 @@
                                                    onclick="location.href='/userinfo/admin_edit_user/{{$client_info['SEQ_NO']}}'">
                                                     <i class="fas fa-pencil-alt"></i> 編集
                                                 </a>
-                                                <a style="margin-left: 3%" class="btn btn-danger btn-sm" href="#"
-                                                   onClick="onUserRemove({{$client_info['SEQ_NO']}}, '{{$client_info['USER_ID']}}', '{{$client_info['USER_NAME']}}');"
-                                                   value="{{$client_info['SEQ_NO']}}">
-                                                    <i class="fas fa-trash"></i> 削除
-                                                </a>
+                                                @if($client_info['USER_ID'] == $USER_ID)
+                                                    <a style="margin-left: 3%" class="btn btn-default btn-sm disabled">
+                                                        <i class="fas fa-trash"></i> 削除
+                                                    </a>
+                                                @else
+                                                    <a style="margin-left: 3%" class="btn btn-danger btn-sm" href="#"
+                                                       onClick="onUserRemove({{$client_info['SEQ_NO']}}, '{{$client_info['USER_ID']}}', '{{$client_info['USER_NAME']}}');"
+                                                       value="{{$client_info['SEQ_NO']}}">
+                                                        <i class="fas fa-trash"></i> 削除
+                                                    </a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -126,6 +132,23 @@
     <script>
         $(function () {
             $("#table_show").DataTable({
+                language: {
+                    "sProcessing": "処理中...",
+                    "sLengthMenu": "_MENU_ 件表示",
+                    "sZeroRecords": "データはありません。",
+                    "sInfo": " _TOTAL_ 件中 _START_ から _END_ まで表示",
+                    "sInfoEmpty": " 0 件中 0 から 0 まで表示",
+                    "sInfoFiltered": "（全 _MAX_ 件より抽出）",
+                    "sInfoPostFix": "",
+                    "sSearch": "検索:",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "先頭",
+                        "sPrevious": "前",
+                        "sNext": "次",
+                        "sLast": "最終"
+                    }
+                },
                 "responsive": true, "lengthChange": false, "autoWidth": false,"searching":false,"ordering":false
                 // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
                 // "buttons": ["excel"]

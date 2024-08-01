@@ -324,3 +324,63 @@ if (!function_exists('getFilterVar')) {
         }
     }
 }
+
+if (!function_exists('getPage')) {
+    /**
+     * @param string
+     */
+    function getPage($page,$allpage,$iswh=array())
+    {
+        if($allpage==1) {
+            return "";
+        }
+        $wh="?";
+        foreach ($iswh as $key => $value) {
+            if($key!="page") {
+                $wh.=$key."=".$value."&";
+            }
+        }
+        $number='';
+        if($allpage<6) {
+            for ($i=1; $i <$allpage+1 ; $i++) {
+                if($i==$page) {
+                    $number.='<li><a class="on">'.$i.'</a></li>';
+                } else {
+                    $number.='<li><a href="'.$wh.'page='.$i.'">'.$i.'</a></li>';
+                }
+            }
+        } else {
+            if($page<4) {
+                for ($i=1; $i <6 ; $i++) {
+                    if($i==$page) {
+                        $number.='<li><a class="on">'.$i.'</a></li>';
+                    } else {
+                        $number.='<li><a href="'.$wh.'page='.$i.'">'.$i.'</a></li>';
+                    }
+                }
+            } else if($page>$allpage-3) {
+                for ($i=$allpage-4; $i <$allpage+1 ; $i++) {
+                    if($i==$page) {
+                        $number.='<li><a class="on">'.$i.'</a></li>';
+                    } else {
+                        $number.='<li><a href="'.$wh.'page='.$i.'">'.$i.'</a></li>';
+                    }
+                }
+            } else {
+                for ($i=$page-2; $i <$page+3 ; $i++) {
+                    if($i==$page) {
+                        $number.='<li><a class="on">'.$i.'</a></li>';
+                    } else {
+                        $number.='<li><a href="'.$wh.'page='.$i.'">'.$i.'</a></li>';
+                    }
+                }
+            }
+        }
+        $html='<ul class="page_soto mt50 mb50">
+					    <li><a href="'.$wh.'page='.($page>1?$page-1:1).'">＜</a></li>
+					    '.$number.'
+					    <li><a href="'.$wh.'page='.($allpage>$page?$page+1:$allpage).'">＞</a></li>
+				</ul>';
+        return $html;
+    }
+}
