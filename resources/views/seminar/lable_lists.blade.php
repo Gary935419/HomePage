@@ -35,12 +35,17 @@
                     <!-- left column -->
                     <div class="col-md-12">
                         <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">
-                                    <button type="button" onclick="location.href='/seminar/lable_add'"
+                            <div class="card-header row">
+                                <div class="col-6">
+                                    <button style="width: 15%" type="button" onclick="location.href='/seminar/lable_add'"
                                             class="btn btn-block btn-success">新規登録
                                     </button>
-                                </h3>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <button style="width:  18%;float: right" type="button" onclick="location.href='/seminar/lable_sort'"
+                                            class="btn btn-block btn-warning">並び順設定
+                                    </button>
+                                </div>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -61,7 +66,7 @@
                                     <tr>
                                         <th>タグ名</th>
                                         <th>作成時間</th>
-                                        <th>アクション</th>
+                                        <th width="15%">アクション</th>
                                     </tr>
                                     </thead>
                                     <tbody>

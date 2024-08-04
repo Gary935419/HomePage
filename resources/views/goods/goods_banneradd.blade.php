@@ -165,9 +165,6 @@
                 if (!isValidHttpUrl($('#link_url').val())) {
                     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・リンク先URLは正しいURLを入力してください。";
                 }
-                // if ($('#b_sort').val() == "") {
-                //     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "順番Numberを入力してください。";
-                // }
 
                 if (strlen(errors_text) > 0) {
                     // $.alert({

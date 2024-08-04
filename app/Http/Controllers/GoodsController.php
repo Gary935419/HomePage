@@ -15,6 +15,15 @@ class GoodsController extends Controller
         return view('goods/goods_add', $this->data);
     }
 
+    public function get_goods_sort()
+    {
+        $paramsAll = request()->all();
+        $Goods = new Goods($this);
+        $info = $Goods->search_goods($paramsAll);
+        $this->data['info'] = $info;
+        return view('goods/goods_sort', $this->data);
+    }
+
     public function post_goods_regist()
     {
         try {
@@ -67,11 +76,6 @@ class GoodsController extends Controller
                 $p_lables_new = implode(",", $p_lables);
             }
 
-//            if (!isset($paramsAll['b_sort']) || empty($paramsAll['b_sort'])) {
-//                throw new \OneException(1);
-//            }
-//            $b_sort = $paramsAll['b_sort'];
-
             $p_flg = empty($paramsAll['p_flg'])?0:1;
             $p_open_flg = empty($paramsAll['p_open_flg'])?0:1;
             $is_del = 0;
@@ -97,7 +101,6 @@ class GoodsController extends Controller
             $insert_S_PRODUCT_INFORMATION_arr['p_open_flg'] = $p_open_flg;
             $insert_S_PRODUCT_INFORMATION_arr['CREATED_DT'] = date('Y-m-d',time());
             $insert_S_PRODUCT_INFORMATION_arr['CREATED_USER'] = session('USER_ID');
-//            $insert_S_PRODUCT_INFORMATION_arr['b_sort'] = $b_sort;
             $insert_S_PRODUCT_INFORMATION_arr['is_del'] = $is_del;
             $Goods->insert_S_PRODUCT_INFORMATION($insert_S_PRODUCT_INFORMATION_arr);
 
@@ -263,11 +266,6 @@ class GoodsController extends Controller
                 $p_lables_new = implode(",", $p_lables);
             }
 
-//            if (!isset($paramsAll['b_sort']) || empty($paramsAll['b_sort'])) {
-//                throw new \OneException(1);
-//            }
-//            $b_sort = $paramsAll['b_sort'];
-
             $p_flg = empty($paramsAll['p_flg'])?0:1;
             $p_open_flg = empty($paramsAll['p_open_flg'])?0:1;
 
@@ -315,6 +313,15 @@ class GoodsController extends Controller
         return view('goods/goods_lableadd',$this->data);
     }
 
+    public function get_goods_lable_sort()
+    {
+        $paramsAll = request()->all();
+        $Goods = new Goods($this);
+        $info = $Goods->search_lablegoods($paramsAll);
+        $this->data['info'] = $info;
+        return view('goods/goods_lable_sort', $this->data);
+    }
+
     public function post_goods_lableregist()
     {
         try {
@@ -324,11 +331,6 @@ class GoodsController extends Controller
                 throw new \OneException(1);
             }
             $pr_name = $paramsAll['pr_name'];
-
-//            if (!isset($paramsAll['pr_sort']) || empty($paramsAll['pr_sort'])) {
-//                throw new \OneException(1);
-//            }
-//            $pr_sort = $paramsAll['pr_sort'];
 
             $is_del = 0;
 
@@ -346,7 +348,6 @@ class GoodsController extends Controller
             $insert_S_PRODUCT_LABLES_arr['pr_name'] = $pr_name;
             $insert_S_PRODUCT_LABLES_arr['CREATED_DT'] = date('Y-m-d',time());
             $insert_S_PRODUCT_LABLES_arr['CREATED_USER'] = session('USER_ID');
-//            $insert_S_PRODUCT_LABLES_arr['pr_sort'] = $pr_sort;
             $insert_S_PRODUCT_LABLES_arr['is_del'] = $is_del;
             $Goods->insert_S_PRODUCT_LABLES($insert_S_PRODUCT_LABLES_arr);
 
@@ -459,6 +460,15 @@ class GoodsController extends Controller
     public function get_goods_banneradd()
     {
         return view('goods/goods_banneradd',$this->data);
+    }
+
+    public function get_goods_banner_sort()
+    {
+        $paramsAll = request()->all();
+        $Goods = new Goods($this);
+        $info = $Goods->search_bannergoods($paramsAll);
+        $this->data['info'] = $info;
+        return view('goods/goods_banner_sort', $this->data);
     }
 
     public function post_goods_bannerregist()

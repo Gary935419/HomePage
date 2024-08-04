@@ -14,6 +14,15 @@ class NewsController extends Controller
         return view('news/news_add', $this->data);
     }
 
+    public function get_news_sort()
+    {
+        $paramsAll = request()->all();
+        $News = new News($this);
+        $info = $News->search_news($paramsAll);
+        $this->data['info'] = $info;
+        return view('news/news_sort', $this->data);
+    }
+
     public function post_news_regist()
     {
         try {

@@ -35,12 +35,17 @@
                     <!-- left column -->
                     <div class="col-md-12">
                         <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">
-                                    <button type="button" onclick="location.href='/news/news_add'"
+                            <div class="card-header row">
+                                <div class="col-6">
+                                    <button style="width: 15%" type="button" onclick="location.href='/news/news_add'"
                                             class="btn btn-block btn-success">新規登録
                                     </button>
-                                </h3>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <button style="width:  18%;float: right" type="button" onclick="location.href='/news/news_sort'"
+                                            class="btn btn-block btn-warning">並び順設定
+                                    </button>
+                                </div>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -101,10 +106,17 @@
                                         <th>タイトル</th>
                                         <th>カテゴリ</th>
                                         <th>公開フラグ</th>
-                                        <th>公開日時</th>
+                                        <th>
+                                            公開日時
+                                            @if(!empty($info))
+                                                <a class="btn btn-warning btn-sm" style="margin-left: 10%;" onClick="sent_sorting();">
+                                                    降順
+                                                </a>
+                                            @endif
+                                        </th>
                                         <th>終了日時</th>
                                         <th>作成時間</th>
-                                        <th>アクション</th>
+                                        <th width="15%">アクション</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -213,6 +225,29 @@
                     ajax.post(url, params, function(data) {
                         if (data['RESULT'] == "OK") {
                             location.href = "/news/news_lists?msg_code=200&&msg="+'ニュース情報の削除が完了しました。';
+                        } else {
+                            location.href = "/news/news_lists?msg_code=201&&msg="+data['MESSAGE'];
+                        }
+                    });
+                },
+            });
+        };
+
+        function sent_sorting() {
+            $.confirm({
+                title: false,
+                theme: 'white',
+                content: '並び順設定してよろしいですか?',
+                confirmButton: 'はい',
+                cancelButton: 'いいえ',
+                confirmButtonClass: 'btn-danger',
+                cancelButtonClass: 'btn-info',
+                confirm: function () {
+                    var url = "/api/news/news_sorting";
+                    var params = {};
+                    ajax.post(url, params, function(data) {
+                        if (data['RESULT'] == "OK") {
+                            location.href = "/news/news_lists?msg_code=200&&msg="+'並び順設定が完了しました。';
                         } else {
                             location.href = "/news/news_lists?msg_code=201&&msg="+data['MESSAGE'];
                         }

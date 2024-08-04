@@ -18,7 +18,7 @@ class Goods extends Model
     {
         return DB::table('S_PRODUCT_LABLES')
             ->where('is_del', '=', 0)
-            ->orderBy('pr_sort')
+            ->orderBy('sort')
             ->get()->toArray();
     }
 
@@ -51,7 +51,7 @@ class Goods extends Model
         DB::table('S_PRODUCT_INFORMATION')
             ->where('id', '=', $id)
             ->update(array(
-                'b_sort' => $id
+                'sort' => $id
             ));
     }
 
@@ -92,7 +92,7 @@ class Goods extends Model
             }
 
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('b_sort')
+                ->orderBy('sort')
                 ->get()->toArray();
             return $result;
         } catch (\Exception $e) {
@@ -172,7 +172,7 @@ class Goods extends Model
         DB::table('S_PRODUCT_LABLES')
             ->where('id', '=', $id)
             ->update(array(
-                'pr_sort' => $id
+                'sort' => $id
             ));
     }
 
@@ -185,7 +185,7 @@ class Goods extends Model
                 $m_goods = $m_goods->where('pr_name', 'like', '%'.$params['pr_name'].'%');
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('pr_sort')
+                ->orderBy('sort')
                 ->get()->toArray();
             return $result;
         } catch (\Exception $e) {
@@ -232,7 +232,7 @@ class Goods extends Model
         DB::table('S_PRODUCT_BANNERS')
             ->where('id', '=', $id)
             ->update(array(
-                'b_sort' => $id
+                'sort' => $id
             ));
     }
 
@@ -253,7 +253,7 @@ class Goods extends Model
                 $m_goods = $m_goods->where('b_flg','=', $b_flg);
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('b_sort')
+                ->orderBy('sort')
                 ->get()->toArray();
             return $result;
         } catch (\Exception $e) {

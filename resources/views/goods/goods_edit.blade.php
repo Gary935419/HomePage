@@ -130,11 +130,6 @@
                                     <input type="text" value="{{ $info['p_special_weburl'] }}" class="form-control" id="p_special_weburl" name="p_special_weburl" placeholder="特設サイトURL">
                                 </div>
 
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="exampleInputEmail1">順番Number</label>--}}
-{{--                                    <input type="number" value="{{ $info['b_sort'] }}" class="form-control" id="b_sort" name="b_sort" placeholder="順番Number">--}}
-{{--                                </div>--}}
-
                                 <div class="form-group">
                                     <label>タグ</label>
                                     <select class="select2" id="p_lables" name="p_lables[]" multiple="multiple" data-placeholder="選択してください" style="width: 100%;">

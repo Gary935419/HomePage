@@ -35,12 +35,12 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="https://www.tokai-denshi.co.jp/" role="button" target="_blank">
-                    <i class="fas fa-expand-arrows-alt"></i>
+                    <img style="width: 60%" src="{{ asset('assets/img/window-restore-regular.png') }}">
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-                    <i class="fas fa-th-large"></i>
+                    <img style="width: 60%" src="{{ asset('assets/img/user-regular.png') }}">
                 </a>
             </li>
         </ul>
@@ -51,7 +51,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <div class="brand-link" style="display: block;padding: 1.5rem 0.1rem;transition: width .3s ease-in-out;white-space: nowrap;">
-            <img src="{{ asset('assets/web_img/common/footer_logo.png') }}" class="brand-image elevation-3" style="float: left;margin-left: 1rem;margin-top: -10px;max-height: 25px;width: auto;">
+            <img src="{{ asset('assets/img/logo.png') }}" class="brand-image elevation-3" style="float: left;margin-left: 1rem;margin-top: -10px;max-height: 25px;width: auto;">
             <span class="brand-text font-weight-light"></span>
         </div>
 

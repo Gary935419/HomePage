@@ -17,6 +17,15 @@ class SeminarController extends Controller
         return view('seminar/exhibition_add', $this->data);
     }
 
+    public function get_exhibition_sort()
+    {
+        $paramsAll = request()->all();
+        $Seminar = new Seminar($this);
+        $info = $Seminar->search_S_SEMINARS_EXHIBITIONS($paramsAll);
+        $this->data['info'] = $info;
+        return view('seminar/exhibition_sort', $this->data);
+    }
+
     public function post_exhibition_regist()
     {
         try {
@@ -319,6 +328,15 @@ class SeminarController extends Controller
         return view('seminar/teacher_add', $this->data);
     }
 
+    public function get_teacher_sort()
+    {
+        $paramsAll = request()->all();
+        $Seminar = new Seminar($this);
+        $info = $Seminar->search_S_TEACHER($paramsAll);
+        $this->data['info'] = $info;
+        return view('seminar/teacher_sort', $this->data);
+    }
+
     public function post_teacher_regist()
     {
         try {
@@ -532,6 +550,14 @@ class SeminarController extends Controller
     public function get_lable_add()
     {
         return view('seminar/lable_add', $this->data);
+    }
+
+    public function get_lable_sort()
+    {
+        $paramsAll = request()->all();
+        $Seminar = new Seminar($this);
+        $this->data['info'] = $Seminar->search_lable($paramsAll);
+        return view('seminar/lable_sort', $this->data);
     }
 
     public function post_lable_regist()

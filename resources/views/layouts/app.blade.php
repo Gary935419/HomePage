@@ -41,7 +41,9 @@
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
 
     <!-- jQuery -->
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/jquery-ui/jquery-ui.css') }}">
     <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('adminlte/plugins/jquery-ui/jquery-ui.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/jquery-confirm.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -88,7 +90,6 @@
     <script src="{{ asset('adminlte/plugins/dropzone/min/dropzone.min.js') }}"></script>
     <!-- CK Editor -->
     <script src="{{ asset('ckbox/ckbox.js') }}"></script>
-{{--    <script src="{{ asset('ckeditor/build/ckeditor.js') }}"></script>--}}
 </head>
 
     @yield('content_top')

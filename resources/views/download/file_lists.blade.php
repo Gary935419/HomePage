@@ -35,12 +35,17 @@
                     <!-- left column -->
                     <div class="col-md-12">
                         <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">
-                                    <button type="button" onclick="location.href='/download/file_add'"
+                            <div class="card-header row">
+                                <div class="col-6">
+                                    <button style="width: 15%" type="button" onclick="location.href='/download/file_add'"
                                             class="btn btn-block btn-success">新規登録
                                     </button>
-                                </h3>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <button style="width:  18%;float: right" type="button" onclick="location.href='/download/file_sort'"
+                                            class="btn btn-block btn-warning">並び順設定
+                                    </button>
+                                </div>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -71,11 +76,11 @@
                                 <table id="table_show" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
-                                        <th>ファイル名</th>
-                                        <th>ファイル</th>
-                                        <th>カテゴリ</th>
-                                        <th>作成時間</th>
-                                        <th>アクション</th>
+                                        <th width="30%">ファイル名</th>
+                                        <th width="15%">ファイル</th>
+                                        <th width="20%">カテゴリ</th>
+                                        <th width="20%">作成時間</th>
+                                        <th width="15%">アクション</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -84,7 +89,9 @@
                                             <td>{{$v['d_file_name']}}</td>
                                             <td style="text-align: center">
                                                 @if(!empty($v['d_file_url']))
-                                                    <a href="{{$v['d_file_url']}}" target="_blank"><i style="color: black;font-size: 35px" class="far fa-file"></i></a>
+                                                    <a href="{{$v['d_file_url']}}" target="_blank">
+                                                        <img src="{{ asset('assets/img/file-regular.png') }}">
+                                                    </a>
                                                 @endif
                                             </td>
                                             <td>{{$v['d_category_str']}}</td>

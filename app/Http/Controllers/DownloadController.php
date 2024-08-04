@@ -16,6 +16,15 @@ class DownloadController extends Controller
         return view('/download/file_add', $this->data);
     }
 
+    public function get_file_sort()
+    {
+        $paramsAll = request()->all();
+        $Download = new Download($this);
+        $info = $Download->search_S_DOWNLOADS($paramsAll);
+        $this->data['info'] = $info;
+        return view('download/file_sort', $this->data);
+    }
+
     public function post_file_regist()
     {
         try {
@@ -222,6 +231,15 @@ class DownloadController extends Controller
     public function get_category_add()
     {
         return view('/download/category_add', $this->data);
+    }
+
+    public function get_category_sort()
+    {
+        $paramsAll = request()->all();
+        $Download = new Download($this);
+        $info = $Download->search_S_DOWNLOADS_CATEGORY($paramsAll);
+        $this->data['info'] = $info;
+        return view('download/category_sort', $this->data);
     }
 
     public function post_category_regist()

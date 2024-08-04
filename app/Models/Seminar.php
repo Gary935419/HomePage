@@ -17,7 +17,7 @@ class Seminar extends Model
     {
         return DB::table('S_SEMINARS_EXHIBITIONS_LABLES')
             ->where('is_del', '=', 0)
-            ->orderBy('s_sort')
+            ->orderBy('sort')
             ->get()->toArray();
     }
 
@@ -39,7 +39,7 @@ class Seminar extends Model
         DB::table('S_SEMINARS_EXHIBITIONS')
             ->where('id', '=', $id)
             ->update(array(
-                's_sort' => $id
+                'sort' => $id
             ));
     }
 
@@ -82,7 +82,7 @@ class Seminar extends Model
                 });
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('s_sort')
+                ->orderBy('sort')
                 ->get()->toArray();
 
 
@@ -147,7 +147,7 @@ class Seminar extends Model
         DB::table('S_TEACHER')
             ->where('id', '=', $id)
             ->update(array(
-                'l_sort' => $id
+                'sort' => $id
             ));
     }
 
@@ -162,7 +162,7 @@ class Seminar extends Model
                 $m_goods = $m_goods->where('l_professions', 'like', '%'.$params['l_professions'].'%');
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('l_sort')
+                ->orderBy('sort')
                 ->get()->toArray();
 
             return $result;
@@ -226,7 +226,7 @@ class Seminar extends Model
         DB::table('S_SEMINARS_EXHIBITIONS_LABLES')
             ->where('id', '=', $id)
             ->update(array(
-                's_sort' => $id
+                'sort' => $id
             ));
     }
 
@@ -238,7 +238,7 @@ class Seminar extends Model
                 $m_goods = $m_goods->where('s_name', 'like', '%'.$params['s_name'].'%');
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('s_sort')
+                ->orderBy('sort')
                 ->get()->toArray();
 
             return $result;
@@ -280,6 +280,29 @@ class Seminar extends Model
                     'MODIFY_DT' => date('Y-m-d',time()),
                     'MODIFY_USER' => $params['MODIFY_USER']
                 ));
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function search_SEMINARS_EXHIBITIONS_sort()
+    {
+        try {
+            $m_goods = DB::table('S_SEMINARS_EXHIBITIONS');
+            $result = $m_goods->where('is_del', '=', 0)
+                ->orderBy('exhibition_dates1','DESC')
+                ->orderBy('exhibition_dates2','DESC')
+                ->orderBy('exhibition_dates3','DESC')
+                ->orderBy('exhibition_dates4','DESC')
+                ->orderBy('exhibition_dates5','DESC')
+                ->orderBy('exhibition_dates6','DESC')
+                ->orderBy('exhibition_dates7','DESC')
+                ->orderBy('exhibition_dates8','DESC')
+                ->orderBy('exhibition_dates9','DESC')
+                ->orderBy('exhibition_dates10','DESC')
+                ->get()->toArray();
+
+            return $result;
         } catch (\Exception $e) {
             throw $e;
         }

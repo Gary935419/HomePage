@@ -18,7 +18,7 @@ class Imports extends Model
     {
         return DB::table('S_PRODECT_LABLES')
             ->where('is_del', '=', 0)
-            ->orderBy('p_sort')
+            ->orderBy('sort')
             ->get()->toArray();
     }
 
@@ -50,7 +50,7 @@ class Imports extends Model
         DB::table('S_PRECEDENTS')
             ->where('id', '=', $id)
             ->update(array(
-                'pr_sort' => $id
+                'sort' => $id
             ));
     }
 
@@ -66,7 +66,7 @@ class Imports extends Model
                 $m_goods = $m_goods->where('guild_name', 'like', '%'.$params['guild_name'].'%');
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('pr_sort')
+                ->orderBy('sort')
                 ->get()->toArray();
             return $result;
         } catch (\Exception $e) {
@@ -228,7 +228,7 @@ class Imports extends Model
         DB::table('S_PRODECT_LABLES')
             ->where('id', '=', $id)
             ->update(array(
-                'p_sort' => $id
+                'sort' => $id
             ));
     }
 
@@ -243,7 +243,7 @@ class Imports extends Model
                 $m_goods = $m_goods->whereIn('p_type', $params['p_type_arr']);
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('p_sort')
+                ->orderBy('sort')
                 ->get()->toArray();
 
             return $result;

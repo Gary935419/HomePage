@@ -15,6 +15,15 @@ class ImportsController extends Controller
         return view('imports/recedents_add', $this->data);
     }
 
+    public function get_recedents_sort()
+    {
+        $paramsAll = request()->all();
+        $Imports = new Imports($this);
+        $info = $Imports->search_recedents($paramsAll);
+        $this->data['info'] = $info;
+        return view('imports/recedents_sort', $this->data);
+    }
+
     public function post_recedents_regist()
     {
         try {
@@ -269,6 +278,15 @@ class ImportsController extends Controller
         $Imports = new Imports($this);
         $this->data['S_PRODECT_LABLES'] = $Imports->get_S_PRODECT_LABLES();
         return view('imports/company_add', $this->data);
+    }
+
+    public function get_company_sort()
+    {
+        $paramsAll = request()->all();
+        $Imports = new Imports($this);
+        $info = $Imports->search_company($paramsAll);
+        $this->data['info'] = $info;
+        return view('imports/company_sort', $this->data);
     }
 
     public function post_company_regist()
@@ -538,6 +556,15 @@ class ImportsController extends Controller
         return view('imports/lable_add', $this->data);
     }
 
+    public function get_lable_sort()
+    {
+        $paramsAll = request()->all();
+        $Imports = new Imports($this);
+        $info = $Imports->search_lable($paramsAll);
+        $this->data['info'] = $info;
+        return view('imports/lable_sort', $this->data);
+    }
+
     public function post_lable_regist()
     {
         try {
@@ -701,23 +728,4 @@ class ImportsController extends Controller
         }
     }
 
-    public function get_recedents_details($id)
-    {
-        try {
-            $Imports = new Imports($this);
-            $this->data['info'] = $Imports->select_S_PRECEDENTS_ID_info($id);
-            if (empty($this->data['info'])){
-                throw new \OneException(3);
-            }
-            return view('imports/recedents_details', $this->data);
-        } catch (\OneException $e) {
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
-            Log::error($e->getMessage());
-            return view('error/error', $this->data);
-        } catch (\Exception $e) {
-            $this->data["ERROR_MESSAGE"] = $e->getMessage();
-            Log::error($e->getMessage());
-            return view('error/error', $this->data);
-        }
-    }
 }

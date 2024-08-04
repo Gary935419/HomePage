@@ -42,11 +42,6 @@
                                     <label for="exampleInputEmail1">タグ名<code> 必須</code></label>
                                     <input type="text" value="{{ $info['pr_name'] }}" class="form-control" id="pr_name" name="pr_name" placeholder="タグ名">
                                 </div>
-
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="exampleInputEmail1">順番Number</label>--}}
-{{--                                    <input type="number" value="{{ $info['pr_sort'] }}" class="form-control" id="pr_sort" name="pr_sort" placeholder="順番Number">--}}
-{{--                                </div>--}}
                             </div>
                             <div class="card-footer">
                                 <input type="hidden" value="{{ $info['id'] }}" name="id" id="id">
@@ -70,10 +65,6 @@
                 if ($('#pr_name').val() == "") {
                     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "・タグ名を入力してください。";
                 }
-
-                // if ($('#pr_sort').val() == "") {
-                //     errors_text = errors_text + (strlen(errors_text) > 0 ? "<br/>" : "") + "順番Numberを入力してください。";
-                // }
 
                 if (strlen(errors_text) > 0) {
                     // $.alert({

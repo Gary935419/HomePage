@@ -70,7 +70,7 @@
                                         <th>アカウント名</th>
                                         <th>最終ログイン時間</th>
                                         <th>作成時間</th>
-                                        <th>アクション</th>
+                                        <th width="15%">アクション</th>
                                     </tr>
                                     </thead>
                                     <tbody>

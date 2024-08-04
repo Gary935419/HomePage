@@ -49,7 +49,7 @@ class Download extends Model
         DB::table('S_DOWNLOADS')
             ->where('id', '=', $id)
             ->update(array(
-                'd_sort' => $id
+                'sort' => $id
             ));
     }
 
@@ -62,7 +62,7 @@ class Download extends Model
                 $m_goods = $m_goods->where('d_file_name', 'like', '%'.$params['d_file_name'].'%');
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('d_sort')
+                ->orderBy('sort')
                 ->get()->toArray();
             return $result;
         } catch (\Exception $e) {

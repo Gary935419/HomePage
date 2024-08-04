@@ -15,6 +15,15 @@ class ManagementController extends Controller
         return view('management/site_add', $this->data);
     }
 
+    public function get_site_sort()
+    {
+        $paramsAll = request()->all();
+        $Management = new Management($this);
+        $info = $Management->search_S_MANAGEMENT_SITE($paramsAll);
+        $this->data['info'] = $info;
+        return view('management/site_sort', $this->data);
+    }
+
     public function post_site_regist()
     {
         try {

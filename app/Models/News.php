@@ -32,7 +32,7 @@ class News extends Model
         DB::table('S_NEWS')
             ->where('id', '=', $id)
             ->update(array(
-                'n_sort' => $id
+                'sort' => $id
             ));
     }
 
@@ -58,7 +58,7 @@ class News extends Model
             }
 
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('n_sort')
+                ->orderBy('sort')
                 ->get()->toArray();
 
 
@@ -101,6 +101,19 @@ class News extends Model
                     'MODIFY_DT' => date('Y-m-d',time()),
                     'MODIFY_USER' => $params['MODIFY_USER']
                 ));
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function search_news_sort_n_open_date()
+    {
+        try {
+            $m_goods = DB::table('S_NEWS');
+            $result = $m_goods->where('is_del', '=', 0)
+                ->orderBy('n_open_date','DESC')
+                ->get()->toArray();
+            return $result;
         } catch (\Exception $e) {
             throw $e;
         }
