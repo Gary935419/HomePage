@@ -28,7 +28,12 @@ class News extends Model
 
     public function insert_S_NEWS($insert_S_NEWS_arr)
     {
-        return DB::table('S_NEWS')->insertGetId($insert_S_NEWS_arr);
+        $id = DB::table('S_NEWS')->insertGetId($insert_S_NEWS_arr);
+        DB::table('S_NEWS')
+            ->where('id', '=', $id)
+            ->update(array(
+                'n_sort' => $id
+            ));
     }
 
     public function search_news($params)
@@ -53,7 +58,7 @@ class News extends Model
             }
 
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('id')
+                ->orderBy('n_sort')
                 ->get()->toArray();
 
 
@@ -88,7 +93,6 @@ class News extends Model
     public function news_delete($params)
     {
         try {
-            DB::beginTransaction();
             params_check($params, array('id'));
             DB::table('S_NEWS')
                 ->where('id', '=', $params['id'])
@@ -97,9 +101,7 @@ class News extends Model
                     'MODIFY_DT' => date('Y-m-d',time()),
                     'MODIFY_USER' => $params['MODIFY_USER']
                 ));
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollBack();
             throw $e;
         }
     }

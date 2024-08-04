@@ -13,84 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    echo "Project:FRONT.HOME.PAGE";
-});
-
-//Apiに関連するルーティングの配置です。
-Route::middleware(['req.trim'])->group(function () {
-    Route::group(['prefix' => 'webapi'], function ($app) {
-        $app->post('topics/topics_search', 'api\web\TopicsController@post_topics_search');
-        $app->post('download/download_from_add', 'api\web\DownloadController@post_download_from_add');
-    });
-});
-
-Route::group(['prefix' => 'web'], function ($set) {
-    // aboutus
-    $set->get('aboutus', 'web\WebAboutusController@get_aboutus_index');
-    $set->get('aboutus/business', 'web\WebAboutusController@get_aboutus_business');
-    $set->get('aboutus/history', 'web\WebAboutusController@get_aboutus_history');
-    $set->get('aboutus/message', 'web\WebAboutusController@get_aboutus_message');
-    $set->get('aboutus/movie', 'web\WebAboutusController@get_aboutus_movie');
-    $set->get('aboutus/team', 'web\WebAboutusController@get_aboutus_team');
-
-    // contact
-    $set->get('contact', 'web\WebContactController@get_contact_index');
-    $set->get('contact/check', 'web\WebContactController@get_contact_check');
-    $set->get('contact/thanks', 'web\WebContactController@get_contact_thanks');
-
-    // customers
-    $set->get('customers', 'web\WebCustomersController@get_customers_index');
-    $set->get('customers/detail/{id}', 'web\WebCustomersController@get_customers_detail');
-
-    // downloadform
-    $set->get('downloadform/{id}', 'web\WebDownloadformController@get_downloadform_index');
-    $set->get('downloadform_thanks', 'web\WebDownloadformController@get_downloadform_thanks');
-
-    //downloads
-    $set->get('downloads', 'web\WebDownloadsController@get_downloads_index');
-
-    //management
-    $set->get('management', 'web\WebManagementController@get_management_index');
-
-    //order
-    $set->get('order', 'web\WebOrderController@get_order_index');
-
-    //privacy
-    $set->get('privacy', 'web\WebPrivacyController@get_privacy_index');
-
-    // products
-    $set->get('products', 'web\WebProductsController@get_products_index');
-
-    // seminar
-    $set->get('seminar', 'web\WebSeminarController@get_seminar_index');
-    $set->get('seminar/seminar_fix', 'web\WebSeminarController@get_seminar_fix');
-    $set->get('teacher/detail/{id}', 'web\WebSeminarController@get_teacher_detail');
-
-    // simulations
-    $set->get('simulations', 'web\WebSimulationsController@get_simulations_index');
-
-    // sitemap
-    $set->get('sitemap', 'web\WebSitemapController@get_sitemap_index');
-
-    // support
-    $set->get('support', 'web\WebSupportController@get_support_index');
-
-    // technology
-    $set->get('technology', 'web\WebTechnologyController@get_technology_index');
-
-    // top
-    $set->get('top', 'web\WebTopController@get_top_index');
-
-    // topics
-    $set->get('topics', 'web\WebTopicsController@get_topics_index');
-    $set->get('topics/detail/{id}', 'web\WebTopicsController@get_topics_detail');
-});
-
 //Adminユーザー登録に関連するルーティングの配置です。
 Route::middleware(['auth.admin','req.trim'])->group(function () {
     // Adminホーム画面
-    Route::get('/admin', 'MainController@index');
+    Route::get('/', 'MainController@index');
     // Login画面
     Route::get('/login', 'LoginController@index')->name('login');
     // Login画面Api

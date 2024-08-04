@@ -86,9 +86,9 @@ class Controller extends BaseController
             'controller' => $controller,
             'action' => $name,
             'myrollname' => $myrollname,
-            'USER_IDENTITY' => $user_info['USER_IDENTITY'],
-            'USER_ID' => $user_info['USER_ID'],
-            'USER_NAME' => $user_info['USER_NAME']
+            'USER_IDENTITY' => $user_info['USER_IDENTITY'] ?? '',
+            'USER_ID' => $user_info['USER_ID'] ?? '',
+            'USER_NAME' => $user_info['USER_NAME'] ?? ''
         );
     }
 }

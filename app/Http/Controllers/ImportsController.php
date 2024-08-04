@@ -122,10 +122,12 @@ class ImportsController extends Controller
             $info[$k]['pr_labels_str'] = "";
             foreach ($pr_labels_array as $kk=>$vv){
                 $select_S_PRODECT_LABLES_info = $Imports->select_S_PRODECT_LABLES_info($vv);
-                if ($kk>0){
-                    $info[$k]['pr_labels_str'] = $info[$k]['pr_labels_str'] .",". $select_S_PRODECT_LABLES_info['p_name'];
-                }else{
-                    $info[$k]['pr_labels_str'] = $info[$k]['pr_labels_str'] . $select_S_PRODECT_LABLES_info['p_name'];
+                if (!empty($select_S_PRODECT_LABLES_info) && $select_S_PRODECT_LABLES_info['is_del'] != 1){
+                    if ($kk>0){
+                        $info[$k]['pr_labels_str'] = $info[$k]['pr_labels_str'] .",". $select_S_PRODECT_LABLES_info['p_name'];
+                    }else{
+                        $info[$k]['pr_labels_str'] = $info[$k]['pr_labels_str'] . $select_S_PRODECT_LABLES_info['p_name'];
+                    }
                 }
             }
         }
@@ -384,10 +386,12 @@ class ImportsController extends Controller
             $info[$k]['c_lables_str'] = "";
             foreach ($c_lables_array as $kk=>$vv){
                 $select_S_PRODECT_LABLES_info = $Imports->select_S_PRODECT_LABLES_info($vv);
-                if ($kk>0){
-                    $info[$k]['c_lables_str'] = $info[$k]['c_lables_str'] .",". $select_S_PRODECT_LABLES_info['p_name'];
-                }else{
-                    $info[$k]['c_lables_str'] = $info[$k]['c_lables_str'] . $select_S_PRODECT_LABLES_info['p_name'];
+                if (!empty($select_S_PRODECT_LABLES_info) && $select_S_PRODECT_LABLES_info['is_del'] != 1){
+                    if ($kk>0){
+                        $info[$k]['c_lables_str'] = $info[$k]['c_lables_str'] .",". $select_S_PRODECT_LABLES_info['p_name'];
+                    }else{
+                        $info[$k]['c_lables_str'] = $info[$k]['c_lables_str'] . $select_S_PRODECT_LABLES_info['p_name'];
+                    }
                 }
             }
             $info[$k]['open_flg_str'] = $v['open_flg'] == 0 ? "未公開" : "公開";

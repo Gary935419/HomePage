@@ -27,7 +27,12 @@ class Management extends Model
 
     public function insert_S_MANAGEMENT_SITE($insert_S_MANAGEMENT_SITE_arr)
     {
-        return DB::table('S_MANAGEMENT_SITE')->insertGetId($insert_S_MANAGEMENT_SITE_arr);
+        $id = DB::table('S_MANAGEMENT_SITE')->insertGetId($insert_S_MANAGEMENT_SITE_arr);
+        DB::table('S_MANAGEMENT_SITE')
+            ->where('id', '=', $id)
+            ->update(array(
+                'sort' => $id
+            ));
     }
 
     public function search_S_MANAGEMENT_SITE($params)
@@ -46,7 +51,7 @@ class Management extends Model
                 $m_goods = $m_goods->where('open_flg','=', $open_flg);
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('id')
+                ->orderBy('sort')
                 ->get()->toArray();
 
             return $result;
@@ -80,7 +85,6 @@ class Management extends Model
     public function S_MANAGEMENT_SITE_delete($params)
     {
         try {
-            DB::beginTransaction();
             params_check($params, array('id'));
             DB::table('S_MANAGEMENT_SITE')
                 ->where('id', '=', $params['id'])
@@ -89,9 +93,7 @@ class Management extends Model
                     'MODIFY_DT' => date('Y-m-d',time()),
                     'MODIFY_USER' => $params['MODIFY_USER']
                 ));
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollBack();
             throw $e;
         }
     }

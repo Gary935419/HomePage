@@ -17,6 +17,7 @@ class Download extends Model
     {
         return DB::table('S_DOWNLOADS_CATEGORY')
             ->where('is_del', '=', 0)
+            ->orderBy('sort')
             ->get()->toArray();
     }
 
@@ -44,7 +45,12 @@ class Download extends Model
 
     public function insert_S_DOWNLOADS($insert_S_DOWNLOADS_arr)
     {
-        return DB::table('S_DOWNLOADS')->insertGetId($insert_S_DOWNLOADS_arr);
+        $id = DB::table('S_DOWNLOADS')->insertGetId($insert_S_DOWNLOADS_arr);
+        DB::table('S_DOWNLOADS')
+            ->where('id', '=', $id)
+            ->update(array(
+                'd_sort' => $id
+            ));
     }
 
     public function search_S_DOWNLOADS($params)
@@ -56,7 +62,7 @@ class Download extends Model
                 $m_goods = $m_goods->where('d_file_name', 'like', '%'.$params['d_file_name'].'%');
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('id')
+                ->orderBy('d_sort')
                 ->get()->toArray();
             return $result;
         } catch (\Exception $e) {
@@ -78,7 +84,6 @@ class Download extends Model
     public function delete_S_DOWNLOADS($params)
     {
         try {
-            DB::beginTransaction();
             params_check($params, array('id'));
             DB::table('S_DOWNLOADS')
                 ->where('id', '=', $params['id'])
@@ -87,9 +92,7 @@ class Download extends Model
                     'MODIFY_DT' => date('Y-m-d',time()),
                     'MODIFY_USER' => $params['MODIFY_USER']
                 ));
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollBack();
             throw $e;
         }
     }
@@ -130,7 +133,13 @@ class Download extends Model
 
     public function insert_S_DOWNLOADS_CATEGORY($insert_S_DOWNLOADS_CATEGORY_arr)
     {
-        return DB::table('S_DOWNLOADS_CATEGORY')->insertGetId($insert_S_DOWNLOADS_CATEGORY_arr);
+        $id = DB::table('S_DOWNLOADS_CATEGORY')->insertGetId($insert_S_DOWNLOADS_CATEGORY_arr);
+        DB::table('S_DOWNLOADS_CATEGORY')
+            ->where('id', '=', $id)
+            ->update(array(
+                'sort' => $id
+            ));
+
     }
 
     public function search_S_DOWNLOADS_CATEGORY($params)
@@ -144,7 +153,7 @@ class Download extends Model
                 $m_goods = $m_goods->where('open_flg', $params['open_flg']);
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('id')
+                ->orderBy('sort')
                 ->get()->toArray();
 
             return $result;
@@ -167,7 +176,6 @@ class Download extends Model
     public function delete_S_DOWNLOADS_CATEGORY($params)
     {
         try {
-            DB::beginTransaction();
             params_check($params, array('id'));
             DB::table('S_DOWNLOADS_CATEGORY')
                 ->where('id', '=', $params['id'])
@@ -176,9 +184,7 @@ class Download extends Model
                     'MODIFY_DT' => date('Y-m-d',time()),
                     'MODIFY_USER' => $params['MODIFY_USER']
                 ));
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollBack();
             throw $e;
         }
     }

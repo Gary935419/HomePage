@@ -17,6 +17,7 @@ class Seminar extends Model
     {
         return DB::table('S_SEMINARS_EXHIBITIONS_LABLES')
             ->where('is_del', '=', 0)
+            ->orderBy('s_sort')
             ->get()->toArray();
     }
 
@@ -34,7 +35,12 @@ class Seminar extends Model
 
     public function insert_S_SEMINARS_EXHIBITIONS($insert_S_SEMINARS_EXHIBITIONS_arr)
     {
-        return DB::table('S_SEMINARS_EXHIBITIONS')->insertGetId($insert_S_SEMINARS_EXHIBITIONS_arr);
+        $id = DB::table('S_SEMINARS_EXHIBITIONS')->insertGetId($insert_S_SEMINARS_EXHIBITIONS_arr);
+        DB::table('S_SEMINARS_EXHIBITIONS')
+            ->where('id', '=', $id)
+            ->update(array(
+                's_sort' => $id
+            ));
     }
 
     public function search_S_SEMINARS_EXHIBITIONS($params)
@@ -76,7 +82,7 @@ class Seminar extends Model
                 });
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('id')
+                ->orderBy('s_sort')
                 ->get()->toArray();
 
 
@@ -111,7 +117,6 @@ class Seminar extends Model
     public function S_SEMINARS_EXHIBITIONS_delete($params)
     {
         try {
-            DB::beginTransaction();
             params_check($params, array('id'));
             DB::table('S_SEMINARS_EXHIBITIONS')
                 ->where('id', '=', $params['id'])
@@ -120,9 +125,7 @@ class Seminar extends Model
                     'MODIFY_DT' => date('Y-m-d',time()),
                     'MODIFY_USER' => $params['MODIFY_USER']
                 ));
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollBack();
             throw $e;
         }
     }
@@ -140,7 +143,12 @@ class Seminar extends Model
 
     public function insert_S_TEACHER($insert_S_TEACHER_arr)
     {
-        return DB::table('S_TEACHER')->insertGetId($insert_S_TEACHER_arr);
+        $id = DB::table('S_TEACHER')->insertGetId($insert_S_TEACHER_arr);
+        DB::table('S_TEACHER')
+            ->where('id', '=', $id)
+            ->update(array(
+                'l_sort' => $id
+            ));
     }
 
     public function search_S_TEACHER($params)
@@ -154,7 +162,7 @@ class Seminar extends Model
                 $m_goods = $m_goods->where('l_professions', 'like', '%'.$params['l_professions'].'%');
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('id')
+                ->orderBy('l_sort')
                 ->get()->toArray();
 
             return $result;
@@ -188,7 +196,6 @@ class Seminar extends Model
     public function S_TEACHER_delete($params)
     {
         try {
-            DB::beginTransaction();
             params_check($params, array('id'));
             DB::table('S_TEACHER')
                 ->where('id', '=', $params['id'])
@@ -197,9 +204,7 @@ class Seminar extends Model
                     'MODIFY_DT' => date('Y-m-d',time()),
                     'MODIFY_USER' => $params['MODIFY_USER']
                 ));
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollBack();
             throw $e;
         }
     }
@@ -217,7 +222,12 @@ class Seminar extends Model
 
     public function insert_S_SEMINARS_EXHIBITIONS_LABLES($insert_S_SEMINARS_EXHIBITIONS_LABLES_arr)
     {
-        return DB::table('S_SEMINARS_EXHIBITIONS_LABLES')->insertGetId($insert_S_SEMINARS_EXHIBITIONS_LABLES_arr);
+        $id = DB::table('S_SEMINARS_EXHIBITIONS_LABLES')->insertGetId($insert_S_SEMINARS_EXHIBITIONS_LABLES_arr);
+        DB::table('S_SEMINARS_EXHIBITIONS_LABLES')
+            ->where('id', '=', $id)
+            ->update(array(
+                's_sort' => $id
+            ));
     }
 
     public function search_lable($params)
@@ -228,7 +238,7 @@ class Seminar extends Model
                 $m_goods = $m_goods->where('s_name', 'like', '%'.$params['s_name'].'%');
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('id')
+                ->orderBy('s_sort')
                 ->get()->toArray();
 
             return $result;
@@ -262,7 +272,6 @@ class Seminar extends Model
     public function S_SEMINARS_EXHIBITIONS_LABLES_delete($params)
     {
         try {
-            DB::beginTransaction();
             params_check($params, array('id'));
             DB::table('S_SEMINARS_EXHIBITIONS_LABLES')
                 ->where('id', '=', $params['id'])
@@ -271,9 +280,7 @@ class Seminar extends Model
                     'MODIFY_DT' => date('Y-m-d',time()),
                     'MODIFY_USER' => $params['MODIFY_USER']
                 ));
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollBack();
             throw $e;
         }
     }

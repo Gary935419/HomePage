@@ -148,7 +148,7 @@ class GoodsController extends Controller
             $info[$k]['p_lables_str'] = "";
             foreach ($p_lables_array as $kk=>$vv){
                 $select_S_PRODUCT_LABLES_info = $Goods->select_S_PRODUCT_LABLES_info($vv);
-                if (empty($select_S_PRODUCT_LABLES_info['is_del'])){
+                if (!empty($select_S_PRODUCT_LABLES_info) && $select_S_PRODUCT_LABLES_info['is_del'] != 1){
                     if ($kk>0){
                         $info[$k]['p_lables_str'] = $info[$k]['p_lables_str'] .",". $select_S_PRODUCT_LABLES_info['pr_name'];
                     }else{

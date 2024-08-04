@@ -18,6 +18,7 @@ class Imports extends Model
     {
         return DB::table('S_PRODECT_LABLES')
             ->where('is_del', '=', 0)
+            ->orderBy('p_sort')
             ->get()->toArray();
     }
 
@@ -45,7 +46,12 @@ class Imports extends Model
 
     public function insert_S_PRECEDENTS($insert_S_PRECEDENTS_INFORMATION_arr)
     {
-        return DB::table('S_PRECEDENTS')->insertGetId($insert_S_PRECEDENTS_INFORMATION_arr);
+        $id = DB::table('S_PRECEDENTS')->insertGetId($insert_S_PRECEDENTS_INFORMATION_arr);
+        DB::table('S_PRECEDENTS')
+            ->where('id', '=', $id)
+            ->update(array(
+                'pr_sort' => $id
+            ));
     }
 
     public function search_recedents($params)
@@ -60,7 +66,7 @@ class Imports extends Model
                 $m_goods = $m_goods->where('guild_name', 'like', '%'.$params['guild_name'].'%');
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('id')
+                ->orderBy('pr_sort')
                 ->get()->toArray();
             return $result;
         } catch (\Exception $e) {
@@ -94,7 +100,6 @@ class Imports extends Model
     public function delete_recedents($params)
     {
         try {
-            DB::beginTransaction();
             params_check($params, array('id'));
             DB::table('S_PRECEDENTS')
                 ->where('id', '=', $params['id'])
@@ -103,9 +108,7 @@ class Imports extends Model
                     'MODIFY_DT' => date('Y-m-d',time()),
                     'MODIFY_USER' => $params['MODIFY_USER']
                 ));
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollBack();
             throw $e;
         }
     }
@@ -136,7 +139,12 @@ class Imports extends Model
 
     public function insert_S_COMPANY($insert_S_COMPANY_INFORMATION_arr)
     {
-        return DB::table('S_COMPANY')->insertGetId($insert_S_COMPANY_INFORMATION_arr);
+        $id = DB::table('S_COMPANY')->insertGetId($insert_S_COMPANY_INFORMATION_arr);
+        DB::table('S_COMPANY')
+            ->where('id', '=', $id)
+            ->update(array(
+                'sort' => $id
+            ));
     }
 
     public function search_company($params)
@@ -165,7 +173,7 @@ class Imports extends Model
             }
 
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('id')
+                ->orderBy('sort')
                 ->get()->toArray();
 
 
@@ -201,7 +209,6 @@ class Imports extends Model
     public function company_delete($params)
     {
         try {
-            DB::beginTransaction();
             params_check($params, array('id'));
             DB::table('S_COMPANY')
                 ->where('id', '=', $params['id'])
@@ -210,16 +217,19 @@ class Imports extends Model
                     'MODIFY_DT' => date('Y-m-d',time()),
                     'MODIFY_USER' => $params['MODIFY_USER']
                 ));
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollBack();
             throw $e;
         }
     }
 
     public function insert_S_PRODECT_LABLES($insert_S_PRODECT_LABLES_arr)
     {
-        return DB::table('S_PRODECT_LABLES')->insertGetId($insert_S_PRODECT_LABLES_arr);
+        $id = DB::table('S_PRODECT_LABLES')->insertGetId($insert_S_PRODECT_LABLES_arr);
+        DB::table('S_PRODECT_LABLES')
+            ->where('id', '=', $id)
+            ->update(array(
+                'p_sort' => $id
+            ));
     }
 
     public function search_lable($params)
@@ -233,7 +243,7 @@ class Imports extends Model
                 $m_goods = $m_goods->whereIn('p_type', $params['p_type_arr']);
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('id')
+                ->orderBy('p_sort')
                 ->get()->toArray();
 
             return $result;
@@ -267,7 +277,6 @@ class Imports extends Model
     public function lable_delete($params)
     {
         try {
-            DB::beginTransaction();
             params_check($params, array('id'));
             DB::table('S_PRODECT_LABLES')
                 ->where('id', '=', $params['id'])
@@ -276,9 +285,7 @@ class Imports extends Model
                     'MODIFY_DT' => date('Y-m-d',time()),
                     'MODIFY_USER' => $params['MODIFY_USER']
                 ));
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollBack();
             throw $e;
         }
     }

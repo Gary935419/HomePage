@@ -100,10 +100,12 @@ class DownloadController extends Controller
             $info[$k]['d_category_str'] = "";
             foreach ($d_category_array as $kk=>$vv){
                 $select_select_S_DOWNLOADS_CATEGORY_info_info = $Download->select_S_DOWNLOADS_CATEGORY_info($vv);
-                if ($kk>0){
-                    $info[$k]['d_category_str'] = $info[$k]['d_category_str'] .",". $select_select_S_DOWNLOADS_CATEGORY_info_info['category_name'];
-                }else{
-                    $info[$k]['d_category_str'] = $info[$k]['d_category_str'] . $select_select_S_DOWNLOADS_CATEGORY_info_info['category_name'];
+                if (!empty($select_select_S_DOWNLOADS_CATEGORY_info_info) && $select_select_S_DOWNLOADS_CATEGORY_info_info['is_del'] != 1){
+                    if ($kk>0){
+                        $info[$k]['d_category_str'] = $info[$k]['d_category_str'] .",". $select_select_S_DOWNLOADS_CATEGORY_info_info['category_name'];
+                    }else{
+                        $info[$k]['d_category_str'] = $info[$k]['d_category_str'] . $select_select_S_DOWNLOADS_CATEGORY_info_info['category_name'];
+                    }
                 }
             }
         }

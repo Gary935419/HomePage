@@ -5,8 +5,7 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "7.3.*",
-        "aliyuncs/oss-sdk-php": "*",
+        "php": "8.*",
         "aws/aws-sdk-php": "3.147.10",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",

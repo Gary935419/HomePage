@@ -18,6 +18,7 @@ class Goods extends Model
     {
         return DB::table('S_PRODUCT_LABLES')
             ->where('is_del', '=', 0)
+            ->orderBy('pr_sort')
             ->get()->toArray();
     }
 
@@ -46,7 +47,12 @@ class Goods extends Model
 
     public function insert_S_PRODUCT_INFORMATION($insert_S_PRODUCT_INFORMATION_arr)
     {
-        return DB::table('S_PRODUCT_INFORMATION')->insertGetId($insert_S_PRODUCT_INFORMATION_arr);
+        $id = DB::table('S_PRODUCT_INFORMATION')->insertGetId($insert_S_PRODUCT_INFORMATION_arr);
+        DB::table('S_PRODUCT_INFORMATION')
+            ->where('id', '=', $id)
+            ->update(array(
+                'b_sort' => $id
+            ));
     }
 
     public function search_goods($params)
@@ -86,7 +92,7 @@ class Goods extends Model
             }
 
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('id')
+                ->orderBy('b_sort')
                 ->get()->toArray();
             return $result;
         } catch (\Exception $e) {
@@ -108,7 +114,6 @@ class Goods extends Model
     public function delete_goods($params)
     {
         try {
-            DB::beginTransaction();
             params_check($params, array('id'));
             DB::table('S_PRODUCT_INFORMATION')
                 ->where('id', '=', $params['id'])
@@ -117,9 +122,7 @@ class Goods extends Model
                     'MODIFY_DT' => date('Y-m-d',time()),
                     'MODIFY_USER' => $params['MODIFY_USER']
                 ));
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollBack();
             throw $e;
         }
     }
@@ -138,7 +141,6 @@ class Goods extends Model
     public function delete_lablegoods($params)
     {
         try {
-            DB::beginTransaction();
             params_check($params, array('id'));
             DB::table('S_PRODUCT_LABLES')
                 ->where('id', '=', $params['id'])
@@ -147,9 +149,7 @@ class Goods extends Model
                     'MODIFY_DT' => date('Y-m-d',time()),
                     'MODIFY_USER' => $params['MODIFY_USER']
                 ));
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollBack();
             throw $e;
         }
     }
@@ -168,7 +168,12 @@ class Goods extends Model
 
     public function insert_S_PRODUCT_LABLES($insert_S_PRODUCT_LABLES_arr)
     {
-        return DB::table('S_PRODUCT_LABLES')->insertGetId($insert_S_PRODUCT_LABLES_arr);
+        $id = DB::table('S_PRODUCT_LABLES')->insertGetId($insert_S_PRODUCT_LABLES_arr);
+        DB::table('S_PRODUCT_LABLES')
+            ->where('id', '=', $id)
+            ->update(array(
+                'pr_sort' => $id
+            ));
     }
 
     public function search_lablegoods($params)
@@ -180,7 +185,7 @@ class Goods extends Model
                 $m_goods = $m_goods->where('pr_name', 'like', '%'.$params['pr_name'].'%');
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('id')
+                ->orderBy('pr_sort')
                 ->get()->toArray();
             return $result;
         } catch (\Exception $e) {
@@ -223,7 +228,12 @@ class Goods extends Model
 
     public function insert_S_PRODUCT_BANNERS($insert_S_PRODUCT_BANNERS_arr)
     {
-        return DB::table('S_PRODUCT_BANNERS')->insertGetId($insert_S_PRODUCT_BANNERS_arr);
+        $id = DB::table('S_PRODUCT_BANNERS')->insertGetId($insert_S_PRODUCT_BANNERS_arr);
+        DB::table('S_PRODUCT_BANNERS')
+            ->where('id', '=', $id)
+            ->update(array(
+                'b_sort' => $id
+            ));
     }
 
     public function search_bannergoods($params)
@@ -243,7 +253,7 @@ class Goods extends Model
                 $m_goods = $m_goods->where('b_flg','=', $b_flg);
             }
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('id')
+                ->orderBy('b_sort')
                 ->get()->toArray();
             return $result;
         } catch (\Exception $e) {
@@ -276,7 +286,6 @@ class Goods extends Model
     public function delete_bannergoods($params)
     {
         try {
-            DB::beginTransaction();
             params_check($params, array('id'));
             DB::table('S_PRODUCT_BANNERS')
                 ->where('id', '=', $params['id'])
@@ -285,9 +294,7 @@ class Goods extends Model
                     'MODIFY_DT' => date('Y-m-d',time()),
                     'MODIFY_USER' => $params['MODIFY_USER']
                 ));
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollBack();
             throw $e;
         }
     }

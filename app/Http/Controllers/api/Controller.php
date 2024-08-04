@@ -32,7 +32,6 @@ class Controller extends BaseController
             $this->Admin = new Admin($this);
             $this->Logs = new Logs($this);
 
-            // SIMPLE認証
             $apiHasAuthenticated = false;
             if (isset($_POST['TIMESTAMP']) && isset($_POST['SIGNATURE'])) {
                 $apiHasAuthenticated = APIEncryption::isValid($_POST['SIGNATURE'], $_POST['TIMESTAMP']);
