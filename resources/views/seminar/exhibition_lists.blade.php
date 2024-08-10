@@ -41,11 +41,11 @@
                                             class="btn btn-block btn-success">新規登録
                                     </button>
                                 </div>
-                                <div class="col-6 text-right">
-                                    <button style="width:  18%;float: right" type="button" onclick="location.href='/seminar/exhibition_sort'"
-                                            class="btn btn-block btn-warning">並び順設定
-                                    </button>
-                                </div>
+{{--                                <div class="col-6 text-right">--}}
+{{--                                    <button style="width:  18%;float: right" type="button" onclick="location.href='/seminar/exhibition_sort'"--}}
+{{--                                            class="btn btn-block btn-warning">並び順設定--}}
+{{--                                    </button>--}}
+{{--                                </div>--}}
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -93,11 +93,11 @@
                                         <th>カテゴリ</th>
                                         <th>
                                             開催日
-                                            @if(!empty($info))
-                                                <a class="btn btn-warning btn-sm" style="margin-left: 10%;" onClick="sent_sorting();">
-                                                    降順
-                                                </a>
-                                            @endif
+{{--                                            @if(!empty($info))--}}
+{{--                                                <a class="btn btn-warning btn-sm" style="margin-left: 10%;" onClick="sent_sorting();">--}}
+{{--                                                    降順--}}
+{{--                                                </a>--}}
+{{--                                            @endif--}}
                                         </th>
                                         <th>作成時間</th>
                                         <th width="15%">アクション</th>

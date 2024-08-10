@@ -119,12 +119,12 @@
                         <form enctype="multipart/form-data" action="/imports/recedents_edit" method="post" id="form">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">タイトル<code>.必須</code></label>
+                                    <label for="exampleInputEmail1">タイトル<code> 必須</code></label>
                                     <input type="text" value="{{ $info['pr_title'] }}" class="form-control" id="pr_title" name="pr_title" placeholder="タイトル">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputFile">サムネイル画像<code>.必須、推奨サイズ（400px X 400px）</code></label>
+                                    <label for="exampleInputFile">サムネイル画像<code> 必須、推奨サイズ（400px X 400px）</code></label>
                                     <div class="custom-file">
                                         <input type="hidden" value="{{ $info['pr_img_url'] }}" name="pr_img_url" id="pr_img_url" class="custom-file-input">
                                         <label class="custom-file-label" for="customFile" id="upload_pr_img_url">{{ $info['pr_img_url'] }}</label>
@@ -145,12 +145,12 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">会社名<code>.必須</code></label>
+                                    <label for="exampleInputEmail1">会社名<code> 必須</code></label>
                                     <input type="text" value="{{ $info['guild_name'] }}" class="form-control" id="guild_name" name="guild_name" placeholder="会社名">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputFile">会社ロゴ<code>.必須、推奨サイズ（400px X 400px）</code></label>
+                                    <label for="exampleInputFile">会社ロゴ<code> 必須、推奨サイズ（400px X 400px）</code></label>
                                     <div class="custom-file">
                                         <input type="hidden" value="{{ $info['guild_logo'] }}" name="guild_logo" id="guild_logo" class="custom-file-input">
                                         <label class="custom-file-label" for="customFile" id="upload_guild_logo">{{ $info['guild_logo'] }}</label>
@@ -160,7 +160,7 @@
                                 <div class="img_guild_logo"><img src="" alt=""></div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">会社説明<code>.必須</code></label>
+                                    <label for="exampleInputEmail1">会社説明<code> 必須</code></label>
                                     <div class="editor-container" style="width: 100%">
                                         <textarea class="form-control" rows="6" id="guild_descriptions" name="guild_descriptions" placeholder="会社説明">{{ $info['guild_descriptions'] }}</textarea>
                                     </div>
@@ -175,7 +175,7 @@
 {{--                                    </div>--}}
 {{--                                </div>--}}
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">記事<code>.必須</code></label>
+                                    <label for="exampleInputEmail1">記事<code> 必須</code></label>
                                     <div class="editor-container">
                                         <textarea class="editor" id="editor" name="pr_contents">
                                             {{$info['pr_contents']}}
@@ -184,7 +184,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="inputName">メインフラグ<code>.必須、画像のアップか動画URLを選択してください</code></label><br>
+                                    <label for="inputName">メインフラグ<code> 必須、画像のアップか動画URLを選択してください</code></label><br>
                                     <div class="icheck-primary d-inline">
                                         <input type="radio" onclick="return dispaly_update(0)" id="radioPrimary1" @if ($info['main_flg'] == 0) checked @endif name="main_flg" value="0">
                                         <label for="radioPrimary1">
@@ -200,7 +200,7 @@
                                 </div>
 
                                 <div class="form-group" id="main_img" style="display: @if ($info['main_flg'] == 0) block @else none @endif">
-                                    <label for="exampleInputFile">メインイメージ<code>.必須、推奨サイズ（800px X 480px）</code></label>
+                                    <label for="exampleInputFile">メインイメージ<code> 必須、推奨サイズ（800px X 480px）</code></label>
                                     <div class="custom-file">
                                         <input type="hidden" value="{{ $info['main_img_url'] }}" name="main_img_url" id="main_img_url" class="custom-file-input">
                                         <label class="custom-file-label" for="customFile" id="upload_main_img_url">{{ $info['main_img_url'] }}</label>
@@ -210,8 +210,15 @@
                                 <div class="img_main_img_url"><img src="" alt=""></div>
 
                                 <div class="form-group" id="main_video" style="display: @if ($info['main_flg'] == 1) block @else none @endif">
-                                    <label for="exampleInputEmail1">メイン動画URL<code>.必須、Youtubeの動画URLのみ</code></label>
+                                    <label for="exampleInputEmail1">メイン動画URL<code> 必須、Youtubeの動画URLのみ</code></label>
                                     <input type="text" class="form-control" value="{{ $info['main_video_url'] }}" id="main_video_url" name="main_video_url" placeholder="メイン動画URL">
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" name="open_flg" id="open_flg" @if ($info['open_flg'] == 1) checked @endif value="1">
+                                        <label for="open_flg" class="custom-control-label">公開フラグ</label>
+                                    </div>
                                 </div>
                             </div>
                             <!-- /.card-body -->

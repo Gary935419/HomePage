@@ -60,11 +60,12 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
-                                                <label>&nbsp;</label>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input class="custom-control-input" type="checkbox" @if ($open_flg == 1) checked @endif name="open_flg" id="open_flg" value="1">
-                                                    <label for="open_flg" class="custom-control-label">公開中のみ表示する</label>
-                                                </div>
+                                                <label>公開フラグ</label>
+                                                <select id="open_flg" name="open_flg" class="form-control select2" style="width: 100%;">
+                                                    <option value="0" selected>選択してください</option>
+                                                    <option @if ($open_flg == 1) selected @endif value="1">未公開</option>
+                                                    <option @if ($open_flg == 2) selected @endif value="2">公開</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>

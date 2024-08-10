@@ -97,7 +97,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">フリーテキスト<code>.必須</code></label>
+                                    <label for="exampleInputEmail1">フリーテキスト<code> 必須</code></label>
                                     <div class="editor-container" style="width: 100%">
                                         <textarea class="form-control" rows="6" id="l_contents" name="l_contents" placeholder="フリーテキスト">{{$info['l_contents']}}</textarea>
                                     </div>

@@ -59,7 +59,6 @@ class DownloadController extends Controller
                 throw new \OneException(2);
             }
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $insert_S_DOWNLOADS_arr = array();
@@ -196,7 +195,6 @@ class DownloadController extends Controller
             $confirm_flg = empty($paramsAll['confirm_flg'])?0:1;
             $open_flg = empty($paramsAll['open_flg'])?0:1;
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $update_S_DOWNLOADS_arr = array();
@@ -263,7 +261,6 @@ class DownloadController extends Controller
                 throw new \OneException(14);
             }
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $insert_S_DOWNLOADS_CATEGORY_arr = array();
@@ -301,7 +298,7 @@ class DownloadController extends Controller
             $this->data['MSG'] = $paramsAll['msg'];
         }
         $this->data['category_name'] = $paramsAll['category_name'] ?? '';
-        $this->data['open_flg'] = $paramsAll['open_flg'] ?? array();
+        $this->data['open_flg'] = $paramsAll['open_flg'] ?? 0;
 
         $Download = new Download($this);
         $info = $Download->search_S_DOWNLOADS_CATEGORY($paramsAll);
@@ -357,7 +354,6 @@ class DownloadController extends Controller
 
             $open_flg = empty($paramsAll['open_flg'])?0:1;
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $update_S_DOWNLOADS_CATEGORY_arr = array();

@@ -71,7 +71,6 @@ class NewsController extends Controller
 //                throw new \OneException(9);
 //            }
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $insert_S_NEWS_arr = array();
@@ -88,8 +87,14 @@ class NewsController extends Controller
             $insert_S_NEWS_arr['CREATED_DT'] = date('Y-m-d',time());
             $insert_S_NEWS_arr['CREATED_USER'] = session('USER_ID');
             $insert_S_NEWS_arr['is_del'] = $is_del;
-
             $News->insert_S_NEWS($insert_S_NEWS_arr);
+
+            $info = $News->search_news_sort_n_open_date();
+            foreach ($info as $k=>$v){
+                $update_arr = array();
+                $update_arr['sort'] = $k+1;
+                $News->update_S_NEWS($v['id'],$update_arr);
+            }
 
             DB::commit();
 
@@ -121,7 +126,9 @@ class NewsController extends Controller
 
         $this->data['key_str'] = $paramsAll['key_str'] ?? '';
         $this->data['n_type_arr'] = $paramsAll['n_type_arr'] ?? array();
-        $this->data['n_open_flg'] = $paramsAll['n_open_flg'] ?? array();
+        $this->data['n_open_flg'] = $paramsAll['n_open_flg'] ?? 0;
+        $this->data['n_important_flg'] = $paramsAll['n_important_flg'] ?? 0;
+        $this->data['n_fixed_flg'] = $paramsAll['n_fixed_flg'] ?? 0;
 
         $this->data['D_FROM'] = $paramsAll['D_FROM'] ?? '';
         $this->data['D_TO'] = $paramsAll['D_TO'] ?? '';
@@ -145,9 +152,20 @@ class NewsController extends Controller
                 $info[$k]['type_name'] = "データエラー";
             }
             $info[$k]['n_open_flg_str'] = $v['n_open_flg'] == 0 ? "未公開" : "公開";
+            $info[$k]['n_important_flg_str'] = $v['n_important_flg'] == 0 ? "未重要" : "重要";
+            $info[$k]['n_fixed_flg_str'] = $v['n_fixed_flg'] == 0 ? "未固定" : "固定";
+            $info[$k]['n_open_date'] = date('Y-m-d',strtotime($v['n_open_date']));
         }
 
         $this->data['info'] = $info;
+
+        $info = $News->search_news_sort_n_open_date();
+        foreach ($info as $k=>$v){
+            $update_arr = array();
+            $update_arr['sort'] = $k+1;
+            $News->update_S_NEWS($v['id'],$update_arr);
+        }
+
         return view('news/news_lists', $this->data);
     }
 
@@ -224,7 +242,6 @@ class NewsController extends Controller
             $fix_open_date = $paramsAll['fix_open_date'] ?? "";
             $fix_close_date = $paramsAll['fix_close_date'] ?? "";
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $update_S_NEWS_arr = array();
@@ -240,8 +257,14 @@ class NewsController extends Controller
             $update_S_NEWS_arr['fix_close_date'] = $fix_close_date;
             $update_S_NEWS_arr['MODIFY_DT'] = date('Y-m-d',time());
             $update_S_NEWS_arr['MODIFY_USER'] = session('USER_ID');
-
             $News->update_S_NEWS($id,$update_S_NEWS_arr);
+
+            $info = $News->search_news_sort_n_open_date();
+            foreach ($info as $k=>$v){
+                $update_arr = array();
+                $update_arr['sort'] = $k+1;
+                $News->update_S_NEWS($v['id'],$update_arr);
+            }
 
             DB::commit();
 

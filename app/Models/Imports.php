@@ -65,6 +65,14 @@ class Imports extends Model
             if (isset($params['guild_name']) && $params['guild_name'] != '') {
                 $m_goods = $m_goods->where('guild_name', 'like', '%'.$params['guild_name'].'%');
             }
+            if (isset($params['open_flg']) && !empty($params['open_flg'])) {
+                if ($params['open_flg'] == 1){
+                    $open_flg = 0;
+                }else{
+                    $open_flg = 1;
+                }
+                $m_goods = $m_goods->where('open_flg','=', $open_flg);
+            }
             $result = $m_goods->where('is_del', '=', 0)
                 ->orderBy('sort')
                 ->get()->toArray();
@@ -172,10 +180,33 @@ class Imports extends Model
                 $m_goods = $m_goods->where('open_flg','=', $open_flg);
             }
 
-            $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('sort')
-                ->get()->toArray();
+            if (isset($params['select_flg']) && !empty($params['select_flg'])) {
+                if ($params['select_flg'] == 1){
+                    $select_flg = 0;
+                }else{
+                    $select_flg = 1;
+                }
+                $m_goods = $m_goods->where('select_flg','=', $select_flg);
+            }
 
+            $fieldStrHiragana = implode(',', array_map(function($char_hiragana) {
+                return "'$char_hiragana'";
+            }, config('const.hiragana')));
+
+            $fieldStrKatakana = implode(',', array_map(function($char_katakana) {
+                return "'$char_katakana'";
+            }, config('const.katakana')));
+
+
+            $result = $m_goods->where('is_del', '=', 0)
+                ->orderByRaw("
+                    CASE
+                        WHEN SUBSTRING(furigana_name, 1, 1) IN ($fieldStrHiragana) THEN FIELD(SUBSTRING(furigana_name, 1, 1), $fieldStrHiragana)
+                        WHEN SUBSTRING(furigana_name, 1, 1) IN ($fieldStrKatakana) THEN FIELD(SUBSTRING(furigana_name, 1, 1), $fieldStrKatakana)
+                        ELSE 9999
+                    END
+                ")
+                ->get()->toArray();
 
             return $result;
         } catch (\Exception $e) {

@@ -66,6 +66,7 @@ class ImportsController extends Controller
             $main_flg = $paramsAll['main_flg'] ?? 0;
             $main_img_url = $paramsAll['main_img_url'] ?? "";
             $main_video_url = $paramsAll['main_video_url'] ?? "";
+            $open_flg = empty($paramsAll['open_flg'])?0:1;
 
             $Imports = new Imports($this);
 
@@ -74,7 +75,6 @@ class ImportsController extends Controller
 //                throw new \OneException(6);
 //            }
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $insert_S_PRECEDENTS_INFORMATION_arr = array();
@@ -91,6 +91,7 @@ class ImportsController extends Controller
             $insert_S_PRECEDENTS_INFORMATION_arr['CREATED_DT'] = date('Y-m-d',time());
             $insert_S_PRECEDENTS_INFORMATION_arr['CREATED_USER'] = session('USER_ID');
             $insert_S_PRECEDENTS_INFORMATION_arr['is_del'] = $is_del;
+            $insert_S_PRECEDENTS_INFORMATION_arr['open_flg'] = $open_flg;
             $Imports->insert_S_PRECEDENTS($insert_S_PRECEDENTS_INFORMATION_arr);
 
             DB::commit();
@@ -123,6 +124,7 @@ class ImportsController extends Controller
         $this->data['pr_title'] = $paramsAll['pr_title'] ?? '';
         $this->data['guild_name'] = $paramsAll['guild_name'] ?? '';
         $this->data['PRODECT_LABLES_ARR'] = $paramsAll['pr_labels'] ?? array();
+        $this->data['open_flg'] = $paramsAll['open_flg'] ?? 0;
 
         $Imports = new Imports($this);
         $info = $Imports->search_recedents($paramsAll);
@@ -139,6 +141,7 @@ class ImportsController extends Controller
                     }
                 }
             }
+            $info[$k]['open_flg_str'] = $v['open_flg'] == 0 ? "未公開" : "公開";
         }
         $return_info = array();
         if (!empty($this->data['PRODECT_LABLES_ARR'])){
@@ -233,8 +236,8 @@ class ImportsController extends Controller
             $main_flg = $paramsAll['main_flg'] ?? 0;
             $main_img_url = $paramsAll['main_img_url'] ?? "";
             $main_video_url = $paramsAll['main_video_url'] ?? "";
+            $open_flg = empty($paramsAll['open_flg'])?0:1;
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $update_S_PRECEDENTS_arr = array();
@@ -246,6 +249,7 @@ class ImportsController extends Controller
             $update_S_PRECEDENTS_arr['pr_contents'] = $paramsAll['pr_contents'] ?? "";
             $update_S_PRECEDENTS_arr['pr_labels'] = $pr_labels_new;
             $update_S_PRECEDENTS_arr['main_flg'] = $main_flg;
+            $update_S_PRECEDENTS_arr['open_flg'] = $open_flg;
             $update_S_PRECEDENTS_arr['main_img_url'] = empty($main_flg) ? $main_img_url : "";
             $update_S_PRECEDENTS_arr['main_video_url'] = !empty($main_flg) ? $main_video_url : "";
             $update_S_PRECEDENTS_arr['MODIFY_DT'] = date('Y-m-d',time());
@@ -344,7 +348,6 @@ class ImportsController extends Controller
 //                throw new \OneException(7);
 //            }
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $insert_S_COMPANY_INFORMATION_arr = array();
@@ -394,6 +397,7 @@ class ImportsController extends Controller
         $this->data['video_url'] = $paramsAll['video_url'] ?? '';
         $this->data['PRODUCT_LABLES_ARR'] = $paramsAll['c_lables'] ?? array();
         $this->data['open_flg'] = $paramsAll['open_flg'] ?? 0;
+        $this->data['select_flg'] = $paramsAll['select_flg'] ?? 0;
         $this->data['precedents_url_have'] = $paramsAll['precedents_url_have'] ?? 0;
         $this->data['video_url_have'] = $paramsAll['video_url_have'] ?? 0;
 
@@ -413,6 +417,7 @@ class ImportsController extends Controller
                 }
             }
             $info[$k]['open_flg_str'] = $v['open_flg'] == 0 ? "未公開" : "公開";
+            $info[$k]['select_flg_str'] = $v['select_flg'] == 0 ? "OFF" : "ON";
         }
         $return_info = array();
         if (!empty($this->data['PRODUCT_LABLES_ARR'])){
@@ -514,8 +519,6 @@ class ImportsController extends Controller
             $select_flg = empty($paramsAll['select_flg'])?0:1;
             $open_flg = empty($paramsAll['open_flg'])?0:1;
 
-
-            //数据库事务处理
             DB::beginTransaction();
 
             $update_S_COMPANY_arr = array();
@@ -589,7 +592,6 @@ class ImportsController extends Controller
                 throw new \OneException(8);
             }
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $insert_S_PRODECT_LABLES_arr = array();
@@ -699,7 +701,6 @@ class ImportsController extends Controller
             }
             $p_type = $paramsAll['p_type'];
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $update_S_PRODECT_LABLES_arr = array();

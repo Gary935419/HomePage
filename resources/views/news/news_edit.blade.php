@@ -2,6 +2,31 @@
 @section('content')
     <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.css">
     <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5-premium-features/42.0.2/ckeditor5-premium-features.css">
+    <style>
+        .fuki {
+            display: inline-block;
+            background: #004894;
+            color: #fff;
+            padding: 10px 40px;
+            line-height: 1.4;
+            text-align: center;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 120%;
+            position: relative;
+            margin-bottom: 20px;
+            margin-top: 80px;
+        }
+        .customers_detail_section_ttl {
+            font-size: 150%;
+            line-height: 1.4;
+            color: #004894;
+            border-bottom: 1px solid #004894;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+    </style>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -167,31 +192,7 @@
             }
         }
     </script>
-    <script src="https://cdn.ckbox.io/ckbox/latest/ckbox.js"></script>
     <script type="module" src="{{ asset('assets/ckeditor/main.js') }}"></script>
-{{--    <script>--}}
-{{--        ClassicEditor--}}
-{{--            .create( document.querySelector( '.editor' ), {--}}
-{{--                ckbox: {--}}
-{{--                    tokenUrl: "https://111143.cke-cs.com/token/dev/LzRR1kAjFfQJowpfgdfgjf7WrmUgcsSM6pQZ?limit=10"--}}
-{{--                }--}}
-{{--            } )--}}
-{{--            .then(editor => {--}}
-{{--                // 设置编辑器容器的高度--}}
-{{--                editor.ui.view.editable.element.style.height = '500px';--}}
-{{--                // 确保高度在每次聚焦时保持一致--}}
-{{--                editor.ui.view.editable.element.addEventListener('focus', () => {--}}
-{{--                    editor.ui.view.editable.element.style.height = '500px';--}}
-{{--                });--}}
-{{--                // 确保高度在每次输入时保持一致--}}
-{{--                editor.model.document.on('change:data', () => {--}}
-{{--                    editor.ui.view.editable.element.style.height = '500px';--}}
-{{--                });--}}
-{{--            })--}}
-{{--            .catch(error => {--}}
-{{--                console.error(error);--}}
-{{--            });--}}
-{{--    </script>--}}
     <script>
         $(function () {
             $('.select2').select2()

@@ -151,7 +151,7 @@
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox">
                                         <input class="custom-control-input" type="checkbox" name="p_open_flg" id="p_open_flg" @if ($info['p_open_flg'] == 1) checked @endif value="1">
-                                        <label for="p_open_flg" class="custom-control-label">公開フラグ<code> 必須</code></label>
+                                        <label for="p_open_flg" class="custom-control-label">公開フラグ</label>
                                     </div>
                                 </div>
                             </div>

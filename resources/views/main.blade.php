@@ -35,12 +35,14 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="https://www.tokai-denshi.co.jp/" role="button" target="_blank">
-                    <img style="width: 60%" src="{{ asset('assets/img/window-restore-regular.png') }}">
+{{--                    <img style="width: 60%" src="{{ asset('assets/img/window-restore-regular.png') }}">--}}
+                    <i class="fas fa-clone"></i>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-                    <img style="width: 60%" src="{{ asset('assets/img/user-regular.png') }}">
+{{--                    <img style="width: 60%" src="{{ asset('assets/img/user-regular.png') }}">--}}
+                    <i class="fas fa-user-alt"></i>
                 </a>
             </li>
         </ul>

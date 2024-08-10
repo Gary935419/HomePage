@@ -58,7 +58,6 @@ class ManagementController extends Controller
                 throw new \OneException(13);
             }
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $insert_S_MANAGEMENT_SITE_arr = array();
@@ -173,7 +172,6 @@ class ManagementController extends Controller
 
             $open_flg = empty($paramsAll['open_flg'])?0:1;
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $update_S_MANAGEMENT_SITE_arr = array();

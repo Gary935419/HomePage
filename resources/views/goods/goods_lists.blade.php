@@ -128,19 +128,24 @@
                                         <tr>
                                             <td>{{$v['p_name']}}</td>
                                             <td>{{$v['p_lables_str']}}</td>
+{{--                                            <td style="text-align: center">--}}
+{{--                                                @if(!empty($v['p_pdf_url']))--}}
+{{--                                                    <a href="{{$v['p_pdf_url']}}" target="_blank"><img style="width: 15%" src="{{ asset('assets/img/products_i01.png') }}"></a>--}}
+{{--                                                @endif--}}
+{{--                                            </td>--}}
                                             <td style="text-align: center">
                                                 @if(!empty($v['p_pdf_url']))
-                                                    <a href="{{$v['p_pdf_url']}}" target="_blank"><img style="width: 15%" src="{{ asset('assets/img/products_i01.png') }}"></a>
+                                                    <a href="{{$v['p_pdf_url']}}" target="_blank"><i style='font-size:24px;color: #565656' class="fas fa-file-powerpoint"></i></a>
                                                 @endif
                                             </td>
                                             <td style="text-align: center">
                                                 @if(!empty($v['p_video_url']))
-                                                    <a href="{{$v['p_video_url']}}" target="_blank"><img style="width: 15%" src="{{ asset('assets/img/products_i02.png') }}"></a>
+                                                    <a href="{{$v['p_video_url']}}" target="_blank"><i style='font-size:24px;color: #565656' class="far fa-play-circle"></i></a>
                                                 @endif
                                             </td>
                                             <td style="text-align: center">
                                                 @if(!empty($v['p_special_weburl']))
-                                                    <a href="{{$v['p_special_weburl']}}" target="_blank"><img style="width: 15%" src="{{ asset('assets/img/products_i03.png') }}"></a>
+                                                    <a href="{{$v['p_special_weburl']}}" target="_blank"><i style='font-size:24px;color: #565656' class="fas fa-solid fa-link"></i></a>
                                                 @endif
                                             </td>
                                             <td>{{$v['p_open_flg_str']}}</td>

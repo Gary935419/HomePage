@@ -89,9 +89,7 @@
                                             <td>{{$v['d_file_name']}}</td>
                                             <td style="text-align: center">
                                                 @if(!empty($v['d_file_url']))
-                                                    <a href="{{$v['d_file_url']}}" target="_blank">
-                                                        <img src="{{ asset('assets/img/file-regular.png') }}">
-                                                    </a>
+                                                    <i style='font-size:24px' class="fas fa-file-powerpoint"></i>
                                                 @endif
                                             </td>
                                             <td>{{$v['d_category_str']}}</td>

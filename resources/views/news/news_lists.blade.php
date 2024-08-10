@@ -41,11 +41,11 @@
                                             class="btn btn-block btn-success">新規登録
                                     </button>
                                 </div>
-                                <div class="col-6 text-right">
-                                    <button style="width:  18%;float: right" type="button" onclick="location.href='/news/news_sort'"
-                                            class="btn btn-block btn-warning">並び順設定
-                                    </button>
-                                </div>
+{{--                                <div class="col-6 text-right">--}}
+{{--                                    <button style="width:  18%;float: right" type="button" onclick="location.href='/news/news_sort'"--}}
+{{--                                            class="btn btn-block btn-warning">並び順設定--}}
+{{--                                    </button>--}}
+{{--                                </div>--}}
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -97,6 +97,26 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>&nbsp;</label>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input class="custom-control-input" type="checkbox" @if ($n_important_flg == 1) checked @endif name="n_important_flg" id="n_important_flg" value="1">
+                                                    <label for="n_important_flg" class="custom-control-label">重要なお知らせのみを表示</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>&nbsp;</label>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input class="custom-control-input" type="checkbox" @if ($n_fixed_flg== 1) checked @endif name="n_fixed_flg" id="n_fixed_flg" value="1">
+                                                    <label for="n_fixed_flg" class="custom-control-label">固定された記事のみを表示</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <button type="submit" class="btn btn-primary">検索</button>
                                 </form>
@@ -106,15 +126,16 @@
                                         <th>タイトル</th>
                                         <th>カテゴリ</th>
                                         <th>公開フラグ</th>
+                                        <th>重要フラグ</th>
+                                        <th>固定フラグ</th>
                                         <th>
                                             公開日時
-                                            @if(!empty($info))
-                                                <a class="btn btn-warning btn-sm" style="margin-left: 10%;" onClick="sent_sorting();">
-                                                    降順
-                                                </a>
-                                            @endif
+{{--                                            @if(!empty($info))--}}
+{{--                                                <a class="btn btn-warning btn-sm" style="margin-left: 10%;" onClick="sent_sorting();">--}}
+{{--                                                    降順--}}
+{{--                                                </a>--}}
+{{--                                            @endif--}}
                                         </th>
-                                        <th>終了日時</th>
                                         <th>作成時間</th>
                                         <th width="15%">アクション</th>
                                     </tr>
@@ -125,8 +146,17 @@
                                             <td>{{$v['n_title']}}</td>
                                             <td>{{$v['type_name']}}</td>
                                             <td>{{$v['n_open_flg_str']}}</td>
+                                            <td style="text-align: center">
+                                                @if($v['n_important_flg'] == 1)
+                                                    <i style='font-size:24px' class="far fa-check-circle"></i>
+                                                @endif
+                                            </td>
+                                            <td style="text-align: center">
+                                                @if($v['n_fixed_flg'] == 1)
+                                                    <i style='font-size:24px' class="far fa-check-circle"></i>
+                                                @endif
+                                            </td>
                                             <td>{{empty($v['n_open_date'])?'-':$v['n_open_date']}}</td>
-                                            <td>{{empty($v['n_close_date'])?'-':$v['n_close_date']}}</td>
                                             <td>{{empty($v['CREATED_DT'])?'-':$v['CREATED_DT']}}</td>
                                             <td>
                                                 <a style="margin-left: 3%" class="btn btn-info btn-sm" href="#"

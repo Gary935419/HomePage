@@ -87,7 +87,6 @@ class SeminarController extends Controller
 //                throw new \OneException(10);
 //            }
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $insert_S_SEMINARS_EXHIBITIONS_arr = array();
@@ -115,8 +114,14 @@ class SeminarController extends Controller
             $insert_S_SEMINARS_EXHIBITIONS_arr['CREATED_DT'] = date('Y-m-d',time());
             $insert_S_SEMINARS_EXHIBITIONS_arr['CREATED_USER'] = session('USER_ID');
             $insert_S_SEMINARS_EXHIBITIONS_arr['is_del'] = $is_del;
-
             $Seminar->insert_S_SEMINARS_EXHIBITIONS($insert_S_SEMINARS_EXHIBITIONS_arr);
+
+            $info = $Seminar->search_SEMINARS_EXHIBITIONS_sort();
+            foreach ($info as $k=>$v){
+                $update_arr = array();
+                $update_arr['sort'] = $k+1;
+                $Seminar->update_S_SEMINARS_EXHIBITIONS($v['id'],$update_arr);
+            }
 
             DB::commit();
 
@@ -182,6 +187,14 @@ class SeminarController extends Controller
         }
 
         $this->data['info'] = $info;
+
+        $info = $Seminar->search_SEMINARS_EXHIBITIONS_sort();
+        foreach ($info as $k=>$v){
+            $update_arr = array();
+            $update_arr['sort'] = $k+1;
+            $Seminar->update_S_SEMINARS_EXHIBITIONS($v['id'],$update_arr);
+        }
+
         return view('seminar/exhibition_lists', $this->data);
     }
 
@@ -274,7 +287,6 @@ class SeminarController extends Controller
             $address_flg = empty($paramsAll['address_flg'])?0:1;
             $open_flg = empty($paramsAll['open_flg'])?0:1;
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $update_S_SEMINARS_EXHIBITIONS_arr = array();
@@ -301,8 +313,14 @@ class SeminarController extends Controller
             $update_S_SEMINARS_EXHIBITIONS_arr['exhibition_dates10'] = $paramsAll['exhibition_dates10'] ?? '';
             $update_S_SEMINARS_EXHIBITIONS_arr['MODIFY_DT'] = date('Y-m-d',time());
             $update_S_SEMINARS_EXHIBITIONS_arr['MODIFY_USER'] = session('USER_ID');
-
             $Seminar->update_S_SEMINARS_EXHIBITIONS($id,$update_S_SEMINARS_EXHIBITIONS_arr);
+
+            $info = $Seminar->search_SEMINARS_EXHIBITIONS_sort();
+            foreach ($info as $k=>$v){
+                $update_arr = array();
+                $update_arr['sort'] = $k+1;
+                $Seminar->update_S_SEMINARS_EXHIBITIONS($v['id'],$update_arr);
+            }
 
             DB::commit();
 
@@ -385,7 +403,6 @@ class SeminarController extends Controller
                 throw new \OneException(11);
             }
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $insert_S_TEACHER_arr = array();
@@ -511,7 +528,6 @@ class SeminarController extends Controller
             }
             $l_contents = $paramsAll['l_contents'];
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $update_S_TEACHER_arr = array();
@@ -579,7 +595,6 @@ class SeminarController extends Controller
                 throw new \OneException(12);
             }
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $insert_S_SEMINARS_EXHIBITIONS_LABLES_arr = array();
@@ -666,7 +681,6 @@ class SeminarController extends Controller
             }
             $s_name = $paramsAll['s_name'];
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $update_S_SEMINARS_EXHIBITIONS_LABLES_arr = array();

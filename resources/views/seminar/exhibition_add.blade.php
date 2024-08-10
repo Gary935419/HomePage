@@ -62,12 +62,12 @@
                         <form enctype="multipart/form-data" action="/seminar/exhibition_regist" method="post" id="form">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">タイトル<code>.必須</code></label>
+                                    <label for="exampleInputEmail1">タイトル<code> 必須</code></label>
                                     <input type="text" class="form-control" id="title" name="title" placeholder="タイトル">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>カテゴリ<code>.必須</code></label>
+                                    <label>カテゴリ<code> 必須</code></label>
                                     <select class="form-control select2" name="category" id="category" style="width: 100%;">
                                         <option value="0">選択してください</option>
                                         <option value="1">セミナー</option>
@@ -76,7 +76,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputFile">バナー画像<code>.必須、推奨サイズ（380px X 200px）</code></label>
+                                    <label for="exampleInputFile">バナー画像<code> 必須、推奨サイズ（380px X 200px）</code></label>
                                     <div class="custom-file">
                                         <input type="hidden" name="b_url" id="b_url" class="custom-file-input">
                                         <label class="custom-file-label" for="customFile" id="upload_b_url">ファイルを選択</label>
@@ -86,7 +86,7 @@
                                 <div class="img_b_url"><img src="" alt=""></div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">申込URL<code>.必須、URLのみ</code></label>
+                                    <label for="exampleInputEmail1">申込URL<code> 必須、URLのみ</code></label>
                                     <input type="text" class="form-control" id="apply_url" name="apply_url" placeholder="申込URL">
                                 </div>
 
@@ -102,7 +102,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">説明<code>.必須</code></label>
+                                    <label for="exampleInputEmail1">説明<code> 必須</code></label>
                                     <div class="editor-container" style="width: 100%">
                                         <textarea class="form-control" rows="6" id="p_contents" name="p_contents" placeholder="説明"></textarea>
                                     </div>
@@ -122,7 +122,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>開始時間<code>.必須、「時分」で入力</code></label>
+                                    <label>開始時間<code> 必須、「時分」で入力</code></label>
                                     <div class="input-group date" id="start_date_time" data-target-input="nearest">
                                         <div class="input-group-append" data-target="#start_date_time" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -132,7 +132,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>終了時間<code>.必須、「時分」で入力</code></label>
+                                    <label>終了時間<code> 必須、「時分」で入力</code></label>
                                     <div class="input-group date" id="end_date_time" data-target-input="nearest">
                                         <div class="input-group-append" data-target="#end_date_time" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -142,7 +142,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>開催日1<code>.必須、「年月日」で入力</code></label>
+                                    <label>開催日1<code> 必須、「年月日」で入力</code></label>
                                     <div class="input-group date" id="start_date1" data-target-input="nearest">
                                         <div class="input-group-append" data-target="#start_date1" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -151,7 +151,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group" style="display:none;" id="display_start_date2">
-                                    <label>開催日2<code>.必須、「年月日」で入力</code></label>
+                                    <label>開催日2<code> 必須、「年月日」で入力</code></label>
                                     <div class="input-group date" id="start_date2" data-target-input="nearest">
                                         <div class="input-group-append" data-target="#start_date2" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -160,7 +160,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group" style="display:none;" id="display_start_date3">
-                                    <label>開催日3<code>.必須、「年月日」で入力</code></label>
+                                    <label>開催日3<code> 必須、「年月日」で入力</code></label>
                                     <div class="input-group date" id="start_date3" data-target-input="nearest">
                                         <div class="input-group-append" data-target="#start_date3" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -169,7 +169,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group" style="display:none;" id="display_start_date4">
-                                    <label>開催日4<code>.必須、「年月日」で入力</code></label>
+                                    <label>開催日4<code> 必須、「年月日」で入力</code></label>
                                     <div class="input-group date" id="start_date4" data-target-input="nearest">
                                         <div class="input-group-append" data-target="#start_date4" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -178,7 +178,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group" style="display:none;" id="display_start_date5">
-                                    <label>開催日5<code>.必須、「年月日」で入力</code></label>
+                                    <label>開催日5<code> 必須、「年月日」で入力</code></label>
                                     <div class="input-group date" id="start_date5" data-target-input="nearest">
                                         <div class="input-group-append" data-target="#start_date5" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -187,7 +187,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group" style="display:none;" id="display_start_date6">
-                                    <label>開催日6<code>.必須、「年月日」で入力</code></label>
+                                    <label>開催日6<code> 必須、「年月日」で入力</code></label>
                                     <div class="input-group date" id="start_date6" data-target-input="nearest">
                                         <div class="input-group-append" data-target="#start_date6" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -196,7 +196,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group" style="display:none;" id="display_start_date7">
-                                    <label>開催日7<code>.必須、「年月日」で入力</code></label>
+                                    <label>開催日7<code> 必須、「年月日」で入力</code></label>
                                     <div class="input-group date" id="start_date7" data-target-input="nearest">
                                         <div class="input-group-append" data-target="#start_date7" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -205,7 +205,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group" style="display:none;" id="display_start_date8">
-                                    <label>開催日8<code>.必須、「年月日」で入力</code></label>
+                                    <label>開催日8<code> 必須、「年月日」で入力</code></label>
                                     <div class="input-group date" id="start_date8" data-target-input="nearest">
                                         <div class="input-group-append" data-target="#start_date8" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -214,7 +214,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group" style="display:none;" id="display_start_date9">
-                                    <label>開催日9<code>.必須、「年月日」で入力</code></label>
+                                    <label>開催日9<code> 必須、「年月日」で入力</code></label>
                                     <div class="input-group date" id="start_date9" data-target-input="nearest">
                                         <div class="input-group-append" data-target="#start_date9" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -223,7 +223,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group" style="display:none;" id="display_start_date10">
-                                    <label>開催日10<code>.必須、「年月日」で入力</code></label>
+                                    <label>開催日10<code> 必須、「年月日」で入力</code></label>
                                     <div class="input-group date" id="start_date10" data-target-input="nearest">
                                         <div class="input-group-append" data-target="#start_date10" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>

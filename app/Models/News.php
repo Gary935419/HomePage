@@ -45,13 +45,19 @@ class News extends Model
                 $m_goods = $m_goods->whereIn('n_type', $params['n_type_arr']);
             }
             if (isset($params['D_FROM']) && $params['D_FROM'] != '') {
-                $m_goods = $m_goods->where('n_open_date', '>=', $params['D_FROM']);
+                $m_goods = $m_goods->whereDate('n_open_date', '>=', $params['D_FROM']);
             }
             if (isset($params['D_TO']) && $params['D_TO'] != '') {
-                $m_goods = $m_goods->where('n_open_date', '<=', $params['D_TO']);
+                $m_goods = $m_goods->whereDate('n_open_date', '<=', $params['D_TO']);
             }
             if (isset($params['n_open_flg']) && !empty($params['n_open_flg'])) {
                 $m_goods = $m_goods->where('n_open_flg','=', $params['n_open_flg']);
+            }
+            if (isset($params['n_important_flg']) && !empty($params['n_important_flg'])) {
+                $m_goods = $m_goods->where('n_important_flg','=', $params['n_important_flg']);
+            }
+            if (isset($params['n_fixed_flg']) && !empty($params['n_fixed_flg'])) {
+                $m_goods = $m_goods->where('n_fixed_flg','=', $params['n_fixed_flg']);
             }
             if (isset($params['key_str']) && $params['key_str'] != '') {
                 $m_goods = $m_goods->where('n_title', 'like', '%'.$params['key_str'].'%');

@@ -41,11 +41,11 @@
                                             class="btn btn-block btn-success">新規登録
                                     </button>
                                 </div>
-                                <div class="col-6 text-right">
-                                    <button style="width:  18%;float: right" type="button" onclick="location.href='/imports/company_sort'"
-                                            class="btn btn-block btn-warning">並び順設定
-                                    </button>
-                                </div>
+{{--                                <div class="col-6 text-right">--}}
+{{--                                    <button style="width:  18%;float: right" type="button" onclick="location.href='/imports/company_sort'"--}}
+{{--                                            class="btn btn-block btn-warning">並び順設定--}}
+{{--                                    </button>--}}
+{{--                                </div>--}}
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -82,6 +82,16 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
+                                                <label>選抜フラグ</label>
+                                                <select id="select_flg" name="select_flg" class="form-control select2" style="width: 100%;">
+                                                    <option value="0" selected>選択してください</option>
+                                                    <option @if ($select_flg == 1) selected @endif value="1">OFF</option>
+                                                    <option @if ($select_flg == 2) selected @endif value="2">ON</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
                                                 <label>&nbsp;</label>
                                                 <div class="custom-control custom-checkbox">
                                                     <input class="custom-control-input" type="checkbox" @if ($precedents_url_have == 1) checked @endif name="precedents_url_have" id="precedents_url_have" value="1">
@@ -105,10 +115,12 @@
                                     <thead>
                                     <tr>
                                         <th>企業名</th>
+                                        <th>フリガナ</th>
+                                        <th>タグ</th>
                                         <th>導入事例URL</th>
                                         <th>紹介動画URL</th>
-                                        <th>タグ</th>
                                         <th>公開フラグ</th>
+                                        <th>選抜フラグ</th>
                                         <th>作成時間</th>
                                         <th width="15%">アクション</th>
                                     </tr>
@@ -117,18 +129,26 @@
                                     @foreach($info as $v)
                                         <tr>
                                             <td>{{$v['c_name']}}</td>
+                                            <td>{{$v['furigana_name']}}</td>
+                                            <td>{{$v['c_lables_str']}}</td>
                                             <td style="text-align: center">
                                                 @if(!empty($v['precedents_url']))
-                                                    <a href="{{$v['precedents_url']}}" target="_blank"><img style="width: 15%" src="{{ asset('assets/img/products_i03.png') }}"></a>
+                                                    <a href="{{$v['precedents_url']}}" target="_blank"><i style='font-size:24px;color: #565656' class="fas fa-solid fa-link"></i></a>
                                                 @endif
                                             </td>
                                             <td style="text-align: center">
                                                 @if(!empty($v['video_url']))
-                                                    <a href="{{$v['video_url']}}" target="_blank"><img style="width: 15%" src="{{ asset('assets/img/products_i02.png') }}"></a>
+                                                    <a href="{{$v['video_url']}}" target="_blank"><i style='font-size:24px;color: #565656' class="far fa-play-circle"></i></a>
                                                 @endif
                                             </td>
-                                            <td>{{$v['c_lables_str']}}</td>
                                             <td>{{$v['open_flg_str']}}</td>
+                                            <td style="text-align: center">
+                                                @if($v['select_flg'] == 1)
+                                                    <i style='font-size:24px' class="far fa-check-circle"></i>
+{{--                                                @else--}}
+{{--                                                    <i style='font-size:24px' class="far fa-times-circle"></i>--}}
+                                                @endif
+                                            </td>
                                             <td>{{empty($v['CREATED_DT'])?'-':$v['CREATED_DT']}}</td>
                                             <td>
                                                 <a style="margin-left: 3%" class="btn btn-info btn-sm" href="#"

@@ -85,7 +85,6 @@ class GoodsController extends Controller
 //                throw new \OneException(2);
 //            }
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $insert_S_PRODUCT_INFORMATION_arr = array();
@@ -269,7 +268,6 @@ class GoodsController extends Controller
             $p_flg = empty($paramsAll['p_flg'])?0:1;
             $p_open_flg = empty($paramsAll['p_open_flg'])?0:1;
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $update_S_PRODUCT_INFORMATION_arr = array();
@@ -341,7 +339,6 @@ class GoodsController extends Controller
                 throw new \OneException(4);
             }
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $insert_S_PRODUCT_LABLES_arr = array();
@@ -429,7 +426,6 @@ class GoodsController extends Controller
                 throw new \OneException(4);
             }
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $update_S_PRODUCT_LABLES_arr = array();
@@ -501,7 +497,6 @@ class GoodsController extends Controller
                 throw new \OneException(5);
             }
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $insert_S_PRODUCT_BANNERS_arr = array();
@@ -607,7 +602,6 @@ class GoodsController extends Controller
 
             $b_flg = empty($paramsAll['b_flg'])?0:1;
 
-            //数据库事务处理
             DB::beginTransaction();
 
             $update_S_PRODUCT_BANNERS_arr = array();

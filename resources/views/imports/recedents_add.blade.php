@@ -205,6 +205,13 @@
                                     <label for="exampleInputEmail1">メイン動画URL<code> 必須、Youtubeの動画URLのみ</code></label>
                                     <input type="text" class="form-control" id="main_video_url" name="main_video_url" placeholder="メイン動画URL">
                                 </div>
+
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" name="open_flg" id="open_flg" value="1">
+                                        <label for="open_flg" class="custom-control-label">公開フラグ</label>
+                                    </div>
+                                </div>
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">

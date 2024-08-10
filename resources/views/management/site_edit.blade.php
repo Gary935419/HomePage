@@ -77,12 +77,12 @@
                                 <div class="img_logo"><img src="" alt=""></div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">URL<code>.必須</code></label>
+                                    <label for="exampleInputEmail1">URL<code> 必須</code></label>
                                     <input type="text" value="{{ $info['url'] }}" class="form-control" id="url" name="url" placeholder="URL">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">説明<code>.必須</code></label>
+                                    <label for="exampleInputEmail1">説明<code> 必須</code></label>
                                     <div class="editor-container" style="width: 100%">
                                         <textarea class="form-control" rows="6" id="contents" name="contents" placeholder="説明">{{$info['contents']}}</textarea>
                                     </div>

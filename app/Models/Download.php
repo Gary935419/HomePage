@@ -150,7 +150,12 @@ class Download extends Model
                 $m_goods = $m_goods->where('category_name', 'like', '%'.$params['category_name'].'%');
             }
             if (isset($params['open_flg']) && !empty($params['open_flg'])) {
-                $m_goods = $m_goods->where('open_flg', $params['open_flg']);
+                if ($params['open_flg'] == 1){
+                    $open_flg = 0;
+                }else{
+                    $open_flg = 1;
+                }
+                $m_goods = $m_goods->where('open_flg','=', $open_flg);
             }
             $result = $m_goods->where('is_del', '=', 0)
                 ->orderBy('sort')
