@@ -60,12 +60,6 @@ class Goods extends Model
         try {
             $m_goods = DB::table('S_PRODUCT_INFORMATION');
 
-//            if (isset($params['D_FROM']) && $params['D_FROM'] != '') {
-//                $m_goods = $m_goods->where('mg.create_time', '>=', strtotime($params['D_FROM']));
-//            }
-//            if (isset($params['D_TO']) && $params['D_TO'] != '') {
-//                $m_goods = $m_goods->where('mg.create_time', '<=', strtotime($params['D_TO'])+86400);
-//            }
             if (isset($params['p_name']) && $params['p_name'] != '') {
                 $m_goods = $m_goods->where('p_name', 'like', '%'.$params['p_name'].'%');
             }

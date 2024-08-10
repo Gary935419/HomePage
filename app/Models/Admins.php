@@ -58,14 +58,6 @@ class Admins extends Model
             return 'パスワード設定情報は送信されません。';
         }
 
-        // 桁数チェック
-//        if (!preg_match('/^.{'.config('const.PASSWORD_LIMI_MINLENGTH_ADMIN').','.config('const.PASSWORD_LIMI_MAXLENGTH_ADMIN').'}$/', $password)) {
-//            return '密码位数为'.config('const.PASSWORD_LIMI_MINLENGTH_ADMIN').'~'.config('const.PASSWORD_LIMI_MAXLENGTH_ADMIN').'之间。';
-//        }
-        // 形式チェック
-//        if (preg_match(config('const.PASSWORD_VALIDATE_STRING_ADMIN'), $password)) {
-//            return 'パスワードに無効な文字が含まれています。';
-//        }
         if (config('const.PASSWORD_REQUIRE_NUMBER_ADMIN')) {
             if (!preg_match(config('const.PASSWORD_VALIDATE_NUMBER_ADMIN'), $password)) {
                 return 'パスワードには数字を含めてください。';
