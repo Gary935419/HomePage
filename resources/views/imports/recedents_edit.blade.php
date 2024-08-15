@@ -205,7 +205,7 @@
                                         <input type="hidden" value="{{ $info['main_img_url'] }}" name="main_img_url" id="main_img_url" class="custom-file-input">
                                         <label class="custom-file-label" for="customFile" id="upload_main_img_url">{{ $info['main_img_url'] }}</label>
                                     </div>
-                                    <img src="{{ $info['main_img_url'] }}" class="layui-upload-img" style="width:100px;height:100px;display: none;margin-top: 1%" id="main_img_url_img" name="main_img_url_img">
+                                    <img src="{{ $info['main_img_url'] }}" class="layui-upload-img" style="width:100px;height:100px;margin-top: 1%" id="main_img_url_img" name="main_img_url_img">
                                 </div>
                                 <div class="img_main_img_url"><img src="" alt=""></div>
 
