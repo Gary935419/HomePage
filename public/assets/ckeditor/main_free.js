@@ -1,21 +1,23 @@
 import {
     ClassicEditor,
     AccessibilityHelp,
+    Alignment,
     Autoformat,
     AutoImage,
     AutoLink,
     Autosave,
+    BlockQuote,
     Bold,
-    CKBox,
-    CKBoxImageEdit,
-    CloudServices,
-    Code,
-    CodeBlock,
     Essentials,
+    FindAndReplace,
+    FontBackgroundColor,
+    FontColor,
+    FontFamily,
+    FontSize,
     GeneralHtmlSupport,
     Heading,
-    HtmlComment,
-    HtmlEmbed,
+    Highlight,
+    HorizontalLine,
     ImageBlock,
     ImageCaption,
     ImageInline,
@@ -26,18 +28,34 @@ import {
     ImageTextAlternative,
     ImageToolbar,
     ImageUpload,
+    Indent,
+    IndentBlock,
     Italic,
     Link,
     LinkImage,
     List,
-    MediaEmbed,
     ListProperties,
+    // Markdown,
+    MediaEmbed,
+    Mention,
+    PageBreak,
     Paragraph,
+    // PasteFromMarkdownExperimental,
     PasteFromOffice,
-    PictureEditing,
+    RemoveFormat,
     SelectAll,
-    ShowBlocks,
-    SourceEditing,
+    SimpleUploadAdapter,
+    SpecialCharacters,
+    SpecialCharactersArrows,
+    SpecialCharactersCurrency,
+    SpecialCharactersEssentials,
+    SpecialCharactersLatin,
+    SpecialCharactersMathematical,
+    SpecialCharactersText,
+    Strikethrough,
+    Style,
+    Subscript,
+    Superscript,
     Table,
     TableCaption,
     TableCellProperties,
@@ -45,19 +63,12 @@ import {
     TableProperties,
     TableToolbar,
     TextTransformation,
+    TodoList,
+    Underline,
     Undo
 } from 'ckeditor5';
-import {PasteFromOfficeEnhanced} from 'ckeditor5-premium-features';
 
 import translations from 'ckeditor5/translations/ja.js';
-import premiumFeaturesTranslations from 'ckeditor5-premium-features/translations/ja.js';
-
-/**
- * Please update the following values with your actual tokens.
- * Instructions on how to obtain them: https://ckeditor.com/docs/trial/latest/guides/real-time/quick-start.html
- */
-const LICENSE_KEY = 'T0ZsRFhOMWJUZG5mRldIaksxcW1XaDVYSkxrMEJBQzEzbHhKT0ZER1k0aTVsZno1TmVtYVNmOGxsMDVrZVE9PS1NakF5TkRBNE1qYz0=';
-const CKBOX_TOKEN_URL = 'https://114734.cke-cs.com/token/dev/4snf8NHowxPWVRffyucxPhsSuUaqhqu0Hrgz?limit=10';
 
 const editorConfig = {
     toolbar: {
@@ -65,47 +76,68 @@ const editorConfig = {
             'undo',
             'redo',
             '|',
-            // 'sourceEditing',
-            // 'showBlocks',
+            // 'findAndReplace',
             'selectAll',
             '|',
             'heading',
+            // 'style',
+            '|',
+            'fontSize',
+            'fontFamily',
+            'fontColor',
+            'fontBackgroundColor',
             '|',
             'bold',
             'italic',
+            'underline',
+            'strikethrough',
+            // 'subscript',
+            // 'superscript',
             // 'code',
+            // 'removeFormat',
             '|',
-            'insertImage',
+            'specialCharacters',
+            'horizontalLine',
+            'pageBreak',
             'link',
-            // 'ckbox',
-            'insertTable',
+            'insertImage',
             'mediaEmbed',
+            'insertTable',
+            'highlight',
+            'blockQuote',
             // 'codeBlock',
-            'htmlEmbed',
+            '|',
+            'alignment',
             '|',
             'bulletedList',
             'numberedList',
+            // 'todoList',
+            // 'outdent',
+            // 'indent',
             '|',
+            'accessibilityHelp'
         ],
-        shouldNotGroupWhenFull: false
+        shouldNotGroupWhenFull: true
     },
     plugins: [
         AccessibilityHelp,
+        Alignment,
         Autoformat,
         AutoImage,
         AutoLink,
         Autosave,
+        BlockQuote,
         Bold,
-        CKBox,
-        CKBoxImageEdit,
-        CloudServices,
-        Code,
-        CodeBlock,
         Essentials,
+        FindAndReplace,
+        FontBackgroundColor,
+        FontColor,
+        FontFamily,
+        FontSize,
         GeneralHtmlSupport,
         Heading,
-        HtmlComment,
-        HtmlEmbed,
+        Highlight,
+        HorizontalLine,
         ImageBlock,
         ImageCaption,
         ImageInline,
@@ -116,19 +148,34 @@ const editorConfig = {
         ImageTextAlternative,
         ImageToolbar,
         ImageUpload,
+        Indent,
+        IndentBlock,
         Italic,
         Link,
         LinkImage,
         List,
-        MediaEmbed,
         ListProperties,
+        // Markdown,
+        MediaEmbed,
+        Mention,
+        PageBreak,
         Paragraph,
+        // PasteFromMarkdownExperimental,
         PasteFromOffice,
-        PasteFromOfficeEnhanced,
-        PictureEditing,
+        RemoveFormat,
         SelectAll,
-        ShowBlocks,
-        SourceEditing,
+        SimpleUploadAdapter,
+        SpecialCharacters,
+        SpecialCharactersArrows,
+        SpecialCharactersCurrency,
+        SpecialCharactersEssentials,
+        SpecialCharactersLatin,
+        SpecialCharactersMathematical,
+        SpecialCharactersText,
+        Strikethrough,
+        Style,
+        Subscript,
+        Superscript,
         Table,
         TableCaption,
         TableCellProperties,
@@ -136,11 +183,19 @@ const editorConfig = {
         TableProperties,
         TableToolbar,
         TextTransformation,
+        TodoList,
+        Underline,
         Undo
     ],
-    ckbox: {
-        tokenUrl: CKBOX_TOKEN_URL,
-        language: 'ja'
+    fontFamily: {
+        supportAllValues: true
+    },
+    fontSize: {
+        options: [10, 12, 14, 'default', 18, 20, 22],
+        supportAllValues: true
+    },
+    simpleUpload: {
+        uploadUrl: '/api/upload/pushFIleEditor',
     },
     heading: {
         options: [
@@ -183,14 +238,11 @@ const editorConfig = {
             'imageStyle:wrapText',
             'imageStyle:breakText',
             '|',
-            'resizeImage',
-            '|',
-            'ckboxImageEdit'
+            'resizeImage'
         ]
     },
     // initialData:'',
     language: 'ja',
-    licenseKey: LICENSE_KEY,
     link: {
         addTargetToExternalLinks: true,
         defaultProtocol: 'https://',
@@ -211,13 +263,61 @@ const editorConfig = {
             reversed: true
         }
     },
-    // placeholder: '記事情報を入力してください!',
+    // placeholder: 'Type or paste your content here!',
+    style: {
+        definitions: [
+            {
+                name: 'Article category',
+                element: 'h3',
+                classes: ['category']
+            },
+            {
+                name: 'Title',
+                element: 'h2',
+                classes: ['document-title']
+            },
+            {
+                name: 'Subtitle',
+                element: 'h3',
+                classes: ['document-subtitle']
+            },
+            {
+                name: 'Info box',
+                element: 'p',
+                classes: ['info-box']
+            },
+            {
+                name: 'Side quote',
+                element: 'blockquote',
+                classes: ['side-quote']
+            },
+            {
+                name: 'Marker',
+                element: 'span',
+                classes: ['marker']
+            },
+            {
+                name: 'Spoiler',
+                element: 'span',
+                classes: ['spoiler']
+            },
+            {
+                name: 'Code (dark)',
+                element: 'pre',
+                classes: ['fancy-code', 'fancy-code-dark']
+            },
+            {
+                name: 'Code (bright)',
+                element: 'pre',
+                classes: ['fancy-code', 'fancy-code-bright']
+            }
+        ]
+    },
     table: {
         contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties']
     },
-    translations: [translations, premiumFeaturesTranslations]
+    translations: [translations]
 };
-
 
 ClassicEditor.create(
     document.querySelector('#editor'), editorConfig
@@ -232,4 +332,3 @@ ClassicEditor.create(
 }).catch(error => {
     console.error(error);
 });
-

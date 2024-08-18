@@ -1,7 +1,8 @@
 @extends('main')
 @section('content')
-    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.css">
-    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5-premium-features/42.0.2/ckeditor5-premium-features.css">
+    {{--    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.css">--}}
+    {{--    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5-premium-features/42.0.2/ckeditor5-premium-features.css">--}}
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css">
     <style>
         .fuki {
             display: inline-block;
@@ -172,17 +173,27 @@
         </section>
         <!-- /.content -->
     </div>
+{{--    <script type="importmap">--}}
+{{--        {--}}
+{{--            "imports": {--}}
+{{--                "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.js",--}}
+{{--                "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/42.0.2/",--}}
+{{--                "ckeditor5-premium-features": "https://cdn.ckeditor.com/ckeditor5-premium-features/42.0.2/ckeditor5-premium-features.js",--}}
+{{--                "ckeditor5-premium-features/": "https://cdn.ckeditor.com/ckeditor5-premium-features/42.0.2/"--}}
+{{--            }--}}
+{{--        }--}}
+{{--    </script>--}}
+{{--    <script type="module" src="{{ asset('assets/ckeditor/main.js') }}"></script>--}}
+
     <script type="importmap">
         {
             "imports": {
-                "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.js",
-                "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/42.0.2/",
-                "ckeditor5-premium-features": "https://cdn.ckeditor.com/ckeditor5-premium-features/42.0.2/ckeditor5-premium-features.js",
-                "ckeditor5-premium-features/": "https://cdn.ckeditor.com/ckeditor5-premium-features/42.0.2/"
+                "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.js",
+                "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.0.0/"
             }
         }
     </script>
-    <script type="module" src="{{ asset('assets/ckeditor/main.js') }}"></script>
+    <script type="module" src="{{ asset('assets/ckeditor/main_free.js') }}"></script>
     <script>
         $(function () {
             $('.select2').select2()

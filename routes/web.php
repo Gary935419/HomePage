@@ -31,6 +31,7 @@ Route::middleware(['req.trim'])->group(function () {
     Route::group(['prefix' => 'api'], function ($app) {
         $app->post('admins/user_rights_setting', 'api\AdminsController@action_user_rights_setting');
         $app->post('upload/pushFIle', 'api\AdminsController@actionUploadImg');
+        $app->post('upload/pushFIleEditor', 'api\AdminsController@actionUploadImgEditor');
         $app->post('goods/goods_delete', 'api\GoodsController@post_goods_delete');
         $app->post('goods/goods_sort', 'api\GoodsController@post_goods_sort');
         $app->post('goods/goods_labledelete', 'api\GoodsController@post_goods_labledelete');

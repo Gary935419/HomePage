@@ -1,7 +1,8 @@
 @extends('main')
 @section('content')
-    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.css">
-    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5-premium-features/42.0.2/ckeditor5-premium-features.css">
+    {{--    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.css">--}}
+    {{--    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5-premium-features/42.0.2/ckeditor5-premium-features.css">--}}
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css">
     <style>
         .img_pr_img_url {
             display: none;
@@ -238,41 +239,27 @@
         </section>
         <!-- /.content -->
     </div>
+    {{--    <script type="importmap">--}}
+    {{--        {--}}
+    {{--            "imports": {--}}
+    {{--                "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.js",--}}
+    {{--                "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/42.0.2/",--}}
+    {{--                "ckeditor5-premium-features": "https://cdn.ckeditor.com/ckeditor5-premium-features/42.0.2/ckeditor5-premium-features.js",--}}
+    {{--                "ckeditor5-premium-features/": "https://cdn.ckeditor.com/ckeditor5-premium-features/42.0.2/"--}}
+    {{--            }--}}
+    {{--        }--}}
+    {{--    </script>--}}
+    {{--    <script type="module" src="{{ asset('assets/ckeditor/main.js') }}"></script>--}}
+
     <script type="importmap">
         {
             "imports": {
-                "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.js",
-                "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/42.0.2/",
-                "ckeditor5-premium-features": "https://cdn.ckeditor.com/ckeditor5-premium-features/42.0.2/ckeditor5-premium-features.js",
-                "ckeditor5-premium-features/": "https://cdn.ckeditor.com/ckeditor5-premium-features/42.0.2/"
+                "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.js",
+                "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.0.0/"
             }
         }
     </script>
-{{--    <script src="https://cdn.ckbox.io/ckbox/latest/ckbox.js"></script>--}}
-    <script type="module" src="{{ asset('assets/ckeditor/main.js') }}"></script>
-{{--    <script>--}}
-{{--        ClassicEditor--}}
-{{--            .create( document.querySelector( '.editor' ), {--}}
-{{--                ckbox: {--}}
-{{--                    tokenUrl: "https://111143.cke-cs.com/token/dev/LzRR1kAjFfQJowpfgdfgjf7WrmUgcsSM6pQZ?limit=10"--}}
-{{--                }--}}
-{{--            } )--}}
-{{--            .then(editor => {--}}
-{{--                // 设置编辑器容器的高度--}}
-{{--                editor.ui.view.editable.element.style.height = '500px';--}}
-{{--                // 确保高度在每次聚焦时保持一致--}}
-{{--                editor.ui.view.editable.element.addEventListener('focus', () => {--}}
-{{--                    editor.ui.view.editable.element.style.height = '500px';--}}
-{{--                });--}}
-{{--                // 确保高度在每次输入时保持一致--}}
-{{--                editor.model.document.on('change:data', () => {--}}
-{{--                    editor.ui.view.editable.element.style.height = '500px';--}}
-{{--                });--}}
-{{--            })--}}
-{{--            .catch(error => {--}}
-{{--                console.error(error);--}}
-{{--            });--}}
-{{--    </script>--}}
+    <script type="module" src="{{ asset('assets/ckeditor/main_free.js') }}"></script>
     <script>
         $(function () {
             $('.select2').select2();
