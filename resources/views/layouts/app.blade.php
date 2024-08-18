@@ -87,8 +87,8 @@
     <!-- dropzonejs -->
     <script src="{{ asset('adminlte/plugins/dropzone/min/dropzone.min.js') }}"></script>
     <!-- CK Editor -->
-    <script src="{{ asset('ckbox/translations/ja.js') }}"></script>
-    <script src="{{ asset('ckbox/ckbox.js') }}"></script>
+{{--    <script src="{{ asset('ckbox/translations/ja.js') }}"></script>--}}
+{{--    <script src="{{ asset('ckbox/ckbox.js') }}"></script>--}}
 </head>
 
     @yield('content_top')
