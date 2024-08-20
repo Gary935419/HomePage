@@ -25,7 +25,7 @@ class AuthenticateAdmin
         }
 
         // ログイン後で且つ、権限が無い場合は、ログインページヘ（そもそも表示されない）
-        elseif ($request->path() != 'login' && $request->path() != 'logout' && $request->path() != 'admin' && $request->post('FORCED_CHANGE_PASSWORD_USER_ID') == null && !AuthGroupOtbSimpleGroup::has_access(strtolower($request->segment(1).".".$request->segment(2)))) {
+        elseif ($request->path() != 'login' && $request->path() != 'logout' && $request->path() != '/' && $request->post('FORCED_CHANGE_PASSWORD_USER_ID') == null && !AuthGroupOtbSimpleGroup::has_access(strtolower($request->segment(1).".".$request->segment(2)))) {
             return redirect('/login');
         }
         return $next($request);

@@ -81,8 +81,8 @@
                                                       </span>
                                                     </div>
                                                     <input type="text" value="{{ $D_FROM_D_TO }}" class="form-control float-right" name="reservation" id="reservation">
-                                                    <input type="hidden" class="form-control float-right" name="D_FROM" id="D_FROM">
-                                                    <input type="hidden" class="form-control float-right" name="D_TO" id="D_TO">
+                                                    <input type="hidden" class="form-control float-right" name="D_FROM" id="D_FROM" value="{{ $D_FROM }}">
+                                                    <input type="hidden" class="form-control float-right" name="D_TO" id="D_TO" value="{{ $D_TO }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -136,7 +136,7 @@
 {{--                                                </a>--}}
 {{--                                            @endif--}}
                                         </th>
-                                        <th>作成時間</th>
+                                        <th>更新日時</th>
                                         <th width="15%">アクション</th>
                                     </tr>
                                     </thead>
@@ -157,7 +157,7 @@
                                                 @endif
                                             </td>
                                             <td>{{empty($v['n_open_date'])?'-':$v['n_open_date']}}</td>
-                                            <td>{{empty($v['CREATED_DT'])?'-':$v['CREATED_DT']}}</td>
+                                            <td>{{empty($v['MODIFY_DT'])?'-':$v['MODIFY_DT']}}</td>
                                             <td>
                                                 <a style="margin-left: 3%" class="btn btn-info btn-sm" href="#"
                                                    onclick="location.href='/news/news_edit/{{$v['id']}}'">

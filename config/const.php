@@ -23,9 +23,10 @@ return array(
     'PASSWORD_REQUIRE_ALPHABET_ADMIN' => true,
     // パスワード記号必須
     'PASSWORD_REQUIRE_SIGN_ADMIN' => false,
-    // パスワード有効文字列
+    // ユーザーID有効文字列
     'USER_ID_VALIDATE_STRING_ADMIN' => '/[^a-zA-Z0-9_\-\s]/',
-
+    // パスワード有効文字列
+    'USER_PWD_VALIDATE_STRING_ADMIN' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
     // 50音順
     'hiragana' => [
         'あ', 'い', 'う', 'え', 'お', 'か', 'き', 'く', 'け', 'こ',

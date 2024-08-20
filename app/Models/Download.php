@@ -61,6 +61,14 @@ class Download extends Model
             if (isset($params['d_file_name']) && $params['d_file_name'] != '') {
                 $m_goods = $m_goods->where('d_file_name', 'like', '%'.$params['d_file_name'].'%');
             }
+            if (isset($params['open_flg']) && !empty($params['open_flg'])) {
+                if ($params['open_flg'] == 1){
+                    $open_flg = 0;
+                }else{
+                    $open_flg = 1;
+                }
+                $m_goods = $m_goods->where('open_flg','=', $open_flg);
+            }
             $result = $m_goods->where('is_del', '=', 0)
                 ->orderBy('sort')
                 ->get()->toArray();

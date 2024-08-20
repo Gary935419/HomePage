@@ -21,7 +21,7 @@ class Admins extends Model
         if ($original_password == $new_password) {
             return '新しいパスワードは現在のパスワードと同じですので、再設定してください。';
         }
-        $password_general_check = self::check_admin_user_password(array('PASSWORD' => $new_password, ));
+        $password_general_check = self::check_admin_user_password(array('PASSWORD' => $new_password));
         if (!empty($password_general_check)) {
             return $password_general_check;
         }
@@ -73,10 +73,8 @@ class Admins extends Model
                 return 'パスワードには記号を含めてください。';
             }
         }
-        if (config('const.USER_ID_VALIDATE_STRING_ADMIN')) {
-            if (preg_match(config('const.USER_ID_VALIDATE_STRING_ADMIN'), $password)) {
-                return 'ロパスワードに無効な文字が含まれています。';
-            }
+        if (!preg_match(config('const.USER_PWD_VALIDATE_STRING_ADMIN'), $password)) {
+            return 'パスワードは英大文字・英小文字・数字がそれぞれ1文字以上含まれるものを入力してください。';
         }
         return '';
     }
@@ -161,10 +159,8 @@ class Admins extends Model
             return 'ログインID設定情報は送信されません。';
         }
 
-        if (config('const.USER_ID_VALIDATE_STRING_ADMIN')) {
-            if (preg_match(config('const.USER_ID_VALIDATE_STRING_ADMIN'), $USER_ID)) {
-                return 'ログインIDに無効な文字が含まれています。';
-            }
+        if (preg_match(config('const.USER_ID_VALIDATE_STRING_ADMIN'), $USER_ID)) {
+            return 'ログインIDに無効な文字が含まれています。';
         }
         return '';
     }

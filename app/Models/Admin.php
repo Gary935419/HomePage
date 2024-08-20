@@ -166,7 +166,10 @@ class Admin extends Model
                     ->first();
             }
             // return true when login was verified, and either the hash matches or multiple logins are allowed
-            if ($this->user and (config('auth.multiple_logins', false) or $this->user['LOGIN_HASH'] === $LOGIN_HASH)) {
+//            if ($this->user and (config('auth.multiple_logins', false) or $this->user['LOGIN_HASH'] === $LOGIN_HASH)) {
+//                return true;
+//            }
+            if ($this->user) {
                 return true;
             }
         }

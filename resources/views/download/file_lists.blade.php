@@ -70,6 +70,16 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>公開フラグ</label>
+                                                <select id="open_flg" name="open_flg" class="form-control select2" style="width: 100%;">
+                                                    <option value="0" selected>選択してください</option>
+                                                    <option @if ($open_flg == 1) selected @endif value="1">未公開</option>
+                                                    <option @if ($open_flg == 2) selected @endif value="2">公開</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary">検索</button>
                                 </form>
@@ -78,7 +88,8 @@
                                     <tr>
                                         <th width="30%">ファイル名</th>
                                         <th width="15%">ファイル</th>
-                                        <th width="20%">カテゴリ</th>
+                                        <th width="10%">カテゴリ</th>
+                                        <th width="10%">公開フラグ</th>
                                         <th width="20%">作成時間</th>
                                         <th width="15%">アクション</th>
                                     </tr>
@@ -93,6 +104,7 @@
                                                 @endif
                                             </td>
                                             <td>{{$v['d_category_str']}}</td>
+                                            <td>{{$v['open_flg_str']}}</td>
                                             <td>{{empty($v['CREATED_DT'])?'-':$v['CREATED_DT']}}</td>
                                             <td>
                                                 <a style="margin-left: 3%" class="btn btn-info btn-sm" href="#"

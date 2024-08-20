@@ -165,7 +165,6 @@ class UserInfoController extends Controller
             if ($password != $comfirm) {
                 $error_message = '再入力されたパスワードが合致しません。';
             } else {
-
                 $error_message = $Admins->check_admin_user_password(array('PASSWORD' => $password));
             }
             $check_admin_user_id_error_message = $Admins->check_admin_user_id(array('USER_ID' => $user_id));

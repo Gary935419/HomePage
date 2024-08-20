@@ -98,6 +98,7 @@ class DownloadController extends Controller
             $this->data['MSG_CODE'] = $MSG_CODE;
             $this->data['MSG'] = $paramsAll['msg'];
         }
+        $this->data['open_flg'] = $paramsAll['open_flg'] ?? 0;
         $this->data['d_file_name'] = $paramsAll['d_file_name'] ?? '';
         $this->data['d_category_arr'] = $paramsAll['d_category'] ?? array();
 
@@ -106,6 +107,7 @@ class DownloadController extends Controller
         foreach ($info as $k=>$v){
             $d_category_array = explode(",", $v['d_category']);
             $info[$k]['d_category_str'] = "";
+            $info[$k]['open_flg_str'] = $v['open_flg'] == 0 ? "未公開" : "公開";
             foreach ($d_category_array as $kk=>$vv){
                 $select_select_S_DOWNLOADS_CATEGORY_info_info = $Download->select_S_DOWNLOADS_CATEGORY_info($vv);
                 if (!empty($select_select_S_DOWNLOADS_CATEGORY_info_info) && $select_select_S_DOWNLOADS_CATEGORY_info_info['is_del'] != 1){

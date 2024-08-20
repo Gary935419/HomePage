@@ -60,11 +60,13 @@ class News extends Model
                 $m_goods = $m_goods->where('n_fixed_flg','=', $params['n_fixed_flg']);
             }
             if (isset($params['key_str']) && $params['key_str'] != '') {
-                $m_goods = $m_goods->where('n_title', 'like', '%'.$params['key_str'].'%');
+                $m_goods = $m_goods->where(function ($m_goods) use ($params) {
+                    $m_goods->where('n_title', 'like', '%'.$params['key_str'].'%')->orWhere('n_contents', 'like', '%'.$params['key_str'].'%');
+                });
             }
 
             $result = $m_goods->where('is_del', '=', 0)
-                ->orderBy('sort')
+                ->orderBy('MODIFY_DT','DESC')
                 ->get()->toArray();
 
 

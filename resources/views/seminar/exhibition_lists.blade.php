@@ -77,8 +77,8 @@
                                                       </span>
                                                     </div>
                                                     <input type="text" value="{{ $D_FROM_D_TO }}" class="form-control float-right" name="reservation" id="reservation">
-                                                    <input type="hidden" class="form-control float-right" name="D_FROM" id="D_FROM">
-                                                    <input type="hidden" class="form-control float-right" name="D_TO" id="D_TO">
+                                                    <input type="hidden" class="form-control float-right" name="D_FROM" id="D_FROM" value="{{ $D_FROM }}">
+                                                    <input type="hidden" class="form-control float-right" name="D_TO" id="D_TO" value="{{ $D_TO }}">
                                                 </div>
                                             </div>
                                         </div>
